@@ -142,3 +142,20 @@ and on completion we get
 Source: Deleteing imported accounts in metamask (Official Docs): [Click here](https://metamask.zendesk.com/hc/en-us/articles/360057435092-How-to-remove-an-account-from-your-MetaMask-wallet)
 
 ![](./ss-we-can-not-delete-created-accounts-in-metamask.png)
+
+## More on theory part
+
+- ![](./ss-1-urxo.png)
+- ![](./ss-operations-on-blockchain.png)
+- ![](./ss-external-and-contract-accounts.png)
+- ![](./ss-incentive-model.png)
+- ![](./ss-transaction-integrity-blockchain.png)
+- ![](./ss-fallbak-fn-takes-money-into-smart-contract.png)
+- ![](./ss-deployment-of-smart-contract.png)
+- ![](./ss-what-is-metamask.png)
+- ![](./ss-what-is-remix.png)
+- ![](./ss-enable-test-networks-in-metamast.png)
+
+**Modifier are used to check user input conditions. Events are used to trigger some outside applications. Event tells the client side applications that some change has been done.**
+
+**Smart contracts need an address to deploy and invoke its functions.**
