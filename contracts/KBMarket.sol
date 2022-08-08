@@ -9,6 +9,8 @@ import '@openzeppelin/contracts/utils/Counters.sol';
 
 import 'hardhat/console.sol';
 
+// public and private are visibility modifiers
+
 contract KBMarket is ReentrancyGuard{
 	using Counters for Counters.Counter;
 

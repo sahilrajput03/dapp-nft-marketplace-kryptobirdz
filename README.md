@@ -105,57 +105,127 @@ We are gonna use these contracts for minting token and grabbing TOKEN_URI, setti
 
 1.
 
-![](./ss-enable-test-networks-in-metamast.png)
+![](./ss/ss-enable-test-networks-in-metamast.png)
 
 2.
 
-![](./ss-metamask-shows-local-blockchain.png)
+![](./ss/ss-metamask-shows-local-blockchain.png)
 
 ## Minting/Creating nft with an account using metamask on websites
 
 1.
 
-![](./ss-creating-token-with-ur-account-with-metamask.png)
+![](./ss/ss-creating-token-with-ur-account-with-metamask.png)
 
 2.
 
-![](./ss-create-token-confirm.png)
+![](./ss/ss-create-token-confirm.png)
 
 ## Buying an nft looks like this
 
-![](./ss-buying-nft-looks-like.png)
+![](./ss/ss-buying-nft-looks-like.png)
 
 and on completion we get
 
-![](./ss-confirm-transaction.png)
+![](./ss/ss-confirm-transaction.png)
 
 ## Successful transaction address
 
-![](./ss-how-addresses-linked-on-successful-transaction.png)
+![](./ss/ss-how-addresses-linked-on-successful-transaction.png)
 
 ## What is mumbai-testnet
 
-![](./ss-what-is-mumbai-testnet.png)
+![](./ss/ss-what-is-mumbai-testnet.png)
 
 ## We cannot delete accounts created (but imported ones can deleted) on metamask and it'll be there foreever
 
 Source: Deleteing imported accounts in metamask (Official Docs): [Click here](https://metamask.zendesk.com/hc/en-us/articles/360057435092-How-to-remove-an-account-from-your-MetaMask-wallet)
 
-![](./ss-we-can-not-delete-created-accounts-in-metamask.png)
+![](./ss/ss-we-can-not-delete-created-accounts-in-metamask.png)
 
 ## More on theory part
 
-- ![](./ss-1-urxo.png)
-- ![](./ss-operations-on-blockchain.png)
-- ![](./ss-external-and-contract-accounts.png)
-- ![](./ss-incentive-model.png)
-- ![](./ss-transaction-integrity-blockchain.png)
-- ![](./ss-fallbak-fn-takes-money-into-smart-contract.png)
-- ![](./ss-deployment-of-smart-contract.png)
-- ![](./ss-what-is-metamask.png)
-- ![](./ss-what-is-remix.png)
-- ![](./ss-enable-test-networks-in-metamast.png)
+- ![](./ss/ss-1-urxo.png)
+- ![](./ss/ss-operations-on-blockchain.png)
+- ![](./ss/ss-external-and-contract-accounts.png)
+- ![](./ss/ss-incentive-model.png)
+- ![](./ss/ss-transaction-integrity-blockchain.png)
+- ![](./ss/ss-fallbak-fn-takes-money-into-smart-contract.png)
+- ![](./ss/ss-deployment-of-smart-contract.png)
+- ![](./ss/ss-what-is-metamask.png)
+- ![](./ss/ss-what-is-remix.png)
+- ![](./ss/ss-enable-test-networks-in-metamast.png)
 
 **Modifier are used to check user input conditions. Events are used to trigger some outside applications. Event tells the client side applications that some change has been done.**
 
 **Smart contracts need an address to deploy and invoke its functions.**
+
+## Using account 3 with Remix IDE
+
+![](./ss/ss-connected-account-with-remix.png)
+
+## Get money in your test wallets i.e, `KovanETH`
+
+@: https://faucets.chain.link/
+
+Source: https://github.com/MetaMask/metamask-extension/issues/5439#issuecomment-990094952
+
+Other multiple Source: https://github.com/MetaMask/metamask-extension/issues/5439#issuecomment-990402909
+
+Promising for 10 coins in 30mins(7:40pm): https://faucet.egorfine.com/
+
+## Hello world contract deployed via remix IDE
+
+- ![](./ss/ss-hello-world-contract-deployed-via-remix.png)
+- ![](./ss/ss-more-insights-about-metamask-and-remix.png)
+- Add polygon mumbai testnet to metamask [source](https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-metamask/):
+
+![](./ss/ss-add-polygon-mumbai-testnet.png)
+
+![](./ss/ss-add-polygon-mumbai-testnet-2.png)
+
+- Add polygon mainnet to metamask [source](https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-metamask/) :
+
+![](./ss/ss-adding-polygon-network-to-metamask.png)
+
+![](./ss/ss-adding-polygon-network-to-metamask-2.png)
+
+- Mumbai Testnet and Mainnet in Metamask
+
+![](./ss/ss-mumbai-testnet-and-mainnet.png)
+
+- web2 and web3
+
+![](./ss/ss-web2-and-web3.png)
+
+- bitCoin price analysis
+
+![](./ss/ss-bitcoin-price-inc-analysis.png)
+
+## now?? 8 August, 2022
+
+**TODO NOW:**
+
+- Use polygon.technology with mobile internet till connect fixes the GOVT BLOCKED ISSUE.
+- Deploy a solidity smartcontract on polygon testnet: https://youtu.be/c80AHFOo63M?t=412
+  - (COPY^^):Hardhat - Deploying Smart Contract to Ethereum (Testnet / Mainnet): https://youtu.be/Uvphp4aVeDg
+  - youtube search: https://www.youtube.com/results?search_query=deployment+to+mumbainet&sp=CAASAhAB
+  - google search: do if required..
+
+**Explore:**
+
+- Q. What is Polygon Pos Chain explorer: https://polygonscan.com/
+
+**DEEP LONG INTERVIEWS**
+
+- Deep Talk with Jaynti Kanani - CEO & Co-founder of Matic (Polygon): Start watching from: https://youtu.be/XsKRaMhX3Iw?t=137
+- Matic Network | BlockchainBrad EXCLUSIVE Interview with MATIC COO | An Ethereum Scalability solution: Start watching from here: https://youtu.be/XZcBbKf8lRI?t=1115
+
+**Articles:**
+
+- Matic: https://www.moneycontrol.com/news/business/startup/from-diamond-factory-workers-son-to-founder-of-10-billion-crypto-venture-the-story-of-jaynti-kanani-and-polygon-7007481.html
+
+**Video content**
+
+- Amazing Youtube playlist by polygon for learning new tech: https://www.youtube.com/watch?v=S8hZ5rDV7kg
+- Polygon Tv CHANNEL: https://www.youtube.com/c/PolygonTV, src: https://polygon.technology/developers

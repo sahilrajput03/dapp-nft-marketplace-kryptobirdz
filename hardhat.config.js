@@ -12,6 +12,7 @@ require('@nomiclabs/hardhat-waffle')
 // + import '@nomicfoundation/hardhat-chai-matchers'
 
 const fs = require('fs')
+// Private key of your account you created via metamask
 const keyData = fs.readFileSync('./p-key.txt', {
 	encoding: 'utf8',
 	flag: 'r',

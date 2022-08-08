@@ -1,0 +1,220 @@
+<h1 id="nft-marketplace---kyptobirdz">NFT Marketplace - Kyptobirdz</h1>
+<p>Web3 Apps: Web3, in the context of technology, refers to
+decentralized apps that run on the blockchain. These are apps that allow
+anyone to participate without monetizing their personal data.</p>
+<h2 id="start-from-13.-hardhat-infra-blockchain-configuration">start
+from <code>13. Hardhat &amp; Infra Blockchain Configuration</code></h2>
+<p>Libraries:</p>
+<ul>
+<li><code>ethers</code> - To help us interact with ethereum
+blockchain</li>
+<li><code>hardhat</code> - To provide us a development environment and
+it allows us to compile contracts and deploy our contracts to
+blockchain. (We’re uisng <code>hardhat</code> instead of
+<code>truffle</code> in this project). Awesome thing:
+<code>hardhat</code> can also initialize the solidity contracts for us
+and get the project rolling so it can do little bit of that boilerplate
+which otherwise again would be cumbersome to do over and over
+again.</li>
+<li><code>@nomiclabs/hardhat-waffle</code>:</li>
+<li><code>@nomiclabs/hardhat-ethers</code>:</li>
+<li><code>web3modal</code>: To connect with metamask and run
+transactions</li>
+<li><code>@openzeppelin/contracts</code>:</li>
+<li><code>ethereum-waffle</code>: A library which actually contains
+ERC721 Contracts already build to Standards. (Coz we’re not going to
+build our nft token from scratch)</li>
+<li><code>chai</code>: For testing environment</li>
+<li><code>ipfs-http-client</code>: It is decentralized way of hosting
+our URI’s or NFT images (which are files). So its a way to store files.
+We use this coz when our users will be tokenizing the NFT’s there’re
+gonna be hosting it IPFS.</li>
+<li><code>axios</code> - To help us with http requests</li>
+<li><code>add</code> - A cross-browser, numerically stable way to add
+floats in Javascript.</li>
+<li>LATEST: <code>@nomicfoundation/hardhat-toolbox</code> - A new setup
+instead of using <code>@nomiclabs/hardhat-waffle</code>.</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install ethers hardhat @nomiclabs/hardhat-waffle ethereum-waffle chai @nomiclabs/hardhat-ethers web3modal @openzeppelin/contracts ipfs-http-client axios</span></code></pre></div>
+<p><strong>Linked Course:</strong></p>
+<ul>
+<li>Complete nft development course - To help you create
+<code>ERC721 token</code> from scratch we learn the tokenomics and the
+functionality. <strong>FYI: In real world we’re not gonna be building
+from scratch every single nft.</strong> But to solidify the the
+knowledge its good to learn how its done from scratch.</li>
+</ul>
+<p><strong>TRACK</strong></p>
+<p><code>hardhat</code> initialize our project and build out some smart
+contracts for us by</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> hardhat</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ✔ What do you want to do? · Create a JavaScript project</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ✔ Hardhat project root: · /home/array/test/nft-marketplace-kryptobirdz</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ✔ Do you want to add a .gitignore? (Y/n) · y</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Readme generated from above command</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># ===================================</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Sample Hardhat Project</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="ex">This</span> project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="ex">Try</span> running some of the following tasks:</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># shell</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> hardhat help</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> hardhat test</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="va">GAS_REPORT</span><span class="op">=</span>true <span class="ex">npx</span> hardhat test</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> hardhat node</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="ex">npx</span> hardhat run scripts/deploy.js</span></code></pre></div>
+<h2 id="erc">ERC</h2>
+<p>We’re using Openzepplin, so have ready made contracts. YO!</p>
+<p><a
+href="https://dev.to/envoy_/ks-what-are-ethereum-request-for-comments-erc-standards-5f80">Dev
+article</a></p>
+<p><a href="https://eips.ethereum.org/EIPS/eip-721">EIP</a></p>
+<p><a
+href="https://ethereum.org/en/developers/docs/standards/tokens/erc-721/#top">ERC-721</a></p>
+<p>FROM <code>node_modules</code>: <a
+href="node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol">Here</a></p>
+<p>You can see other contracts in ^^ that file as well:</p>
+<pre class="sol"><code>import &quot;./IERC721.sol&quot;;
+import &quot;./IERC721Receiver.sol&quot;;
+import &quot;./extensions/IERC721Metadata.sol&quot;;
+import &quot;../../utils/Address.sol&quot;;
+import &quot;../../utils/Context.sol&quot;;
+import &quot;../../utils/Strings.sol&quot;;
+import &quot;../../utils/introspection/ERC165.sol&quot;;</code></pre>
+<p>We are gonna use these contracts for minting token and grabbing
+TOKEN_URI, setting up our IPFS.</p>
+<h2 id="useful-resources">Useful resources</h2>
+<ul>
+<li>Infure Dashboard - <a href="https://infura.io/dashboard">Click
+here</a></li>
+<li>Upgrading Contracts in Solidity - <a
+href="https://docs.openzeppelin.com/learn/upgrading-smart-contracts">Click
+here</a></li>
+<li>Solana vs. Ethereum(solidity) 1 - <a
+href="https://pixelplex.io/blog/solana-vs-ethereum/">Click here</a></li>
+<li>Solana vs. Ethereum(solidity) 2 - <a
+href="https://www.reddit.com/r/solana/comments/oes1gd/should_i_learn_solana_rust_or_ethereum_solidity/">Click
+here</a></li>
+<li>Dapp course on gdrive - <a
+href="https://drive.google.com/drive/folders/1o7eExDuepyTlyMUeospr1epx-xF9ELM9">Click
+here</a></li>
+<li>Deployement Cost to Ethereum and other blockchains: <a
+href="https://medium.com/the-capital/how-much-does-it-cost-to-deploy-a-smart-contract-on-ethereum-11bcd64da1">Click
+here</a></li>
+</ul>
+<h2 id="learn">LEARN</h2>
+<ul>
+<li>You can deploy to local blockchain by running the
+<code>start-local-blockchain</code> script and use
+<code>deploy-local-KryptoBird</code> to deploy to local blockchain you
+just started.</li>
+<li><code>artifacts</code> folder in generated when you run
+<code>deploy-local-KryptoBird</code> script.</li>
+</ul>
+<h2 id="other-disturbed-things-by-this-nft-project">OTHER DISTURBED
+THINGS BY THIS NFT PROJECT</h2>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=h6wBYWWdyYQ">Auth for New
+Devs: It’s Easier Than You Think</a></li>
+<li><a href="https://www.youtube.com/watch?v=mkVUW1KroTI">Build and
+Deploy a blockchain network for FREE: IBM Blockchain Tutorial
+#2</a></li>
+<li>IMP: https://vimeo.com/34017777</li>
+<li>FIGMA COURSE:
+https://www.udemy.com/course/mastering-figma-beginner-to-expert/learn/lecture/20734372?start=30#overview</li>
+</ul>
+<h2 id="enabling-test-network-in-metamask">Enabling test network in
+metamask</h2>
+<ol type="1">
+<li></li>
+</ol>
+<p><img src="./ss/ss-enable-test-networks-in-metamast.png" /></p>
+<ol start="2" type="1">
+<li></li>
+</ol>
+<p><img src="./ss/ss-metamask-shows-local-blockchain.png" /></p>
+<h2
+id="mintingcreating-nft-with-an-account-using-metamask-on-websites">Minting/Creating
+nft with an account using metamask on websites</h2>
+<ol type="1">
+<li></li>
+</ol>
+<p><img
+src="./ss/ss-creating-token-with-ur-account-with-metamask.png" /></p>
+<ol start="2" type="1">
+<li></li>
+</ol>
+<p><img src="./ss/ss-create-token-confirm.png" /></p>
+<h2 id="buying-an-nft-looks-like-this">Buying an nft looks like
+this</h2>
+<p><img src="./ss/ss-buying-nft-looks-like.png" /></p>
+<p>and on completion we get</p>
+<p><img src="./ss/ss-confirm-transaction.png" /></p>
+<h2 id="successful-transaction-address">Successful transaction
+address</h2>
+<p><img
+src="./ss/ss-how-addresses-linked-on-successful-transaction.png" /></p>
+<h2 id="what-is-mumbai-testnet">What is mumbai-testnet</h2>
+<p><img src="./ss/ss-what-is-mumbai-testnet.png" /></p>
+<h2
+id="we-cannot-delete-accounts-created-but-imported-ones-can-deleted-on-metamask-and-itll-be-there-foreever">We
+cannot delete accounts created (but imported ones can deleted) on
+metamask and it’ll be there foreever</h2>
+<p>Source: Deleteing imported accounts in metamask (Official Docs): <a
+href="https://metamask.zendesk.com/hc/en-us/articles/360057435092-How-to-remove-an-account-from-your-MetaMask-wallet">Click
+here</a></p>
+<p><img
+src="./ss/ss-we-can-not-delete-created-accounts-in-metamask.png" /></p>
+<h2 id="more-on-theory-part">More on theory part</h2>
+<ul>
+<li><img src="./ss/ss-1-urxo.png" /></li>
+<li><img src="./ss/ss-operations-on-blockchain.png" /></li>
+<li><img src="./ss/ss-external-and-contract-accounts.png" /></li>
+<li><img src="./ss/ss-incentive-model.png" /></li>
+<li><img src="./ss/ss-transaction-integrity-blockchain.png" /></li>
+<li><img
+src="./ss/ss-fallbak-fn-takes-money-into-smart-contract.png" /></li>
+<li><img src="./ss/ss-deployment-of-smart-contract.png" /></li>
+<li><img src="./ss/ss-what-is-metamask.png" /></li>
+<li><img src="./ss/ss-what-is-remix.png" /></li>
+<li><img src="./ss/ss-enable-test-networks-in-metamast.png" /></li>
+</ul>
+<p><strong>Modifier are used to check user input conditions. Events are
+used to trigger some outside applications. Event tells the client side
+applications that some change has been done.</strong></p>
+<p><strong>Smart contracts need an address to deploy and invoke its
+functions.</strong></p>
+<h2 id="using-account-3-with-remix-ide">Using account 3 with Remix
+IDE</h2>
+<p><img src="./ss/ss-connected-account-with-remix.png" /></p>
+<h2 id="get-money-in-your-test-wallets-i.e-kovaneth">Get money in your
+test wallets i.e, <code>KovanETH</code></h2>
+<p>@: https://faucets.chain.link/</p>
+<p>Source:
+https://github.com/MetaMask/metamask-extension/issues/5439#issuecomment-990094952</p>
+<p>Other multiple Source:
+https://github.com/MetaMask/metamask-extension/issues/5439#issuecomment-990402909</p>
+<p>Promising for 10 coins in 30mins(7:40pm):
+https://faucet.egorfine.com/</p>
+<h2 id="hello-world-contract-deployed-via-remix-ide">Hello world
+contract deployed via remix IDE</h2>
+<ul>
+<li><img
+src="./ss/ss-hello-world-contract-deployed-via-remix.png" /></li>
+<li><img
+src="./ss/ss-more-insights-about-metamask-and-remix.png" /></li>
+<li>Add polygon mumbai testnet to metamask:</li>
+</ul>
+<p><img src="./ss/ss-add-polygon-mumbai-testnet.png" /></p>
+<p><img src="./ss/ss-add-polygon-mumbai-testnet-2.png" /></p>
+<ul>
+<li>Add polygon mainnet to metamask:</li>
+</ul>
+<p><img src="./ss/ss-adding-polygon-network-to-metamask.png" /></p>
+<p><img src="./ss/ss-adding-polygon-network-to-metamask-2.png" /></p>
