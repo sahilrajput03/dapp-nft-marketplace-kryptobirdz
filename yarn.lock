@@ -5050,9 +5050,14 @@
     "ajv" "^6.12.3"
     "har-schema" "^2.0.0"
 
-"hardhat-watcher@^2.3.0":
-  "integrity" "sha512-u76a/1pxPyW9DRZ7FZ8HoSQ4AuKOiSDQTR2NyiZlH5f0Ux+qQfahsh9CNusRLhx2s1OWzlkwCVvrdHq5FTGUzw=="
-  "resolved" "https://registry.npmjs.org/hardhat-watcher/-/hardhat-watcher-2.3.0.tgz"
+"hardhat-clone@file:../hardhat-watcher":
+  "resolved" "file:../hardhat-watcher"
+  "version" "2.3.0"
+  dependencies:
+    "chokidar" "^3.5.3"
+
+"hardhat-watcher@file:../hardhat-watcher":
+  "resolved" "file:../hardhat-watcher"
   "version" "2.3.0"
   dependencies:
     "chokidar" "^3.5.3"
