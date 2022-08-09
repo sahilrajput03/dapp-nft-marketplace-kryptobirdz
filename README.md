@@ -202,6 +202,10 @@ Promising for 10 coins in 30mins(7:40pm): https://faucet.egorfine.com/
 
 ![](./ss/ss-bitcoin-price-inc-analysis.png)
 
+- Learn remix ide: FYI: I used locally run hardhat blockchain instead of mumbai-testnet bcoz mumbai-testnet was resolving single request in 5-15mins for me.
+
+![](./ss/ss-learn-remix-ide.png)
+
 ## now?? 8 August, 2022
 
 **TODO NOW:**
@@ -229,3 +233,36 @@ Promising for 10 coins in 30mins(7:40pm): https://faucet.egorfine.com/
 
 - Amazing Youtube playlist by polygon for learning new tech: https://www.youtube.com/watch?v=S8hZ5rDV7kg
 - Polygon Tv CHANNEL: https://www.youtube.com/c/PolygonTV, src: https://polygon.technology/developers
+
+## Installed `hardhat-watcher`
+
+Usage - Docs: https://github.com/xanderdeseyn/hardhat-watcher#usage
+
+```bash
+npm install hardhat-watcher
+```
+
+And addded below script to `package.json`
+
+```js
+require('@nomiclabs/hardhat-waffle')
+
+// Also add below to default export config object:
+{
+  // ...,
+  watcher: {
+  'learn-contracts': {
+    tasks: ['test'],
+    files: ['./contracts', './test'],
+  },
+},
+}
+```
+
+and create a script in `package.json` like:
+
+```json
+"test-watch-learn-contracts": "hardhat watch learn-contracts",
+```
+
+so we can use `npm run test-watch-learn-contracts` to run tests in watch mode.

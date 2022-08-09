@@ -1,7 +1,7 @@
 const {expect} = require('chai')
 const {ethers} = require('hardhat')
 
-describe('KBMarket', function () {
+describe.skip('KBMarket', function () {
 	it('Should mint and trade NFTs', async function () {
 		// test to receive contract addresses
 		const Market = await ethers.getContractFactory('KBMarket')

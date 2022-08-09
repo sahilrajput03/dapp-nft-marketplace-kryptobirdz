@@ -5050,6 +5050,13 @@
     "ajv" "^6.12.3"
     "har-schema" "^2.0.0"
 
+"hardhat-watcher@^2.3.0":
+  "integrity" "sha512-u76a/1pxPyW9DRZ7FZ8HoSQ4AuKOiSDQTR2NyiZlH5f0Ux+qQfahsh9CNusRLhx2s1OWzlkwCVvrdHq5FTGUzw=="
+  "resolved" "https://registry.npmjs.org/hardhat-watcher/-/hardhat-watcher-2.3.0.tgz"
+  "version" "2.3.0"
+  dependencies:
+    "chokidar" "^3.5.3"
+
 "hardhat@^2.0.0", "hardhat@^2.10.1", "hardhat@^2.9.4":
   "integrity" "sha512-0FN9TyCtn7Lt25SB2ei2G7nA2rZjP+RN6MvFOm+zYwherxLZNo6RbD8nDz88eCbhRapevmXqOiL2nM8INKsjmA=="
   "resolved" "https://registry.npmjs.org/hardhat/-/hardhat-2.10.1.tgz"

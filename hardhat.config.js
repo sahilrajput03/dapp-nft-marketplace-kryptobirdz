@@ -11,6 +11,9 @@ require('@nomiclabs/hardhat-waffle')
 // - require('@nomicfoundation/hardhat-waffle')
 // + import '@nomicfoundation/hardhat-chai-matchers'
 
+// To add capability to run tests in watch mode ~Sahil
+require('hardhat-watcher')
+
 const fs = require('fs')
 // Private key of your account you created via metamask
 const keyData = fs.readFileSync('./p-key.txt', {
@@ -48,6 +51,13 @@ module.exports = {
 				enabled: true,
 				runs: 200,
 			},
+		},
+	},
+	// Run it via: `npx hardhat watch compilation`
+	watcher: {
+		'learn-contracts': {
+			tasks: ['test'],
+			files: ['./contracts', './test'],
 		},
 	},
 }
