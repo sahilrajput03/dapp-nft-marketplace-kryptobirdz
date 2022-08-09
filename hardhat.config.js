@@ -56,8 +56,9 @@ module.exports = {
 	// Run it via: `npx hardhat watch compilation`
 	watcher: {
 		'learn-contracts': {
-			tasks: ['test'],
-			files: ['./contracts', './test'],
+			// Using Position arguments hardhat watcher: https://github.com/xanderdeseyn/hardhat-watcher#positional-arguments
+			tasks: [{command: 'test', params: {testFiles: ['./test/learn-contracts.js']}}],
+			files: ['./contracts', './test/learn-contracts.js'],
 		},
 	},
 }
@@ -65,3 +66,28 @@ module.exports = {
 // module.exports = {
 // 	solidity: '0.8.9',
 // }
+
+/*
+LEARN ~ Sahil
+COMMAND
+npx hardhat test --help
+# OUTPUT:
+# Hardhat version 2.10.1
+# 
+# Usage: hardhat [GLOBAL OPTIONS] test [--bail] [--grep <STRING>] [--no-compile] [--parallel] [...testFiles]
+# 
+# OPTIONS:
+# 
+#   --bail        Stop running tests after the first test failure
+#   --grep        Only run tests matching the given string or regexp
+#   --no-compile  Don't compile before running this task
+#   --parallel    Run tests in parallel
+# 
+# POSITIONAL ARGUMENTS:
+# 
+#   testFiles     An optional list of files to test (default: [])
+# 
+# test: Runs mocha tests
+# 
+# For global options help run: hardhat help
+*/

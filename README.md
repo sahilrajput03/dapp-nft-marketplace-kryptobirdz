@@ -86,7 +86,13 @@ We are gonna use these contracts for minting token and grabbing TOKEN_URI, setti
 - Upgrading Contracts in Solidity - [Click here](https://docs.openzeppelin.com/learn/upgrading-smart-contracts)
 - Solana vs. Ethereum(solidity) 1 - [Click here](https://pixelplex.io/blog/solana-vs-ethereum/)
 - Solana vs. Ethereum(solidity) 2 - [Click here](https://www.reddit.com/r/solana/comments/oes1gd/should_i_learn_solana_rust_or_ethereum_solidity/)
-- Dapp course on gdrive - [Click here](https://drive.google.com/drive/folders/1o7eExDuepyTlyMUeospr1epx-xF9ELM9)
+
+**Courses:**
+
+- (TODO) UDEMY COURSE: Become a Blockchain Developer: Ethereum + Solidity + Project
+- (TODO) YOUTUBE COURSE: Blockchain Ecommerce App Tutorial (Accept ERC20 Token Payments): https://www.youtube.com/watch?v=f5npM1PvoyE , [Github - unofficial's person code](https://github.com/michael-steinert/SolidityWeb3ECommerceExpressMongooseMongoDBReact)
+- (TODO) ~AMAZING~ Youtube Playlist (~Polygon): BUIDL IT - Workshop #1 - Intro to Web3 Tech Stack: https://www.youtube.com/watch?v=S8hZ5rDV7kg
+- UDEMY COURSE: Dapp course on gdrive - Build An NFT Marketplace From Scratch - Blockchain DApp: [Click here](https://drive.google.com/drive/folders/1o7eExDuepyTlyMUeospr1epx-xF9ELM9)
 - Deployement Cost to Ethereum and other blockchains: [Click here](https://medium.com/the-capital/how-much-does-it-cost-to-deploy-a-smart-contract-on-ethereum-11bcd64da1)
 
 ## LEARN
@@ -231,7 +237,6 @@ Promising for 10 coins in 30mins(7:40pm): https://faucet.egorfine.com/
 
 **Video content**
 
-- Amazing Youtube playlist by polygon for learning new tech: https://www.youtube.com/watch?v=S8hZ5rDV7kg
 - Polygon Tv CHANNEL: https://www.youtube.com/c/PolygonTV, src: https://polygon.technology/developers
 
 ## Installed `hardhat-watcher`
@@ -266,3 +271,18 @@ and create a script in `package.json` like:
 ```
 
 so we can use `npm run test-watch-learn-contracts` to run tests in watch mode.
+
+### temporary truffle urls
+
+```bash
+yarn develop truffle
+# from youtube's course of ecommerceWeb3
+```
+
+Writing Test in Solidity: https://trufflesuite.com/docs/truffle/testing/writing-tests-in-solidity/
+
+Writing Test in JS: https://trufflesuite.com/docs/truffle/testing/writing-tests-in-javascript/
+
+Debugger: https://trufflesuite.com/docs/truffle/getting-started/using-the-truffle-debugger/
+
+SOLIDITY Hardhat Typescript Template: https://github.com/xanderdeseyn/solidity-hardhat-template
