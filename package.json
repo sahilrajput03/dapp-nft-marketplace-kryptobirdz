@@ -8,11 +8,11 @@
 		"start": "next start",
 		"lint": "next lint",
 		"test": "hardhat test",
-		"test-watch-learn-contractsNodemonBADDD": "nodemon -x 'hardhat test --no-compile test/learn-contracts.js' -w contracts -w test -e sol",
-		"test-watch-learn-contracts": "hardhat watch learn-contracts",
-		"test-watch-learn-contracts-original": "hardhat watch learn-contracts",
+		"compile": "hardhat compile",
+		"test-watch": "hardhat watch learn-contracts",
 		"deploy-local-KryptoBird": "hardhat run ./scripts/deployKryptoBird.js --network localhost",
-		"start-local-blockchain": "hardhat node"
+		"start-local-blockchain": "hardhat node",
+		"BADDDtest-watch-learn-contractsNodemon": "nodemon -x 'hardhat test --no-compile test/learn-contracts.js' -w contracts -w test -e sol"
 	},
 	"dependencies": {
 		"@nomicfoundation/hardhat-chai-matchers": "^1.0.2",

@@ -212,6 +212,47 @@ Promising for 10 coins in 30mins(7:40pm): https://faucet.egorfine.com/
 
 ![](./ss/ss-learn-remix-ide.png)
 
+- `hadhat node` accounts are same everytime and for all the users everywhere WHEREAS truffle's accounts might change during development (truffle sucks in this sense):
+
+![](./ss/ss-hardhat-accounts-are-same-everytime-and-for-all-users.png)
+
+- Type of blockchain developers: ![](./ss/ss-types-of-blockchain-developers.png)
+
+## hardhat vs. truffle:
+
+Source: https://youtu.be/tfQFk6pmtFc
+
+Source: https://youtu.be/Si3nmjyQXds
+
+Source: https://www.youtube.com/watch?v=eR_9XSfF9p8
+
+What are hardhat and truffle? Ans. They are frameworks for developing dapps of javascript.
+
+Why frameworks? Ans. Because provide out of the box facilities to write tests and one command deployment features.
+
+Hardhat and Truffle do the same thing i.e, speed up the development process for blockchain applicationgs and smart contracts in particular.
+
+In truffle: `web3js` is default but if you wanna configure to use `etherjs` then its a tricky thing to do.
+
+Truffle is a opinionated framework.
+
+In truffle when you deploy contracts to blockchain you need to make migration files to do that and that works in a particular way and they have particular syntax on doing that. For e.g., https://github.com/dappuniversity/eth_swap/blob/master/migrations/2_deploy_contracts.js
+
+Default way to use truffle essentially is to use their external blockchain known as ganashe. Ganashe can be accessed via cli: `ganashe-cli` whereas hardhat has `hardhat node`
+
+Using truffle/hardhat nodes for real blockchain development of their implementations: https://youtu.be/tfQFk6pmtFc?t=711
+
+## hardhat commands
+
+```
+# Compile contracts and it creates two folder i.e., cache and artifacts which have corresponding .json (has abi: used to interact with the smart contract and the bytecode which is used to deploy smart conract) compiled file.
+npx hardhat compile
+```
+
+## uint256?
+
+https://medium.com/hara-engineering/how-long-will-uint256-last-47f9796e171e
+
 ## now?? 8 August, 2022
 
 **TODO NOW:**
@@ -221,6 +262,7 @@ Promising for 10 coins in 30mins(7:40pm): https://faucet.egorfine.com/
   - (COPY^^):Hardhat - Deploying Smart Contract to Ethereum (Testnet / Mainnet): https://youtu.be/Uvphp4aVeDg
   - youtube search: https://www.youtube.com/results?search_query=deployment+to+mumbainet&sp=CAASAhAB
   - google search: do if required..
+  - read article: https://blog.polymath.network/solidity-tips-and-tricks-to-save-gas-and-reduce-bytecode-size-c44580b218e6
 
 **Explore:**
 
@@ -286,3 +328,9 @@ Writing Test in JS: https://trufflesuite.com/docs/truffle/testing/writing-tests-
 Debugger: https://trufflesuite.com/docs/truffle/getting-started/using-the-truffle-debugger/
 
 SOLIDITY Hardhat Typescript Template: https://github.com/xanderdeseyn/solidity-hardhat-template
+
+## web3js(15.8k*) and ethersjs(5.4k*)
+
+https://youtu.be/Si3nmjyQXds
+
+more?
