@@ -17,6 +17,10 @@ const FirstAccAddr = '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'
 // console.log(String(Number.MAX_SAFE_INTEGER).length) // 16
 
 describe('Contract1 Tests', function () {
+	// Runs callback before each test below
+	beforeEach(async function () {
+		// await network.provider.send('hardhat_reset')
+	})
 	it('first contract', async function () {
 		// Reset accounts in hardhat node // https://ethereum.stackexchange.com/a/112437/106687
 		await network.provider.send('hardhat_reset')
