@@ -13,6 +13,9 @@ const {ethers, network} = require('hardhat')
 const zeroAddress = '0x0000000000000000000000000000000000000000'
 const FirstAccAddr = '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'
 
+// console.log(Number.MAX_SAFE_INTEGER) // 9007199254740991
+// console.log(String(Number.MAX_SAFE_INTEGER).length) // 16
+
 describe('Contract1 Tests', function () {
 	it('first contract', async function () {
 		// Reset accounts in hardhat node // https://ethereum.stackexchange.com/a/112437/106687
@@ -20,7 +23,9 @@ describe('Contract1 Tests', function () {
 
 		const [firstAcc] = await ethers.getSigners()
 		const firstAccBal = await firstAcc.getBalance()
-		const DEFAULT_BALANCE = BigNumber.from(10_000_000_000_000_000_000_000n) // ~Sahil: Learn to use big int in js: https://github.com/sahilrajput03#limitation-of-javascript-amazing-bigint-type
+		const DEFAULT_BALANCE = BigNumber.from('10000000000000000000000')
+		// Using bigInt is also works fine and docs provide example an example using big Int as well ~Sahil
+		// const DEFAULT_BALANCE = BigNumber.from(10_000_000_000_000_000_000_000n) // ~Sahil: Learn to use big int in js: https://github.com/sahilrajput03#limitation-of-javascript-amazing-bigint-type
 		expect(firstAccBal.eq(DEFAULT_BALANCE)).eq(true)
 
 		const Contract1 = await ethers.getContractFactory('Contract1')
