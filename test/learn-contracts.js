@@ -82,7 +82,7 @@ describe('Contract1 Tests', function () {
 })
 
 describe('Contract2 Tests', function () {
-	it('second contract', async function () {
+	it('second contract - simple', async function () {
 		// LEARN STRUCTS
 		const Contract2 = await ethers.getContractFactory('Contract2')
 		const contract2 = await Contract2.deploy()
@@ -129,9 +129,9 @@ describe('Contract2 Tests', function () {
 
 		// Push item to array
 		await contract2.pushArr(5)
-		const value = await contract2.arr(0) // contract2.arr(0) gets value at 0 index
-		expect(value).equal(5)
-		expect(value).equal(BigNumber.from('5'))
+		const valueAt0 = await contract2.arr(0) // contract2.arr(0) gets value at 0 index
+		expect(valueAt0).equal(5)
+		expect(valueAt0).equal(BigNumber.from('5'))
 
 		// Pop and try to access now will throw err again coz no value @ 0 index again as last above error
 		await contract2.popArr()
@@ -156,6 +156,131 @@ describe('Contract2 Tests', function () {
 		expect(await contract2.barr(1)).equal(51)
 		expect(await contract2.barr(1)).equal('51')
 		expect(await contract2.barr(1)).equal(BigNumber.from('51'))
+
+		// learn enums
+		// enum ActionChoices{left,right,up,down} which means left=0, right=1, up=2, down=3
+		expect(await contract2.choice()).equal(0)
+		await contract2.setRight()
+		expect(await contract2.choice()).equal(1)
+		await contract2.setUp()
+		expect(await contract2.choice()).equal(2)
+		await contract2.setLeft()
+		expect(await contract2.choice()).equal(0)
+
+		// learn mappings: Mapping is associative array or key-value pairs
+		// mapping(key => value) VISIBILITYIDENTIFIER(public/private) VARIABLE_NAME;
+		// KEY can be (uint, string and address i.e., elementary data-types) and VALUE can be any data-type (including structs and all)
+
+		//! Learn functions
+		//! VISIBILITY IDENTIFIERS:
+		// 1. public: callable internally, externally and also by inherited contracts
+		// 2. private callable only via contract itself not via derived contract
+		// 3. external: callable only from other contracts and externally (*not* callable by contract itself)
+		// 4. internal: () callable only from contract itself or from derived contracts *not* by transactions
+
+		expect(await contract2.myString()).equal('')
+		// Learn: Getter function can either be pure or view
+		// PURE FUNCTIONS cannot modify/read state variables
+		expect(await contract2.sumExternalPure(2, 3)).equal(5) // external pure
+		expect(await contract2.multiplyPublicPure(2, 3)).equal(6) // public pure
+		// VIEW FUNCTION cannot modify state variables but can read state
+		expect(await contract2.namePublicView()).equal('sahil')
+		expect(await contract2.nameExternalView()).equal('sahil')
+
+		expect(await contract2.concatMyString('world')).equal('hello world')
+
+		// Events Implementation: https://ethereum.stackexchange.com/a/119857
+		const txn = await contract2.learnEvent(7) // Docs: https://docs.ethers.io/v5/single-page/#/v5/api/providers/types/-%23-providers-TransactionResponse
+		const receipt = await txn.wait()
+		// console.log(rc.events.map((event) => event.event)) // Lists all emmited events from tx
+		const myEvent = receipt.events.find((event) => event.event === 'myEvent')
+		const [foo, bar, baz] = myEvent.args
+		expect(foo).equal(7)
+		expect(bar).equal(8)
+		expect(baz).equal(9)
+		const yourEvent = receipt.events.find((event) => event.event === 'yourEvent')
+		const [buzz] = yourEvent.args
+		expect(buzz).equal('bacardi')
+	})
+
+	it('deafult accounts in hardhat test environment', async () => {
+		const DEFAULT_ACCOUNTS = ['0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266', '0x70997970C51812dc3A010C7d01b50e0d17dc79C8', '0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC', '0x90F79bf6EB2c4f870365E785982E1f101E93b906', '0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65', '0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc', '0x976EA74026E726554dB657fA54763abd0C3a0aa9', '0x14dC79964da2C08b23698B3D3cc7Ca32193d9955', '0x23618e81E3f5cdF7f54C3d65f7FBc0aBf5B21E8f', '0xa0Ee7A142d267C1f36714E4a8F75612F20a79720', '0xBcd4042DE499D14e55001CcbB24a551F3b954096', '0x71bE63f3384f5fb98995898A86B02Fb2426c5788', '0xFABB0ac9d68B0B445fB7357272Ff202C5651694a', '0x1CBd3b2770909D4e10f157cABC84C7264073C9Ec', '0xdF3e18d64BC6A983f673Ab319CCaE4f1a57C7097', '0xcd3B766CCDd6AE721141F452C550Ca635964ce71', '0x2546BcD3c84621e976D8185a91A922aE77ECEc30', '0xbDA5747bFD65F08deb54cb465eB87D40e51B197E', '0xdD2FD4581271e230360230F9337D5c0430Bf44C0', '0x8626f6940E2eb28930eFb4CeF49B2d1F2C9C1199']
+
+		const allSigners = await ethers.getSigners()
+		const allSignersAddressList = allSigners.map((s) => s.address)
+		expect(allSignersAddressList).to.have.same.members(DEFAULT_ACCOUNTS)
+	})
+
+	it('non-view and non-pure functions return transaction data', async () => {
+		const Contract2 = await ethers.getContractFactory('Contract2')
+		const contract2 = await Contract2.deploy()
+		await contract2.deployed()
+
+		// All functions return tx (transaction) data (*non view and *non pure functions)
+		const tx = await contract2.simpleFunction()
+		// console.log({tx})
+		expect(typeof tx).equal('object')
+		const expectedKeys = ['hash', 'type', 'accessList', 'blockHash', 'blockNumber', 'transactionIndex', 'confirmations', 'from', 'gasPrice', 'maxPriorityFeePerGas', 'maxFeePerGas', 'gasLimit', 'to', 'value', 'nonce', 'data', 'r', 's', 'v', 'creates', 'chainId', 'wait']
+		// const {gasPrice, gasLimit, maxFeePerGas} = tx
+		// console.log({gasPrice, gasLimit, maxFeePerGas})
+
+		expect(Object.keys(tx)).to.have.same.members(expectedKeys)
+
+		/* src: https://ethereum.stackexchange.com/a/88122
+		- The return-value of a non-constant (neither pure nor view) function is available only when the function is called on-chain (i.e., from this contract or from another contract).
+		- When you call such function from the off-chain (e.g., from an ethers.js script), you need to execute it within a transaction, and the return-value is the hash of that transaction.
+		- This is because it is unknown when the transaction will be mined and added to the blockchain.
+
+		Moreover, even when the transaction is added to the blockchain, it can be removed from it later.
+		Why do I get `transactionData` instead of actual return value of the solidity function) -
+		(1 *) Lovely Question and Explanation: https://stackoverflow.com/questions/72101716/calling-smart-contract-with-hardhat-can-return-either-value-or-dictionary
+		(2*) Another good answer on stackoverflow:: https://ethereum.stackexchange.com/a/94873
+		(3*) Obtain value from non-view function: https://ethereum.stackexchange.com/a/88122
+		(4) https://ethereum.stackexchange.com/a/88122
+		*/
+	})
+})
+
+// FYI: 1eth = 10**9gwei = 10**18 wei). ~Sahil: ALSO: 1 gwei is gigaWei i.e., 10**9 wei
+// const ethValue = ethers.utils.formatEther(weiValue) //? Convert wei to ether
+
+// Learn simple math with BigNumber (subtraction)
+// console.log(BigNumber.from('33919000271350').sub(BigNumber.from('33919000271360')))
+
+describe('Contract 3 Tests', function () {
+	it('simple amount transfer', async function () {
+		// Contracts are deployed using the first signer/account by default
+		const [firstAcc] = await ethers.getSigners()
+		const Contract3 = await ethers.getContractFactory('Contract3')
+		const ONE_GWEI = 10 ** 9
+		const amount = 2 * ONE_GWEI
+
+		const contract3 = await Contract3.deploy() //! last argument will pbe msg object ~Sahil (check Lock.js file)
+		await contract3.deployed()
+		// console.log(contract3.address) // Address of contract. It changes on every run of the test ~Sahil
+		expect(await contract3.balance()).equal(0) // initial value
+		// Adding money to contract address from thin air IMO ~Sahil (=> Passing msg.value to solidity function: https://ethereum.stackexchange.com/a/102760)
+		await contract3.getMoney({value: amount}) // tldr: last argument is considered as `msg` object ~Sahil
+		expect(await contract3.balance()).equal(amount) // balance is returned in gwei
+		// Add more money
+		const tx1 = await contract3.getMoney({value: amount})
+		expect(tx1.from).equal(firstAcc.address) // tx.from is the address of first user in the 20 account of hardhat accounts ~Sahi
+		// ALSO, `tx.to` WILL BE the addess of the contract itself (it changes on every run of the test as well) ~Sahil
+		// Getting value of `balance` variable of the contract ~Sahil
+		const expectedBalance = BigNumber.from(2 * amount)
+		const receivedBalance = await contract3.balance()
+		expect(receivedBalance.eq(expectedBalance)).equal(true) // balance is returned in gwei
+
+		// withdraw money from contract to particular account
+		const initialBal = await firstAcc.getBalance()
+		const tx2 = await contract3.withdraw(firstAcc.address, amount)
+		const rc2 = await tx2.wait()
+		const gasCostForTxn = rc2.gasUsed.mul(rc2.effectiveGasPrice)
+		const expectedProfit = BigNumber.from(amount).sub(gasCostForTxn)
+		const finalBal = await firstAcc.getBalance()
+		const profit = finalBal.sub(initialBal) // MATH.OPERATIONS ON BIGNUMBER: https://docs.ethers.io/v5/api/utils/bignumber/#BigNumber--BigNumber--methods--math-operations
+		// console.log({profit, expectedProfit})
+		expect(profit.eq(expectedProfit)).equal(true)
 	})
 })
 

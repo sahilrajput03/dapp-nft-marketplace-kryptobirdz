@@ -45,7 +45,8 @@ module.exports = {
 	},
 	// Adding optimizer for solidity coz its gonna simplify complicated expressions, it can reduce gas cost and a whole bunch of good stuff.
 	solidity: {
-		version: '0.8.9',
+		// version: '0.8.9', // from nft market course project
+		version: '0.8.16', // @latest
 		settings: {
 			optimizer: {
 				enabled: true,

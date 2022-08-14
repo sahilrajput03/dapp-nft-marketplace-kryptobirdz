@@ -82,6 +82,8 @@ We are gonna use these contracts for minting token and grabbing TOKEN_URI, setti
 
 ## Useful resources
 
+- Docs: https://docs.soliditylang.org/
+- SOLIDITY BY Example: https://solidity-by-example.org/function/
 - Infure Dashboard - [Click here](https://infura.io/dashboard)
 - Upgrading Contracts in Solidity - [Click here](https://docs.openzeppelin.com/learn/upgrading-smart-contracts)
 - Solana vs. Ethereum(solidity) 1 - [Click here](https://pixelplex.io/blog/solana-vs-ethereum/)
@@ -89,6 +91,7 @@ We are gonna use these contracts for minting token and grabbing TOKEN_URI, setti
 
 **Courses:**
 
+- (HINDI) - https://www.youtube.com/playlist?list=PLgPmWS2dQHW9u6IXZq5t5GMQTpW7JL33i
 - (TODO) UDEMY COURSE: Become a Blockchain Developer: Ethereum + Solidity + Project
 - (TODO) YOUTUBE COURSE: Blockchain Ecommerce App Tutorial (Accept ERC20 Token Payments): https://www.youtube.com/watch?v=f5npM1PvoyE , [Github - unofficial's person code](https://github.com/michael-steinert/SolidityWeb3ECommerceExpressMongooseMongoDBReact)
 - (TODO) ~AMAZING~ Youtube Playlist (~Polygon): BUIDL IT - Workshop #1 - Intro to Web3 Tech Stack: https://www.youtube.com/watch?v=S8hZ5rDV7kg
@@ -212,9 +215,11 @@ Promising for 10 coins in 30mins(7:40pm): https://faucet.egorfine.com/
 
 ![](./ss/ss-learn-remix-ide.png)
 
-- `hadhat node` accounts are same everytime and for all the users everywhere WHEREAS truffle's accounts might change during development (truffle sucks in this sense):
+- `hadhat node` accounts are same everytime (in node and as well as testing {see 2nd screenshot below to understand}) and for all the users everywhere WHEREAS truffle's accounts might change during development (truffle sucks in this sense):
 
 ![](./ss/ss-hardhat-accounts-are-same-everytime-and-for-all-users.png)
+
+![](./ss/ss-all-accounts-in-testing.png)
 
 - Type of blockchain developers: ![](./ss/ss-types-of-blockchain-developers.png)
 
@@ -334,3 +339,25 @@ SOLIDITY Hardhat Typescript Template: https://github.com/xanderdeseyn/solidity-h
 https://youtu.be/Si3nmjyQXds
 
 more?
+
+## temp
+
+![](./ss/ss-how-functions.png)
+![](./ss/ss-require-assert-and-revert.png)
+![](./ss/ss-view-vs-pure-functions.png)
+
+- [Docs - Transaction Response - Etherjs](https://docs.ethers.io/v5/single-page/#/v5/api/providers/types/-%23-providers-TransactionResponse) -
+
+![](./ss/ss-tx-receipt.png)
+
+- Harhat testing
+
+![](./ss/ss-hardhat-testing.png)
+
+- Source Stackoverflow answer: [Click here](https://ethereum.stackexchange.com/a/19391) **_(PLEASE SEE THE UPDATE OF THIS ANSWER AS PER LATEST STANDARDS BELOW THIS IMAGE)_**
+
+![](./ss/ss-public-external-internal-and-private-functions.png)
+
+**UPDATED ANSWER COZ ( ABOVE IS EXPIRES NOW):**
+
+![](./ss/ss-update-for-public-external-answer.png)

@@ -20,6 +20,7 @@ describe('Lock', function () {
 		const [owner, otherAccount] = await ethers.getSigners()
 
 		const Lock = await ethers.getContractFactory('Lock')
+		//! ~Sahil: unlockTime is parameter for the constructor and {value} is the msg object
 		const lock = await Lock.deploy(unlockTime, {value: lockedAmount})
 
 		return {lock, unlockTime, lockedAmount, owner, otherAccount}

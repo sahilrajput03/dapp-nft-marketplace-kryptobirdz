@@ -91,6 +91,8 @@ import &quot;../../utils/introspection/ERC165.sol&quot;;</code></pre>
 TOKEN_URI, setting up our IPFS.</p>
 <h2 id="useful-resources">Useful resources</h2>
 <ul>
+<li>Docs: https://docs.soliditylang.org/</li>
+<li>SOLIDITY BY Example: https://solidity-by-example.org/function/</li>
 <li>Infure Dashboard - <a href="https://infura.io/dashboard">Click
 here</a></li>
 <li>Upgrading Contracts in Solidity - <a
@@ -101,7 +103,22 @@ href="https://pixelplex.io/blog/solana-vs-ethereum/">Click here</a></li>
 <li>Solana vs. Ethereum(solidity) 2 - <a
 href="https://www.reddit.com/r/solana/comments/oes1gd/should_i_learn_solana_rust_or_ethereum_solidity/">Click
 here</a></li>
-<li>Dapp course on gdrive - <a
+</ul>
+<p><strong>Courses:</strong></p>
+<ul>
+<li>(HINDI) -
+https://www.youtube.com/playlist?list=PLgPmWS2dQHW9u6IXZq5t5GMQTpW7JL33i</li>
+<li>(TODO) UDEMY COURSE: Become a Blockchain Developer: Ethereum +
+Solidity + Project</li>
+<li>(TODO) YOUTUBE COURSE: Blockchain Ecommerce App Tutorial (Accept
+ERC20 Token Payments): https://www.youtube.com/watch?v=f5npM1PvoyE , <a
+href="https://github.com/michael-steinert/SolidityWeb3ECommerceExpressMongooseMongoDBReact">Github
+- unofficial’s person code</a></li>
+<li>(TODO) <sub>AMAZING</sub> Youtube Playlist (~Polygon): BUIDL IT -
+Workshop #1 - Intro to Web3 Tech Stack:
+https://www.youtube.com/watch?v=S8hZ5rDV7kg</li>
+<li>UDEMY COURSE: Dapp course on gdrive - Build An NFT Marketplace From
+Scratch - Blockchain DApp: <a
 href="https://drive.google.com/drive/folders/1o7eExDuepyTlyMUeospr1epx-xF9ELM9">Click
 here</a></li>
 <li>Deployement Cost to Ethereum and other blockchains: <a
@@ -234,9 +251,53 @@ href="https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-me
 </ul>
 <p><img src="./ss/ss-bitcoin-price-inc-analysis.png" /></p>
 <ul>
-<li>Learn remix ide:</li>
+<li>Learn remix ide: FYI: I used locally run hardhat blockchain instead
+of mumbai-testnet bcoz mumbai-testnet was resolving single request in
+5-15mins for me.</li>
 </ul>
 <p><img src="./ss/ss-learn-remix-ide.png" /></p>
+<ul>
+<li><code>hadhat node</code> accounts are same everytime (in node and as
+well as testing {see 2nd screenshot below to understand}) and for all
+the users everywhere WHEREAS truffle’s accounts might change during
+development (truffle sucks in this sense):</li>
+</ul>
+<p><img
+src="./ss/ss-hardhat-accounts-are-same-everytime-and-for-all-users.png" /></p>
+<p><img src="./ss/ss-all-accounts-in-testing.png" /></p>
+<ul>
+<li>Type of blockchain developers: <img
+src="./ss/ss-types-of-blockchain-developers.png" /></li>
+</ul>
+<h2 id="hardhat-vs.-truffle">hardhat vs. truffle:</h2>
+<p>Source: https://youtu.be/tfQFk6pmtFc</p>
+<p>Source: https://youtu.be/Si3nmjyQXds</p>
+<p>Source: https://www.youtube.com/watch?v=eR_9XSfF9p8</p>
+<p>What are hardhat and truffle? Ans. They are frameworks for developing
+dapps of javascript.</p>
+<p>Why frameworks? Ans. Because provide out of the box facilities to
+write tests and one command deployment features.</p>
+<p>Hardhat and Truffle do the same thing i.e, speed up the development
+process for blockchain applicationgs and smart contracts in
+particular.</p>
+<p>In truffle: <code>web3js</code> is default but if you wanna configure
+to use <code>etherjs</code> then its a tricky thing to do.</p>
+<p>Truffle is a opinionated framework.</p>
+<p>In truffle when you deploy contracts to blockchain you need to make
+migration files to do that and that works in a particular way and they
+have particular syntax on doing that. For e.g.,
+https://github.com/dappuniversity/eth_swap/blob/master/migrations/2_deploy_contracts.js</p>
+<p>Default way to use truffle essentially is to use their external
+blockchain known as ganashe. Ganashe can be accessed via cli:
+<code>ganashe-cli</code> whereas hardhat has
+<code>hardhat node</code></p>
+<p>Using truffle/hardhat nodes for real blockchain development of their
+implementations: https://youtu.be/tfQFk6pmtFc?t=711</p>
+<h2 id="hardhat-commands">hardhat commands</h2>
+<pre><code># Compile contracts and it creates two folder i.e., cache and artifacts which have corresponding .json (has abi: used to interact with the smart contract and the bytecode which is used to deploy smart conract) compiled file.
+npx hardhat compile</code></pre>
+<h2 id="uint256">uint256?</h2>
+<p>https://medium.com/hara-engineering/how-long-will-uint256-last-47f9796e171e</p>
 <h2 id="now-8-august-2022">now?? 8 August, 2022</h2>
 <p><strong>TODO NOW:</strong></p>
 <ul>
@@ -250,6 +311,8 @@ Mainnet): https://youtu.be/Uvphp4aVeDg</li>
 <li>youtube search:
 https://www.youtube.com/results?search_query=deployment+to+mumbainet&amp;sp=CAASAhAB</li>
 <li>google search: do if required..</li>
+<li>read article:
+https://blog.polymath.network/solidity-tips-and-tricks-to-save-gas-and-reduce-bytecode-size-c44580b218e6</li>
 </ul></li>
 </ul>
 <p><strong>Explore:</strong></p>
@@ -271,8 +334,70 @@ https://www.moneycontrol.com/news/business/startup/from-diamond-factory-workers-
 </ul>
 <p><strong>Video content</strong></p>
 <ul>
-<li>Amazing Youtube playlist by polygon for learning new tech:
-https://www.youtube.com/watch?v=S8hZ5rDV7kg</li>
 <li>Polygon Tv CHANNEL: https://www.youtube.com/c/PolygonTV, src:
 https://polygon.technology/developers</li>
 </ul>
+<h2 id="installed-hardhat-watcher">Installed
+<code>hardhat-watcher</code></h2>
+<p>Usage - Docs:
+https://github.com/xanderdeseyn/hardhat-watcher#usage</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> install hardhat-watcher</span></code></pre></div>
+<p>And addded below script to <code>package.json</code></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="pp">require</span>(<span class="st">&#39;@nomiclabs/hardhat-waffle&#39;</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">// Also add below to default export config object:</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">// ...,</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">watcher</span><span class="op">:</span> {</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&#39;learn-contracts&#39;</span><span class="op">:</span> {</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">tasks</span><span class="op">:</span> [<span class="st">&#39;test&#39;</span>]<span class="op">,</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">files</span><span class="op">:</span> [<span class="st">&#39;./contracts&#39;</span><span class="op">,</span> <span class="st">&#39;./test&#39;</span>]<span class="op">,</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>}<span class="op">,</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>and create a script in <code>package.json</code> like:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="er">&quot;test-watch-learn-contracts&quot;:</span> <span class="er">&quot;hardhat</span> <span class="er">watch</span> <span class="er">learn-contracts&quot;,</span></span></code></pre></div>
+<p>so we can use <code>npm run test-watch-learn-contracts</code> to run
+tests in watch mode.</p>
+<h3 id="temporary-truffle-urls">temporary truffle urls</h3>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">yarn</span> develop truffle</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># from youtube&#39;s course of ecommerceWeb3</span></span></code></pre></div>
+<p>Writing Test in Solidity:
+https://trufflesuite.com/docs/truffle/testing/writing-tests-in-solidity/</p>
+<p>Writing Test in JS:
+https://trufflesuite.com/docs/truffle/testing/writing-tests-in-javascript/</p>
+<p>Debugger:
+https://trufflesuite.com/docs/truffle/getting-started/using-the-truffle-debugger/</p>
+<p>SOLIDITY Hardhat Typescript Template:
+https://github.com/xanderdeseyn/solidity-hardhat-template</p>
+<h2 id="web3js15.8k-and-ethersjs5.4k">web3js(15.8k<em>) and
+ethersjs(5.4k</em>)</h2>
+<p>https://youtu.be/Si3nmjyQXds</p>
+<p>more?</p>
+<h2 id="temp">temp</h2>
+<p><img src="./ss/ss-how-functions.png" /> <img
+src="./ss/ss-require-assert-and-revert.png" /> <img
+src="./ss/ss-view-vs-pure-functions.png" /></p>
+<ul>
+<li><a
+href="https://docs.ethers.io/v5/single-page/#/v5/api/providers/types/-%23-providers-TransactionResponse">Docs
+- Transaction Response - Etherjs</a> -</li>
+</ul>
+<p><img src="./ss/ss-tx-receipt.png" /></p>
+<ul>
+<li>Harhat testing</li>
+</ul>
+<p><img src="./ss/ss-hardhat-testing.png" /></p>
+<ul>
+<li>Source Stackoverflow answer: <a
+href="https://ethereum.stackexchange.com/a/19391">Click here</a>
+<strong><em>(PLEASE SEE THE UPDATE OF THIS ANSWER AS PER LATEST
+STANDARDS BELOW THIS IMAGE)</em></strong></li>
+</ul>
+<p><img
+src="./ss/ss-public-external-internal-and-private-functions.png" /></p>
+<p><strong>UPDATED ANSWER COZ ( ABOVE IS EXPIRES NOW):</strong></p>
+<p><img src="./ss/ss-update-for-public-external-answer.png" /></p>

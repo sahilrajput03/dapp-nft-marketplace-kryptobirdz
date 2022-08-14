@@ -9,6 +9,7 @@ contract Contract1{
     string public myString; // non-initialized string has '' value ~Sahil
     // address type is used to send funds and for sending account balances
     // an address is of 20 bytes size
+    // ! ~Sahil: All addresses have balance proerty initialized to 0
     address public defAddress; // defalt value is zeroAddress i.e., '0x0000000000000000000000000000000000000000'
     address public myAdd;
     mapping (uint => address) public myMap;
