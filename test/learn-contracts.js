@@ -1,6 +1,6 @@
 const {expect} = require('chai')
 const {BigNumber} = require('ethers')
-const {ethers} = require('hardhat')
+const {ethers, network} = require('hardhat')
 // const {ethers} = require('ethers') // from your own
 // Article Writing Test for Contract: https://dev.to/jacobedawson/import-test-a-popular-nft-smart-contract-with-hardhat-ethers-12i5
 // Gtihub: https://github.com/jacobedawson/import-test-contracts-hardhat
@@ -11,10 +11,18 @@ const {ethers} = require('hardhat')
 // Introduction to Simple Smart Contract: https://docs.soliditylang.org/en/develop/introduction-to-smart-contracts.html?highlight=address(0)#index-8
 // zero address: https://stackoverflow.com/questions/48219716/what-is-address0-in-solidity#:~:text=Note%3A%20There%20is%20also%20the,is%20set%20to%20'0x0'.&text=address(0)%20is%20also%20the,send%20'burned'%20tokens%20to.
 const zeroAddress = '0x0000000000000000000000000000000000000000'
-const myAddress = '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'
+const FirstAccAddr = '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'
 
 describe('Contract1 Tests', function () {
 	it('first contract', async function () {
+		// Reset accounts in hardhat node // https://ethereum.stackexchange.com/a/112437/106687
+		await network.provider.send('hardhat_reset')
+
+		const [firstAcc] = await ethers.getSigners()
+		const firstAccBal = await firstAcc.getBalance()
+		const DEFAULT_BALANCE = BigNumber.from(10_000_000_000_000_000_000_000n) // ~Sahil: Learn to use big int in js: https://github.com/sahilrajput03#limitation-of-javascript-amazing-bigint-type
+		expect(firstAccBal.eq(DEFAULT_BALANCE)).eq(true)
+
 		const Contract1 = await ethers.getContractFactory('Contract1')
 		const contract1 = await Contract1.deploy()
 		await contract1.deployed()
@@ -49,7 +57,7 @@ describe('Contract1 Tests', function () {
 
 		const address = await contract1.myAdd()
 		expect(typeof address).to.equal('string')
-		expect(address).to.equal(myAddress)
+		expect(address).to.equal(FirstAccAddr)
 		const defBalance = await contract1.getDefBalance()
 		// console.log({defBalance})
 		const expectedKeys = ['_hex', '_isBigNumber']
@@ -72,12 +80,12 @@ describe('Contract1 Tests', function () {
 
 		expect(await contract1.myMap(0)).equal(zeroAddress)
 		await contract1.initMyMap() // initialize key 0 value as myAddress in the contract
-		expect(await contract1.myMap(0)).equal(myAddress)
+		expect(await contract1.myMap(0)).equal(FirstAccAddr)
 		expect(await contract1.myMap(3)).equal(zeroAddress) // bcoz key 3 is not initialized
 
 		// init user with respective address; setting value in `myMap` in contract
-		await contract1.initUser(17, myAddress)
-		expect(await contract1.myMap(17)).equal(myAddress)
+		await contract1.initUser(17, FirstAccAddr)
+		expect(await contract1.myMap(17)).equal(FirstAccAddr)
 	})
 })
 
@@ -100,7 +108,7 @@ describe('Contract2 Tests', function () {
 
 		await contract2.change()
 		const newFund = await contract2.fund()
-		expect(newFund.addr).to.equal(myAddress)
+		expect(newFund.addr).to.equal(FirstAccAddr)
 		expect(newFund.amt).to.equal(25)
 
 		// LEARN ARRAYS
@@ -206,6 +214,7 @@ describe('Contract2 Tests', function () {
 	it('deafult accounts in hardhat test environment', async () => {
 		const DEFAULT_ACCOUNTS = ['0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266', '0x70997970C51812dc3A010C7d01b50e0d17dc79C8', '0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC', '0x90F79bf6EB2c4f870365E785982E1f101E93b906', '0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65', '0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc', '0x976EA74026E726554dB657fA54763abd0C3a0aa9', '0x14dC79964da2C08b23698B3D3cc7Ca32193d9955', '0x23618e81E3f5cdF7f54C3d65f7FBc0aBf5B21E8f', '0xa0Ee7A142d267C1f36714E4a8F75612F20a79720', '0xBcd4042DE499D14e55001CcbB24a551F3b954096', '0x71bE63f3384f5fb98995898A86B02Fb2426c5788', '0xFABB0ac9d68B0B445fB7357272Ff202C5651694a', '0x1CBd3b2770909D4e10f157cABC84C7264073C9Ec', '0xdF3e18d64BC6A983f673Ab319CCaE4f1a57C7097', '0xcd3B766CCDd6AE721141F452C550Ca635964ce71', '0x2546BcD3c84621e976D8185a91A922aE77ECEc30', '0xbDA5747bFD65F08deb54cb465eB87D40e51B197E', '0xdD2FD4581271e230360230F9337D5c0430Bf44C0', '0x8626f6940E2eb28930eFb4CeF49B2d1F2C9C1199']
 
+		// https://docs.ethers.io/v5/api/signer/
 		const allSigners = await ethers.getSigners()
 		const allSignersAddressList = allSigners.map((s) => s.address)
 		expect(allSignersAddressList).to.have.same.members(DEFAULT_ACCOUNTS)
@@ -275,7 +284,7 @@ describe('Contract 3 Tests', function () {
 		const initialBal = await firstAcc.getBalance()
 		const tx2 = await contract3.withdraw(firstAcc.address, amount)
 		const rc2 = await tx2.wait()
-		const gasCostForTxn = rc2.gasUsed.mul(rc2.effectiveGasPrice)
+		const gasCostForTxn = rc2.gasUsed.mul(rc2.effectiveGasPrice) // My own answer at stackexchange: https://ethereum.stackexchange.com/a/133587/106687
 		const expectedProfit = BigNumber.from(amount).sub(gasCostForTxn)
 		const finalBal = await firstAcc.getBalance()
 		const profit = finalBal.sub(initialBal) // MATH.OPERATIONS ON BIGNUMBER: https://docs.ethers.io/v5/api/utils/bignumber/#BigNumber--BigNumber--methods--math-operations
