@@ -238,11 +238,13 @@ describe('Contract2 Tests', function () {
 		const tx = await contract2.simpleFunction()
 		// console.log({tx})
 		expect(typeof tx).equal('object')
-		const expectedKeys = ['hash', 'type', 'accessList', 'blockHash', 'blockNumber', 'transactionIndex', 'confirmations', 'from', 'gasPrice', 'maxPriorityFeePerGas', 'maxFeePerGas', 'gasLimit', 'to', 'value', 'nonce', 'data', 'r', 's', 'v', 'creates', 'chainId', 'wait']
+		const expectedKeysTx = ['hash', 'type', 'accessList', 'blockHash', 'blockNumber', 'transactionIndex', 'confirmations', 'from', 'gasPrice', 'maxPriorityFeePerGas', 'maxFeePerGas', 'gasLimit', 'to', 'value', 'nonce', 'data', 'r', 's', 'v', 'creates', 'chainId', 'wait']
 		// const {gasPrice, gasLimit, maxFeePerGas} = tx
 		// console.log({gasPrice, gasLimit, maxFeePerGas})
-
-		expect(Object.keys(tx)).to.have.same.members(expectedKeys)
+		expect(Object.keys(tx)).to.have.same.members(expectedKeysTx)
+		const rc = await tx.wait()
+		const expectedKeysRc = ['to', 'from', 'contractAddress', 'transactionIndex', 'gasUsed', 'logsBloom', 'blockHash', 'transactionHash', 'logs', 'blockNumber', 'confirmations', 'cumulativeGasUsed', 'effectiveGasPrice', 'status', 'type', 'byzantium', 'events']
+		expect(Object.keys(rc)).to.have.same.members(expectedKeysRc)
 
 		/* src: https://ethereum.stackexchange.com/a/88122
 		- The return-value of a non-constant (neither pure nor view) function is available only when the function is called on-chain (i.e., from this contract or from another contract).
@@ -267,7 +269,7 @@ describe('Contract2 Tests', function () {
 
 describe('Contract 3 Tests', function () {
 	it('simple amount transfer', async function () {
-		// Contracts are deployed using the first signer/account by default
+		// Contracts are deployed using the first signer/account by default ~Hardhat docs
 		const [firstAcc] = await ethers.getSigners()
 		const Contract3 = await ethers.getContractFactory('Contract3')
 		const ONE_GWEI = 10 ** 9
@@ -278,6 +280,7 @@ describe('Contract 3 Tests', function () {
 		// console.log(contract3.address) // Address of contract. It changes on every run of the test ~Sahil
 		expect(await contract3.balance()).equal(0) // initial value
 		// Adding money to contract address from thin air IMO ~Sahil (=> Passing msg.value to solidity function: https://ethereum.stackexchange.com/a/102760)
+		// msg.value: https://ethereum.stackexchange.com/a/43382
 		await contract3.getMoney({value: amount}) // tldr: last argument is considered as `msg` object ~Sahil
 		expect(await contract3.balance()).equal(amount) // balance is returned in gwei
 		// Add more money
@@ -299,6 +302,27 @@ describe('Contract 3 Tests', function () {
 		const profit = finalBal.sub(initialBal) // MATH.OPERATIONS ON BIGNUMBER: https://docs.ethers.io/v5/api/utils/bignumber/#BigNumber--BigNumber--methods--math-operations
 		// console.log({profit, expectedProfit})
 		expect(profit.eq(expectedProfit)).equal(true)
+	})
+})
+
+describe('contract 4', function () {
+	it('testing msg.value', async function () {
+		const Contract4 = await ethers.getContractFactory('Contract4')
+		const contract4 = await Contract4.deploy()
+		await contract4.deployed()
+
+		const tx1 = await contract4.getMsgDetails()
+		const rc = await tx1.wait()
+		const msgDetailsEvent = rc.events.find((e) => e.event === 'msgDetails')
+
+		const [msgSender, msgValueInWeiWithTheMessage, gasLeft] = msgDetailsEvent.args
+		// msg.sender is the address of the `firstAccAddr` from 20 demo accounts of the hardhat node.
+		expect(msgSender).equal(FirstAccAddr)
+		// msg.value (default value is 0)
+		expect(msgValueInWeiWithTheMessage).equal(0)
+		// gasleft()
+		// console.log(gasLeft) (static value is passed to test manually- can be flaky test in future ~Sahil)
+		expect(gasLeft.eq(BigNumber.from('29000110'))).equal(true)
 	})
 })
 

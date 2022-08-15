@@ -326,13 +326,13 @@ yarn develop truffle
 # from youtube's course of ecommerceWeb3
 ```
 
-Writing Test in Solidity: https://trufflesuite.com/docs/truffle/testing/writing-tests-in-solidity/
-
-Writing Test in JS: https://trufflesuite.com/docs/truffle/testing/writing-tests-in-javascript/
-
-Debugger: https://trufflesuite.com/docs/truffle/getting-started/using-the-truffle-debugger/
-
-SOLIDITY Hardhat Typescript Template: https://github.com/xanderdeseyn/solidity-hardhat-template
+- Writing Test in Solidity: https://trufflesuite.com/docs/truffle/testing/writing-tests-in-solidity/
+- Writing Test in JS: https://trufflesuite.com/docs/truffle/testing/writing-tests-in-javascript/
+- Debugger: https://trufflesuite.com/docs/truffle/getting-started/using-the-truffle-debugger/
+- SOLIDITY Hardhat Typescript Template: https://github.com/xanderdeseyn/solidity-hardhat-template
+- learn x in y mins - solidity: https://learnxinyminutes.com/docs/solidity/
+- hardhat runner docs: https://hardhat.org/hardhat-runner
+- hardhat networK: https://hardhat.org/hardhat-network
 
 ## web3js(15.8k*) and ethersjs(5.4k*)
 

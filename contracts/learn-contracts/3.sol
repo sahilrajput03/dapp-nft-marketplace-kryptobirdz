@@ -15,7 +15,3 @@ contract Contract3{
         to.transfer(amt); // `transfer` is a builtin function for address imo ~Sahil
     }
 }
-// maxFeePerGas: 1000000016 => 10 digit
-// gasPrice : 1000000008 => 10 digit
-// gasLimit: 29023000 => 8 digit
-// actualDiff : 33919000271360 => 14 digit
