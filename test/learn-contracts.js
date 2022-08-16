@@ -8,6 +8,8 @@ const {ethers, network} = require('hardhat')
 // Writing Test (Solidity): https://trufflesuite.com/docs/truffle/testing/writing-tests-in-solidity/
 // Ethers Api Docs: https://docs.ethers.io/v5/api/utils/bignumber/
 
+// All Chai Matchers: https://hardhat.org/hardhat-chai-matchers/docs/overview
+
 // Introduction to Simple Smart Contract: https://docs.soliditylang.org/en/develop/introduction-to-smart-contracts.html?highlight=address(0)#index-8
 // zero address: https://stackoverflow.com/questions/48219716/what-is-address0-in-solidity#:~:text=Note%3A%20There%20is%20also%20the,is%20set%20to%20'0x0'.&text=address(0)%20is%20also%20the,send%20'burned'%20tokens%20to.
 const zeroAddress = '0x0000000000000000000000000000000000000000'
