@@ -352,19 +352,6 @@ describe('contract 4', function () {
 		const expectedErrMessage = "give number's is smaller"
 		// Clean way
 		await expect(contract4.isTwoDigitNumber({value: 6})).to.be.revertedWith(expectedErrMessage)
-		// Dirty Way - Using try and catch
-		let e1 = {}
-		try {
-			const tx2 = await contract4.isTwoDigitNumber({value: 6})
-		} catch (e) {
-			const {name, message} = e
-			e1.name = name
-			e1.message = message.slice(message.indexOf("'") + 1, -1)
-			e1.bareMessage = message
-		}
-		expect(e1.name).equal('Error')
-		expect(e1.message).equal(expectedErrMessage)
-		expect(e1.bareMessage.startsWith(requireErrorMessagePrefix)).equal(true)
 	})
 
 	it('block.timestamp', async () => {
