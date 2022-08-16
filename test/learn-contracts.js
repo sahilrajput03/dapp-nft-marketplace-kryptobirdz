@@ -323,6 +323,8 @@ describe('Contract 3 Tests', function () {
 	})
 })
 
+const requireErrorMessagePrefix = 'VM Exception while processing transaction: reverted with reason string '
+
 describe('contract 4', function () {
 	it('testing msg.value', async function () {
 		const Contract4 = await ethers.getContractFactory('Contract4')
@@ -348,17 +350,19 @@ describe('contract 4', function () {
 		const expectedErrMessage = "give number's is smaller"
 		// Clean way
 		await expect(contract4.isTwoDigitNumber({value: 6})).to.be.revertedWith(expectedErrMessage)
-		// Dirty Way ~Sahil
-		let errror = {}
+		// Dirty Way - Using try and catch
+		let e1 = {}
 		try {
 			const tx2 = await contract4.isTwoDigitNumber({value: 6})
 		} catch (e) {
 			const {name, message} = e
-			errror.name = name
-			errror.message = message.slice(message.indexOf("'") + 1, -1)
+			e1.name = name
+			e1.message = message.slice(message.indexOf("'") + 1, -1)
+			e1.bareMessage = message
 		}
-		expect(errror.name).equal('Error')
-		expect(errror.message).equal(expectedErrMessage)
+		expect(e1.name).equal('Error')
+		expect(e1.message).equal(expectedErrMessage)
+		expect(e1.bareMessage.startsWith(requireErrorMessagePrefix)).equal(true)
 	})
 
 	it('block.timestamp', async () => {
@@ -377,22 +381,48 @@ describe('contract 4', function () {
 
 describe('contract 5', function () {
 	it('revert, assert and require', async function () {
+		// Choosing between `require` and `assert`
 		const Contract5 = await ethers.getContractFactory('Contract5')
 		const contract5 = await Contract5.deploy()
 		await contract5.deployed()
 
 		const [_, secondSigner] = await ethers.getSigners()
 
-		// revert
+		// REVERT
 		const expectedErrMessage = 'Not owner'
 		// calling transaction from other than owner account (i.e., 1st account) of the default accounts: https://github.com/ethers-io/ethers.js/issues/1449#issuecomment-817198604
 		await expect(contract5.connect(secondSigner).getMoney({value: 6})).to.be.revertedWith(expectedErrMessage)
 
-		//TODO: assert??
-		// const aa = await contract5.withdraw(333)
-		// console.log();
+		// ASSERT
+		// LEARN: chai matchers have no direct way of testing solidity assert errors: https://hardhat.org/hardhat-chai-matchers/docs/overview
+		let e1
+		try {
+			const tx = await contract5.withdraw(333)
+		} catch (e) {
+			e1 = e
+		}
+		expect(e1.name).equal('Error')
+		expect(e1.message).equal('VM Exception while processing transaction: reverted with panic code 0x1 (Assertion error)')
 
-		//TODO: require??
+		// LEARN: Below test doesn't work to test with the assert so above way of testing is the only way. (as this test pass even when assert instruction is commented)
+		// await expect(contract5.withdraw(333)).to.be.revertedWith('')
+
+		// REQUIRE
+		const expectedErrMessage2 = 'xxx - U are not the owner'
+		await expect(contract5.connect(secondSigner).withdraw(1)).to.be.revertedWith(expectedErrMessage2)
+		// Dirty way - Using try and catch
+		const e2 = {}
+		try {
+			const tx = await contract5.connect(secondSigner).withdraw(1)
+		} catch (error) {
+			const {name, message} = error
+			e2.name = name
+			e2.message = message.slice(message.indexOf("'") + 1, -1)
+			e2.bareMessage = message
+		}
+		expect(e2.name).equal('Error')
+		expect(e2.message).equal(expectedErrMessage2)
+		expect(e2.bareMessage.startsWith(requireErrorMessagePrefix)).equal(true)
 	})
 })
 

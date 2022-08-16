@@ -10,7 +10,7 @@ contract Contract5{
         owner = msg.sender;
     }
     modifier onlyOwner(){
-        require(owner == msg.sender, "U are not the owner");
+        require(owner == msg.sender, "xxx - U are not the owner");
         _;
     }
     // Adding money to contract address from thin air IMO ~Sahil
