@@ -376,6 +376,10 @@ more?
 
   ![](./ss/ss-lottery.png)
 
+- What happens with selfdestruct function?
+
+![](./ss/ss-destructed-contract.png)
+
 ```txt
 decentralized exchange - one can buy and sell ethereum tokens in a decentralized way without any thirdparty.
 

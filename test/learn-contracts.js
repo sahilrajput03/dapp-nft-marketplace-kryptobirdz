@@ -383,6 +383,8 @@ describe('contract 4', function () {
 
 describe('contract 5', function () {
 	it('revert, assert and require', async function () {
+		// require(), assert(), revert() in SOLIDITY DOCS: https://docs.soliditylang.org/en/v0.8.9/control-structures.html#error-handling-assert-require-revert-and-exceptions
+
 		// Choosing between `require` and `assert`
 		const Contract5 = await ethers.getContractFactory('Contract5')
 		const contract5 = await Contract5.deploy()
@@ -425,6 +427,12 @@ describe('contract 5', function () {
 		expect(e2.name).equal('Error')
 		expect(e2.message).equal(expectedErrMessage2)
 		expect(e2.bareMessage.startsWith(requireErrorMessagePrefix)).equal(true)
+
+		// waht does {uint public targetAmount = 7 ether} in solidity means
+		const Amount = await contract5.targetAmount()
+		expect(Amount).equal(ethers.utils.parseEther('7'))
+		const sevenEthersInWei = BigNumber.from('7000000000000000000')
+		expect(Amount.eq(sevenEthersInWei)).equal(true)
 	})
 })
 
