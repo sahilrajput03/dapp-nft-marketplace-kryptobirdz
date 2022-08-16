@@ -63,6 +63,12 @@ module.exports = {
 			tasks: [{command: 'test', params: {testFiles: ['./test/learn-contracts.js']}}],
 			files: ['./contracts', './test/learn-contracts.js'],
 		},
+		lock: {
+			start: 'tmux clear-history -t $(tmux display -pt "${TMUX_PANE:?}" "#{pane_index}")', // https://github.com/sahilrajput03/flash-runner-npm/blob/main/startTesting.js#L86
+			clearOnStart: true,
+			tasks: [{command: 'test', params: {testFiles: ['./test/Lock.js']}}],
+			files: ['./contracts', './test/Lock.js'],
+		},
 	},
 }
 

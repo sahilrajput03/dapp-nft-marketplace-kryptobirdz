@@ -55,13 +55,13 @@ describe('Lock', function () {
 
 	describe('Withdrawals', function () {
 		describe('Validations', function () {
-			it('Should revert with the right error if called too soon', async function () {
+			it('1. Should revert with the right error if called too soon', async function () {
 				const {lock} = await loadFixture(deployOneYearLockFixture)
 
 				await expect(lock.withdraw()).to.be.revertedWith("You can't withdraw yet")
 			})
 
-			it('Should revert with the right error if called from another account', async function () {
+			it('2. Should revert with the right error if called from another account', async function () {
 				const {lock, unlockTime, otherAccount} = await loadFixture(deployOneYearLockFixture)
 
 				// We can increase the time in Hardhat Network
@@ -71,7 +71,7 @@ describe('Lock', function () {
 				await expect(lock.connect(otherAccount).withdraw()).to.be.revertedWith("You aren't the owner")
 			})
 
-			it("Shouldn't fail if the unlockTime has arrived and the owner calls it", async function () {
+			it("3. Shouldn't fail if the unlockTime has arrived and the owner calls it", async function () {
 				const {lock, unlockTime} = await loadFixture(deployOneYearLockFixture)
 
 				// Transactions are sent using the first signer by default

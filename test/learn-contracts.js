@@ -218,6 +218,10 @@ describe('Contract2 Tests', function () {
 		const yourEvent = receipt.events.find((event) => event.event === 'yourEvent')
 		const [buzz] = yourEvent.args
 		expect(buzz).equal('bacardi')
+
+		// Testing event in a better way (INTUTIVE WAY)
+		await expect(contract2.learnEvent(7)).to.emit(contract2, 'myEvent').withArgs(7, 8, 9)
+		await expect(contract2.learnEvent(7)).to.emit(contract2, 'yourEvent').withArgs('bacardi')
 	})
 
 	it('deafult accounts in hardhat test environment', async () => {
@@ -232,7 +236,17 @@ describe('Contract2 Tests', function () {
 	it('non-view and non-pure functions return transaction data', async () => {
 		const Contract2 = await ethers.getContractFactory('Contract2')
 		const contract2 = await Contract2.deploy()
-		await contract2.deployed()
+		// Wait until the transaction is mined (i.e. contract is deployed) : <<<ETHERJS DOCS
+		//  - returns the receipt
+		//  - throws on failure (the reciept is on the error)
+		const rc1 = await contract2.deployTransaction.wait()
+		expect(rc1.to).equal(null) // null bcoz its the contract init transaction
+		expect(rc1.from).equal(FirstAccAddr)
+
+		const tx1 = await contract2.deployed()
+		const rc2 = await tx1.deployTransaction.wait()
+		expect(rc2.to).equal(null) // null bcoz its the contract init transaction
+		expect(rc1.from).equal(FirstAccAddr)
 
 		// All functions return tx (transaction) data (*non view and *non pure functions)
 		const tx = await contract2.simpleFunction()
@@ -275,6 +289,10 @@ describe('Contract 3 Tests', function () {
 		const ONE_GWEI = 10 ** 9
 		const amount = 2 * ONE_GWEI
 
+		// Ether String and wei: https://docs.ethers.io/v4/api-utils.html#ether-strings-and-wei
+		const oneEtherInWei = ethers.utils.parseEther('1') // 1 eth = 10**18 wei
+		expect(oneEtherInWei.eq(BigNumber.from('1000000000000000000')))
+
 		const contract3 = await Contract3.deploy() //! last argument will pbe msg object ~Sahil (check Lock.js file)
 		await contract3.deployed()
 		// console.log(contract3.address) // Address of contract. It changes on every run of the test ~Sahil
@@ -315,14 +333,66 @@ describe('contract 4', function () {
 		const rc = await tx1.wait()
 		const msgDetailsEvent = rc.events.find((e) => e.event === 'msgDetails')
 
-		const [msgSender, msgValueInWeiWithTheMessage, gasLeft] = msgDetailsEvent.args
-		// msg.sender is the address of the `firstAccAddr` from 20 demo accounts of the hardhat node.
+		const [msgSender, msgValueInWeiWithTheMessage, amount, gasLeft] = msgDetailsEvent.args
+		// msg.sender in contracts is the address of the `firstAccAddr` from 20 demo accounts of the hardhat node.
 		expect(msgSender).equal(FirstAccAddr)
-		// msg.value (default value is 0)
+		// msg.value in contracts (default value is 0)
 		expect(msgValueInWeiWithTheMessage).equal(0)
-		// gasleft()
-		// console.log(gasLeft) (static value is passed to test manually- can be flaky test in future ~Sahil)
-		expect(gasLeft.eq(BigNumber.from('29000110'))).equal(true)
+		// address(this).balance: balance of contract - IMO~Sahil
+		expect(amount).equal('0')
+		// gasleft() in contracts
+		// console.log(gasLeft) // (static value is passed to test manually- can be flaky test in future ~Sahil)
+		expect(gasLeft._isBigNumber).equal(true)
+
+		// require() in solidity
+		const expectedErrMessage = "give number's is smaller"
+		// Clean way
+		await expect(contract4.isTwoDigitNumber({value: 6})).to.be.revertedWith(expectedErrMessage)
+		// Dirty Way ~Sahil
+		let errror = {}
+		try {
+			const tx2 = await contract4.isTwoDigitNumber({value: 6})
+		} catch (e) {
+			const {name, message} = e
+			errror.name = name
+			errror.message = message.slice(message.indexOf("'") + 1, -1)
+		}
+		expect(errror.name).equal('Error')
+		expect(errror.message).equal(expectedErrMessage)
+	})
+
+	it('block.timestamp', async () => {
+		const Contract4 = await ethers.getContractFactory('Contract4')
+		const contract4 = await Contract4.deploy()
+		await contract4.deployed()
+
+		const ts1 = await contract4.getSomeTimeStamp()
+		await contract4.isTwoDigitNumber({value: 50})
+		const ts2 = await contract4.getSomeTimeStamp()
+
+		//! This can be flaky test ~Sahil
+		expect(ts1).not.equal(ts2)
+	})
+})
+
+describe('contract 5', function () {
+	it('revert, assert and require', async function () {
+		const Contract5 = await ethers.getContractFactory('Contract5')
+		const contract5 = await Contract5.deploy()
+		await contract5.deployed()
+
+		const [_, secondSigner] = await ethers.getSigners()
+
+		// revert
+		const expectedErrMessage = 'Not owner'
+		// calling transaction from other than owner account (i.e., 1st account) of the default accounts: https://github.com/ethers-io/ethers.js/issues/1449#issuecomment-817198604
+		await expect(contract5.connect(secondSigner).getMoney({value: 6})).to.be.revertedWith(expectedErrMessage)
+
+		//TODO: assert??
+		// const aa = await contract5.withdraw(333)
+		// console.log();
+
+		//TODO: require??
 	})
 })
 

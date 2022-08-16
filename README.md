@@ -26,6 +26,7 @@ npm install ethers hardhat @nomiclabs/hardhat-waffle ethereum-waffle chai @nomic
 **Linked Course:**
 
 - Complete nft development course - To help you create `ERC721 token` from scratch we learn the tokenomics and the functionality. **FYI: In real world we're not gonna be building from scratch every single nft.** But to solidify the the knowledge its good to learn how its done from scratch.
+- Become a Blockchain Developer: Ethereum + Solidity + Project @UDEMY
 
 **TRACK**
 
@@ -109,6 +110,10 @@ We are gonna use these contracts for minting token and grabbing TOKEN_URI, setti
 - [Build and Deploy a blockchain network for FREE: IBM Blockchain Tutorial #2](https://www.youtube.com/watch?v=mkVUW1KroTI)
 - IMP: https://vimeo.com/34017777
 - FIGMA COURSE: https://www.udemy.com/course/mastering-figma-beginner-to-expert/learn/lecture/20734372?start=30#overview
+- What is payable in solidity - google search - [Click here](https://www.google.com/search?q=payable+in+solidity&oq=payable+in+solidity&aqs=chrome.0.0i512j0i22i30l4j0i390l4.3586j0j1&sourceid=chrome&ie=UTF-8)
+- solidity-by-example.org/payable: https://solidity-by-example.org/payable/
+- 30 Video Playlist by EatTheBlocks: https://www.youtube.com/playlist?list=PLbbtODcOYIoERW44kh3LbUn24eZnHvS1-
+- Paid Courses by EatTheBlocks: https://pro.eattheblocks.com/
 
 ## Enabling test network in metamask
 
@@ -249,7 +254,7 @@ Using truffle/hardhat nodes for real blockchain development of their implementat
 
 ## hardhat commands
 
-```
+```bash
 # Compile contracts and it creates two folder i.e., cache and artifacts which have corresponding .json (has abi: used to interact with the smart contract and the bytecode which is used to deploy smart conract) compiled file.
 npx hardhat compile
 ```
@@ -262,7 +267,6 @@ https://medium.com/hara-engineering/how-long-will-uint256-last-47f9796e171e
 
 **TODO NOW:**
 
-- Use polygon.technology with mobile internet till connect fixes the GOVT BLOCKED ISSUE.
 - Deploy a solidity smartcontract on polygon testnet: https://youtu.be/c80AHFOo63M?t=412
   - (COPY^^):Hardhat - Deploying Smart Contract to Ethereum (Testnet / Mainnet): https://youtu.be/Uvphp4aVeDg
   - youtube search: https://www.youtube.com/results?search_query=deployment+to+mumbainet&sp=CAASAhAB
@@ -329,6 +333,10 @@ yarn develop truffle
 - Writing Test in Solidity: https://trufflesuite.com/docs/truffle/testing/writing-tests-in-solidity/
 - Writing Test in JS: https://trufflesuite.com/docs/truffle/testing/writing-tests-in-javascript/
 - Debugger: https://trufflesuite.com/docs/truffle/getting-started/using-the-truffle-debugger/
+
+## more urls
+
+- 15 Aug: Amzing Youtube Channel for web3 - EatTheBlocks - Are You Still Using Block.Timestamp like this? - https://youtu.be/GLrz3Qyi4io
 - SOLIDITY Hardhat Typescript Template: https://github.com/xanderdeseyn/solidity-hardhat-template
 - learn x in y mins - solidity: https://learnxinyminutes.com/docs/solidity/
 - hardhat runner docs: https://hardhat.org/hardhat-runner
@@ -361,3 +369,14 @@ more?
 **UPDATED ANSWER COZ ( ABOVE IS EXPIRES NOW):**
 
 ![](./ss/ss-update-for-public-external-answer.png)
+
+- Learn to make [lottery contract](https://www.youtube.com/watch?v=GLrz3Qyi4io):
+
+  ![](./ss/ss-lottery.png)
+
+```txt
+decentralized exchange - one can buy and sell ethereum tokens in a decentralized way without any thirdparty.
+
+- what is uniswap?
+- COINBASE: Trading Platform: https://www.youtube.com/watch?v=64GhiDvem4o
+```

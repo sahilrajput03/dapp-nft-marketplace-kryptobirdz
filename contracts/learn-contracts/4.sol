@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.16;
 // You can get above spdx and pragma instructions via shorthands i.e., spdx and pragm
+import "hardhat/console.sol";
 
 contract Contract4{
-    event msgDetails(address msgSenderAddr, uint256 msgValueInWeiWithMessage, uint256 gasLeft);
+    event msgDetails(address msgSenderAddr, uint256 msgValueInWeiWithMessage, uint amount, uint256 gasLeft);
 
     // Adding money to contract address from thin air IMO ~Sahil
     function getMsgDetails()public payable {
@@ -13,6 +14,18 @@ contract Contract4{
         // msg.sender is the address of the `firstAccAddr` from 20 demo accounts of the hardhat node.
         // msg.value is zero by default
         // msg.gas: remaining gas deprecated in 0.4.21, please use gasleft() instead
-        emit msgDetails(msg.sender, msg.value, gasleft());
+        emit msgDetails(msg.sender, msg.value, address(this).balance, gasleft());
+
+        // console.log('Balance of contract:', address(this).balance);
+        // console.log('Timestamp of block', block.timestamp);
+    }
+
+    function isTwoDigitNumber() public payable {
+        // Throw err 'give number is smaller' when msg.value is *not* a two digit number
+        require(msg.value > 9 , "give number's is smaller");
+    }
+
+    function getSomeTimeStamp() public view returns(uint) {
+        return block.timestamp;
     }
 }

@@ -1,0 +1,30 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.16;
+// You can get above spdx and pragma instructions via shorthands i.e., spdx and pragm
+
+contract Contract5{
+    uint public balance; // initial value is 0
+    address public owner;
+
+    constructor(){
+        owner = msg.sender;
+    }
+    modifier onlyOwner(){
+        require(owner == msg.sender, "U are not the owner");
+        _;
+    }
+    // Adding money to contract address from thin air IMO ~Sahil
+    function getMoney()public payable{
+        if(msg.sender != owner){
+            revert("Not owner");
+        }
+        balance += msg.value;
+    }
+    // Transfer money from contract to given account ~Sahil
+    function withdraw(uint amt)public onlyOwner {
+        assert(amt  <= balance);
+
+        balance -= amt;
+        // to.transfer(amt); // `transfer` is a builtin function for address imo ~Sahil
+    }
+}

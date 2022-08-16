@@ -9,7 +9,7 @@ contract Contract3{
     function getMoney()public payable{
         balance += msg.value;
     }
-    // Transfer money from contract to give account ~Sahil
+    // Transfer money from contract to given account ~Sahil
     function withdraw(address payable to, uint amt)public {
         balance -= amt;
         to.transfer(amt); // `transfer` is a builtin function for address imo ~Sahil
