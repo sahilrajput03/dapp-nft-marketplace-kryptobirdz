@@ -1,21 +1,27 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.16;
-// You can get above spdx and pragma instructions via shorthands i.e., spdx and pragm
 
-// require(), assert(), revert() in solidity docs: https://docs.soliditylang.org/en/v0.8.9/control-structures.html#error-handling-assert-require-revert-and-exceptions
+// ! hardhat doesn't support import from http: 
+// 1. https://github.com/NomicFoundation/hardhat/issues/557
+// 2. https://github.com/NomicFoundation/hardhat/issues/649
+
+/*
+
+// import "./5_2_1.sol";
+// import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol"
+
 import "hardhat/console.sol";
 
-contract Contract5{
-    uint public balance; // initial value is 0
-    address public owner;
+// 
+// THIS IS A DEMO FOR USING INTERITANCE FOR BENEFIT OF REUSING CODE
+// => THIS FILE IS A DEMO FOR THE USAGE OF `import` with github file link.
+// 
 
-    constructor(){
-        owner = msg.sender;
-    }
-    modifier onlyOwner(){
-        require(owner == msg.sender, "xxx - U are not the owner");
-        _;
-    }
+
+// Note: We are inheriting `owned` contract in `Contract5_2`
+contract Contract5_3 is owned{
+    uint public balance; // initial value is 0
+
     // Adding money to contract address from thin air IMO ~Sahil
     function getMoney()public payable{
         if(msg.sender != owner){
@@ -39,3 +45,5 @@ contract Contract5{
     //     selfdestruct(address);
     // }
 }
+
+*/

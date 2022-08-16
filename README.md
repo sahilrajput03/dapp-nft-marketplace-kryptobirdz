@@ -380,6 +380,18 @@ more?
 
 ![](./ss/ss-destructed-contract.png)
 
+![](./ss/ss-curiosity-what-solidity-syntax.png)
+
+![](./ss/ss-what-is-payable-method.png)
+
+![](./ss/ss-inheritance.png)
+
+![](./ss/ss-importing-files-solidity.png)
+
+**Boilerplate contract:**
+
+- https://solidity-by-example.org/hacks/self-destruct/
+
 ```txt
 decentralized exchange - one can buy and sell ethereum tokens in a decentralized way without any thirdparty.
 

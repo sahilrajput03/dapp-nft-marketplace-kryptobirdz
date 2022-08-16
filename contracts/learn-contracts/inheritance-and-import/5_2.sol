@@ -1,21 +1,20 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.16;
-// You can get above spdx and pragma instructions via shorthands i.e., spdx and pragm
 
-// require(), assert(), revert() in solidity docs: https://docs.soliditylang.org/en/v0.8.9/control-structures.html#error-handling-assert-require-revert-and-exceptions
+// Importing all contracts and identifiers from the given file
+import "./5_2_1.sol";
+
 import "hardhat/console.sol";
 
-contract Contract5{
-    uint public balance; // initial value is 0
-    address public owner;
+// 
+// THIS IS A DEMO FOR USING INTERITANCE FOR BENEFIT OF REUSING CODE
+// => THIS FILE IS A DEMO FOR THE USAGE OF `import` for the purpose of code-splitting.
+// 
 
-    constructor(){
-        owner = msg.sender;
-    }
-    modifier onlyOwner(){
-        require(owner == msg.sender, "xxx - U are not the owner");
-        _;
-    }
+// Note: We are inheriting `owned` contract in `Contract5_2`
+contract Contract5_2 is owned{
+    uint public balance; // initial value is 0
+
     // Adding money to contract address from thin air IMO ~Sahil
     function getMoney()public payable{
         if(msg.sender != owner){
