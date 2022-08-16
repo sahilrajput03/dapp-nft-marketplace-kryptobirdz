@@ -1,5 +1,7 @@
 # NFT Marketplace - Kyptobirdz
 
+_Disclaimer: `p-key.txt` file related to `polygonAccount` account of metamask._
+
 Web3 Apps: Web3, in the context of technology, refers to decentralized apps that run on the blockchain. These are apps that allow anyone to participate without monetizing their personal data.
 
 ## start from `13. Hardhat & Infra Blockchain Configuration`
