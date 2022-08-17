@@ -1,4 +1,14 @@
-# NFT Marketplace - Kyptobirdz
+# Blockchain
+
+​Blockchain is a shared, immutable ledger that facilitates the process of recording transactions and tracking assets in a business network. An asset can be tangible (a house, car, cash, land) or intangible (intellectual property, patents, copyrights, branding). Virtually anything of value can be tracked and traded on a blockchain network, reducing risk and cutting costs for all involved.
+
+- Smart contracts ARCHIVE: https://github.com/sahilrajput03/My-Smart-Contracts
+
+## Swapnil's Event
+
+https://lu.ma/psoc-blockchain-workshop
+
+## NFT Marketplace - Kyptobirdz
 
 _Disclaimer: `p-key.txt` file related to `polygonAccount` account of metamask._
 
@@ -343,6 +353,10 @@ yarn develop truffle
 - learn x in y mins - solidity: https://learnxinyminutes.com/docs/solidity/
 - hardhat runner docs: https://hardhat.org/hardhat-runner
 - hardhat networK: https://hardhat.org/hardhat-network
+- All Courses from Swapnil Kole on UDEMY: https://www.udemy.com/user/swapnil-kole-2/
+- Swapnil Kole: Linkedin: https://www.linkedin.com/in/swapnil-kole-8a386819b/
+- Dapp univ (sponsored by EatTheBlocks): https://www.youtube.com/c/DappUniversity
+- FLASH LOANS PLAYLIST (Eat the blocks): https://www.youtube.com/playlist?list=PLbbtODcOYIoEMz-XatfkcFMsEwMmYShwk
 
 ## web3js(15.8k*) and ethersjs(5.4k*)
 
@@ -398,3 +412,57 @@ decentralized exchange - one can buy and sell ethereum tokens in a decentralized
 - what is uniswap?
 - COINBASE: Trading Platform: https://www.youtube.com/watch?v=64GhiDvem4o
 ```
+
+- Different blockchains in market right now:
+
+![](./ss/ss-available-blockchain.png)
+
+- Different blockchain libs download on npm:
+
+![](./ss/ss-develper-community.png)
+
+- Some top defi apps and their blockchain used:
+
+![](./ss/ss-some-ethereum-defi-apps.png)
+
+- Jobs with ethereum requirement in US only:
+
+![](./ss/ss-jobs-with-ethereum-requirement.png)
+
+- Ethereum, should I?
+
+![](./ss/ss-ethereum-stats.png)
+
+- dapps vs. apps:
+
+![](./ss/ss-dapps-vs-apps.png)
+
+- Set formatter for solidity as official hardhat vscode extension: its awesome!!!
+
+![](./ss/ss-set-formatter-for-solidity-as-official-hardhat-extension.png)
+
+- Simplified bitcoin blockchain:
+
+![](./ss/ss-blockchain-simplified.png)
+
+- What does transaction looks like:
+
+![](./ss/ss-what-does-transaction-looks-like.png)
+
+- Address looks like this:
+
+![](./ss/ss-address-looks-like.png)
+
+- security:
+
+![](./ss/ss-security.png)
+
+- gas optimization:
+
+![](./ss/ss-gas-optimization.png)
+
+- Deployment using infra:
+
+![](./ss/ss-deployment-using-infra.png)
+
+- watch todo: https://youtu.be/nYeVqMRK-yc
