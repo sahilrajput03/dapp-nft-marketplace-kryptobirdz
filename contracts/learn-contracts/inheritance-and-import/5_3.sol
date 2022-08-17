@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.16;
 
-// ! hardhat doesn't support import from http: 
+// ! hardhat doesn't support import from http:
 // 1. https://github.com/NomicFoundation/hardhat/issues/557
 // 2. https://github.com/NomicFoundation/hardhat/issues/649
 

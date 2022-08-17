@@ -5055,14 +5055,8 @@
     "ajv" "^6.12.3"
     "har-schema" "^2.0.0"
 
-"hardhat-clone@file:../hardhat-watcher":
-  "resolved" "file:../hardhat-watcher"
-  "version" "2.3.0"
-  dependencies:
-    "chokidar" "^3.5.3"
-
-"hardhat-watcher@file:../hardhat-watcher":
-  "resolved" "file:../hardhat-watcher"
+"hardhat-watcher@file:~/Documents/github_repos/hardhat-watcher":
+  "resolved" "file:../../Documents/github_repos/hardhat-watcher"
   "version" "2.3.0"
   dependencies:
     "chokidar" "^3.5.3"
