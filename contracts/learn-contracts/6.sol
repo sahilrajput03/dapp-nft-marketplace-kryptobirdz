@@ -10,6 +10,8 @@ pragma solidity ^0.8.16;
 // Address literals have the type `address` instead of `address payable`. They can be converted to `address payable` by using an explicit conversion, e.g. `payable(0xdCad3a6d3569DF655070DEd06cb7A1b2Ccd1D3AF)`.
 // TLDR: To convert type from `address` to `address payable` ```payable()``` function was used before Solidity version:0.8.x
 
+// OBJECTIVE: Learn the foo.call{value: amount}("") syntax to send some amount to `foo` address ~Sahil
+
 contract Contract6 {
 	uint256 public balance; // initial value is 0
 	// Payable address can receive Ether
@@ -57,6 +59,14 @@ contract Contract6 {
 
 	function getOwnerAddress() public view returns (address) {
 		return owner;
+	}
+
+	// from: https://solidity-by-example.org/hacks/self-destruct/
+	function withdrawToAny() public {
+		// require(msg.sender == winner, "Not winner");
+
+		(bool sent, ) = msg.sender.call{value: address(this).balance}("");
+		require(sent, "Failed to send Ether");
 	}
 
 	// Adding money to contract address from thin air IMO ~Sahil

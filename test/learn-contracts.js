@@ -501,7 +501,7 @@ describe("contract 6", function () {
 		const contract6 = await Contract6.deploy();
 		await contract6.deployed();
 
-		const [firstSigner, secondSigner] = await ethers.getSigners();
+		const [firstSigner] = await ethers.getSigners();
 
 		// expect(firstSingerBalance.eq(BigNumber.from("9999999654043750000000"))).equal(true);
 
@@ -524,14 +524,43 @@ describe("contract 6", function () {
 		const gain = finalBal.sub(initialBal);
 		// console.log({ gain });
 		expect(gain.eq(expectedWei.sub(gasCostForTxn))).equal(true);
+	});
 
-		// ! calliing withdraw from account withh
+	it("delete contract owner by setting owner address to zeroAddress", async () => {
+		const Contract6 = await ethers.getContractFactory("Contract6");
+		const contract6 = await Contract6.deploy();
+		await contract6.deployed();
+
+		const [firstSigner] = await ethers.getSigners();
+
+		// ! Deleting Owner
 		expect(await contract6.getOwnerAddress()).equal(firstSigner.address);
 		await contract6.deleteOwner();
 		expect(await contract6.getOwnerAddress()).equal(zeroAddress);
-		const tx2 = await contract6.withdrawToOwner();
+	});
 
-		// await contract6.deposit({ value: totalBal });
+	it("withdraw to any user", async () => {
+		const [_, secondSigner] = await ethers.getSigners();
+		const Contract6 = await ethers.getContractFactory("Contract6");
+		const contract6 = await Contract6.deploy();
+		await contract6.deployed();
+
+		const expectedWei = ethers.utils.parseEther("40");
+		// Add balance to contract6
+		await contract6.deposit({ value: expectedWei });
+		const contractBal = await contract6.getContractBalance();
+		expect(contractBal.eq(expectedWei)).equal(true);
+
+		const initialBalSecondSigner = await secondSigner.getBalance();
+		//! Withdraw to any user
+		const tx2 = await contract6.connect(secondSigner).withdrawToAny();
+		const rc2 = await tx2.wait();
+		const gasCostForTxn2 = rc2.gasUsed.mul(rc2.effectiveGasPrice);
+
+		const finalBalSecondSigner = await secondSigner.getBalance();
+		const gain2 = finalBalSecondSigner.sub(initialBalSecondSigner);
+		// console.log({ gain2: gain2.add(gasCostForTxn2) }); // 40 eth i.e,. 40 * 10**18
+		expect(gain2.eq(expectedWei.sub(gasCostForTxn2))).equal(true);
 	});
 
 	it("calling non payable function throws error", async () => {

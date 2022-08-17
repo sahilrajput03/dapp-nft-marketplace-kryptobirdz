@@ -387,15 +387,9 @@ more?
 
 ![](./ss/ss-update-for-public-external-answer.png)
 
-- Learn to make [lottery contract](https://www.youtube.com/watch?v=GLrz3Qyi4io):
-
-  ![](./ss/ss-lottery.png)
-
 - What happens with selfdestruct function?
 
 ![](./ss/ss-destructed-contract.png)
-
-![](./ss/ss-curiosity-what-solidity-syntax.png)
 
 ![](./ss/ss-inheritance.png)
 
@@ -480,3 +474,7 @@ OTHER POINTS:
 ```
 
 - Testing with openzepplin's helpers: https://ethereum.stackexchange.com/a/128092/106687
+
+- TODO: Learn to make [Lottery Contract](https://solidity-by-example.org/hacks/self-destruct/) and make tests for it as well:
+
+![](./ss/ss-lottery-contract.png.png)
