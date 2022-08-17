@@ -112,7 +112,7 @@ contract KBMarket is ReentrancyGuard {
 		);
 	}
 
-	// function to conduct transactions and market sales
+	//! function to conduct transactions and market sales
 	function createMarketSale(address nftContract, uint itemId) public payable nonReentrant {
 		uint price = idToMarketToken[itemId].price;
 		uint tokenId = idToMarketToken[itemId].tokenId;
@@ -131,7 +131,7 @@ contract KBMarket is ReentrancyGuard {
 		// sale is finished ~Sahil
 	}
 
-	// function to fetchMarketItems - minting, buying and selling
+	//! function to fetchMarketItems - List all the available items in the market (this is called on the home page of our frontend app)
 	// return the number of unsold items
 	function fetchMarketTokens() public view returns (MarketToken[] memory) {
 		// here MarketToken is a struct
@@ -153,8 +153,7 @@ contract KBMarket is ReentrancyGuard {
 		return items;
 	}
 
-	// return nfts that the user has purchased
-
+	//! return nfts that the user has purchased
 	function fetchMyNFTs() public view returns (MarketToken[] memory) {
 		uint totalItemCount = _tokenIds.current();
 		// a second counter for each individual user
@@ -183,7 +182,7 @@ contract KBMarket is ReentrancyGuard {
 		return items;
 	}
 
-	// function for returning an array of minted nfts
+	//! function for returning an array of minted nfts
 	function fetchItemsCreated() public view returns (MarketToken[] memory) {
 		// instead of .owner it will be the .seller
 		uint totalItemCount = _tokenIds.current();

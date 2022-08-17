@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import {ethers} from 'ethers'
-import {useState} from 'react'
+import React, {useState} from 'react'
 import Web3Modal from 'web3modal'
 import {create as ipfsHttpClient} from 'ipfs-http-client'
 import {nftaddress, nftmarketaddress} from '../config'
@@ -12,6 +12,7 @@ import KBMarket from '../artifacts/contracts/KBMarket.sol/KBMarket.json'
 // file storage
 
 // @ts-ignore
+// ~Sahil: Usage: https://docs.infura.io/infura/networks/ipfs/how-to/make-requests#ipfs-http-client
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
 
 export default function MintItem() {
@@ -29,6 +30,7 @@ export default function MintItem() {
 				progress: (prog) => console.log(`received: ${prog}`),
 			})
 			const url = `https://ipfs.infura.io/ipfs/${added.path}`
+			// @ts-ignore
 			setFileUrl(url)
 		} catch (error) {
 			console.log('Error uploading file:', error)

@@ -82,13 +82,13 @@ FROM `node_modules`: [Here](node_modules/@openzeppelin/contracts/token/ERC721/ER
 You can see other contracts in ^^ that file as well:
 
 ```sol
-import "./IERC721.sol";
-import "./IERC721Receiver.sol";
-import "./extensions/IERC721Metadata.sol";
-import "../../utils/Address.sol";
-import "../../utils/Context.sol";
-import "../../utils/Strings.sol";
-import "../../utils/introspection/ERC165.sol";
+import './IERC721.sol';
+import './IERC721Receiver.sol';
+import './extensions/IERC721Metadata.sol';
+import '../../utils/Address.sol';
+import '../../utils/Context.sol';
+import '../../utils/Strings.sol';
+import '../../utils/introspection/ERC165.sol';
 
 ```
 
@@ -478,3 +478,7 @@ OTHER POINTS:
 - TODO: Learn to make [Lottery Contract](https://solidity-by-example.org/hacks/self-destruct/) and make tests for it as well:
 
 ![](./ss/ss-lottery-contract.png.png)
+
+- I think I can use any other uploading (anyother free ipfs storage facility instead of this):
+
+![](./ss/ss-why-i-am-not-able-to-use-infura-ipfs.png)
