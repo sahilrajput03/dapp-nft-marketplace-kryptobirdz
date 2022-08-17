@@ -13,6 +13,7 @@ contract Contract4 {
 
 		// msg.sender is the address of the `firstAccAddr` from 20 demo accounts of the hardhat node.
 		// msg.value is zero by default
+		// address(this).balance is the balance of contract, zero by default
 		// msg.gas: remaining gas deprecated in 0.4.21, please use gasleft() instead
 		emit msgDetails(msg.sender, msg.value, address(this).balance, gasleft());
 

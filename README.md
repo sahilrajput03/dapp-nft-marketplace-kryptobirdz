@@ -89,6 +89,7 @@ import "../../utils/Address.sol";
 import "../../utils/Context.sol";
 import "../../utils/Strings.sol";
 import "../../utils/introspection/ERC165.sol";
+
 ```
 
 We are gonna use these contracts for minting token and grabbing TOKEN_URI, setting up our IPFS.
@@ -396,8 +397,6 @@ more?
 
 ![](./ss/ss-curiosity-what-solidity-syntax.png)
 
-![](./ss/ss-what-is-payable-method.png)
-
 ![](./ss/ss-inheritance.png)
 
 ![](./ss/ss-importing-files-solidity.png)
@@ -479,3 +478,5 @@ Exerpt from Julien:
 OTHER POINTS:
 - Ethereum 2.0 is not released yet but it'll be then a 3rd generation blockchain. YO!
 ```
+
+- Testing with openzepplin's helpers: https://ethereum.stackexchange.com/a/128092/106687
