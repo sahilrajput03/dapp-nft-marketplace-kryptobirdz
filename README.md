@@ -466,3 +466,16 @@ decentralized exchange - one can buy and sell ethereum tokens in a decentralized
 ![](./ss/ss-deployment-using-infra.png)
 
 - watch todo: https://youtu.be/nYeVqMRK-yc
+
+Exerpt from Julien:
+
+```txt
+1st generation Blockchains: Bitcoin and Monero. These blockchains are capable of doing simple transactions like send and receiving money to the accounts of each other and this is very limited capability of this 1st geenration blockchains.
+
+2nd generation Blockchains: Ethereum. It can run small programs called smart contracts. These smart contracts can manipulate crypto currencies like ether.
+
+3rd generation Blockchains: EOS, Tron, Hyperledger. This generation of blockchain can also run smart contracts however they can process many more transactions and so we can say these blockchains are way more scalable.  ALERT: They are actually distributed databases somewhat inspired from blockchain technology HOWEVER these are not truly blockchains
+
+OTHER POINTS:
+- Ethereum 2.0 is not released yet but it'll be then a 3rd generation blockchain. YO!
+```
