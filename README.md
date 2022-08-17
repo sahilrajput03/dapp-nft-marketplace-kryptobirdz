@@ -482,3 +482,7 @@ OTHER POINTS:
 - I think I can use any other uploading (anyother free ipfs storage facility instead of this):
 
 ![](./ss/ss-why-i-am-not-able-to-use-infura-ipfs.png)
+
+because:
+
+![](./ss/ss-bcoz-of-this.png)
