@@ -481,8 +481,14 @@ OTHER POINTS:
 
 - I think I can use any other uploading (anyother free ipfs storage facility instead of this):
 
+[Check this warning use of using free url at official support](https://community.infura.io/t/ipfs-hosting-files-for-free/3498)
+
 ![](./ss/ss-why-i-am-not-able-to-use-infura-ipfs.png)
 
 because:
 
 ![](./ss/ss-bcoz-of-this.png)
+
+- infura ipfs pricing is not bad though:
+
+![](./ss/ss-infura-pricing-is-not-bad-though.png)
