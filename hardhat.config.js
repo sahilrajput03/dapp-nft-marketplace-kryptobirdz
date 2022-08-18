@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 //? ~Sahil: ALL CONFIG OPTIONS IN DOCS: https://hardhat.org/hardhat-runner/docs/config
 
 // require('@nomicfoundation/hardhat-toolbox')
@@ -14,12 +16,14 @@ require('@nomiclabs/hardhat-waffle')
 // To add capability to run tests in watch mode ~Sahil
 require('hardhat-watcher')
 
-const fs = require('fs')
+// const fs = require('fs')
 // Private key of your account you created via metamask
-const keyData = fs.readFileSync('./p-key.txt', {
-	encoding: 'utf8',
-	flag: 'r',
-})
+// const privateKeyPolygonAccount = fs.readFileSync('./p-key.txt', {
+// 	encoding: 'utf8',
+// 	flag: 'r',
+// })
+const PRIVATE_KEY = process.env.POLYGON_ACCOUNT_PRIVATE_KEY
+const POLYGONSCAN_API_KEY = process.env.POLYGONSCAN_API_KEY
 
 const projectId = 'ab3704f728034cb3ba2efbe718e72788'
 
@@ -33,15 +37,24 @@ module.exports = {
 		},
 		//! couldn't set `polygon-mumbai` in `infura` ~Sahil
 		//LEARN: mumbai-testnet is live development server.
-		mumbai: {
-			url: `"https://polygon-mumbai.infura.io/v3/add${projectId}`,
-			accounts: [keyData], // account from metamask
-		},
+		// mumbai: {
+		// 	url: `https://polygon-mumbai.infura.io/v3/add${projectId}`,
+		// 	accounts: [PRIVATE_KEY], // account from metamask
+		// },
 		//LEARN: mainnet is like production server.
 		mainnet: {
 			url: `https://mainnet.infura.io/v3/${projectId}`,
-			accounts: [keyData], // account from metamask
+			accounts: [PRIVATE_KEY], // account from metamask
 		},
+		// Learn: Deployment to polygontestnet (mumbai); source: https://docs.polygon.technology/docs/develop/hardhat#compiling-the-contract
+		matic: {
+			url: 'https://rpc-mumbai.maticvigil.com',
+			accounts: [PRIVATE_KEY],
+		},
+	},
+	// source: https://docs.polygon.technology/docs/develop/hardhat#compiling-the-contract
+	etherscan: {
+		apiKey: POLYGONSCAN_API_KEY,
 	},
 	// Adding optimizer for solidity coz its gonna simplify complicated expressions, it can reduce gas cost and a whole bunch of good stuff.
 	solidity: {

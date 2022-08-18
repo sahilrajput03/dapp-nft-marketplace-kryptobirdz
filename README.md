@@ -1,5 +1,7 @@
 # Blockchain
 
+Polygon Faucet: https://faucet.polygon.technology/
+
 ​Blockchain is a shared, immutable ledger that facilitates the process of recording transactions and tracking assets in a business network. An asset can be tangible (a house, car, cash, land) or intangible (intellectual property, patents, copyrights, branding). Virtually anything of value can be tracked and traded on a blockchain network, reducing risk and cutting costs for all involved.
 
 - **Smart contracts ARCHIVE:** https://github.com/sahilrajput03/My-Smart-Contracts
@@ -504,3 +506,13 @@ because:
 you need to give a project name then you can use that button copy that api key:
 
 ![](./ss/ss-ipfs-nft-storage-2.png)
+
+- checkout: https://solana.com/summercamp
+
+- forking feature of hardhat (to help us run on a forked blockchain of ethereum mainnet): [Check it out in real demo](https://youtu.be/GBc3lBrXEBo?t=335), Also forking is very usefult when you have chain linked app (i.e., having some hardcoded price feed contract address in your address, thus its very helpful to run against the forked mainnet coz its like real testing). Check [what it means here](https://youtu.be/GBc3lBrXEBo?t=484). FIND ABOUT chainlink in the description of the same video. YO!
+
+- Creating api key in https://polygonscan.com for the `POLYGONSCAN_API_KEY`:
+
+![](./ss/ss-creating-api-key-at-polygonscan-com.png)
+
+- Official fauce of mumbai testnet: https://faucet.polygon.technology/ . FYI: Took `0.2 MATIC` -> `0.1303 MATIC` to deploy my contract! YO!

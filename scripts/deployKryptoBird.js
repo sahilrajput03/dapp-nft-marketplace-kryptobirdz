@@ -4,16 +4,25 @@
 // You can also run a script with `npx hardhat run <script>`. If you do that, Hardhat
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
-const hre = require('hardhat')
+const hh = require('hardhat')
 const fs = require('fs')
 
+let TARGET_FILE_PATH
+
+// This flag is meant to be passed via cli only; ~Sahil
+if (process.env.MUMBAI === 'true') {
+	TARGET_FILE_PATH = 'config-mumbai.js'
+} else {
+	TARGET_FILE_PATH = 'config.js'
+}
+
 async function main() {
-	const NFTMarket = await hre.ethers.getContractFactory('KBMarket')
+	const NFTMarket = await hh.ethers.getContractFactory('KBMarket')
 	const nftMarket = await NFTMarket.deploy()
 	await nftMarket.deployed()
 	console.log('nftMarket deployed to:', nftMarket.address)
 
-	const NFT = await hre.ethers.getContractFactory('NFT')
+	const NFT = await hh.ethers.getContractFactory('NFT')
 	const nft = await NFT.deploy(nftMarket.address)
 	await nft.deployed()
 	console.log('NFT contract deployed to:', nft.address)
@@ -24,7 +33,7 @@ export const nftmarketaddress = '${nftMarket.address}'
 export const nftaddress = '${nft.address}'`.trim()
 
 	let data = JSON.stringify(config)
-	fs.writeFileSync('config.js', JSON.parse(data))
+	fs.writeFileSync(TARGET_FILE_PATH, JSON.parse(data))
 }
 
 main().catch((error) => {
