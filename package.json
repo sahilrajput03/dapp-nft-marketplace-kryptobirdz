@@ -29,6 +29,7 @@
 		"hardhat-watcher": "file:~/Documents/github_repos/hardhat-watcher",
 		"ipfs-http-client": "^57.0.3",
 		"next": "12.2.3",
+		"nft.storage": "^7.0.0",
 		"prettier": "^2.7.1",
 		"prettier-plugin-solidity": "^1.0.0-beta.24",
 		"react": "18.2.0",

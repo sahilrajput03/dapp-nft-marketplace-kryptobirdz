@@ -1,3 +1,4 @@
+// @ts-nocheck
 import 'tailwindcss/tailwind.css'
 import '../styles/globals.css'
 import '../styles/app.css'

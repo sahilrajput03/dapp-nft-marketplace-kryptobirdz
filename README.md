@@ -492,3 +492,11 @@ because:
 - infura ipfs pricing is not bad though:
 
 ![](./ss/ss-infura-pricing-is-not-bad-though.png)
+
+- Getting api key from `nft.storage` for the ipfs service:
+
+![](./ss/ss-nft-storage-get-api-key.png)
+
+you need to give a project name then you can use that button copy that api key:
+
+![](./ss/ss-ipfs-nft-storage-2.png)
