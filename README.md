@@ -16,7 +16,7 @@ https://lu.ma/psoc-blockchain-workshop
 
 ## NFT Marketplace - Kyptobirdz
 
-_Disclaimer: `p-key.txt` file related to `polygonAccount` account of metamask._
+~~_Disclaimer: `p-key.txt` file related to `polygonAccount` account of metamask._~~ I am using sops encrypted `enc.env` file. Yo!!
 
 Web3 Apps: Web3, in the context of technology, refers to decentralized apps that run on the blockchain. These are apps that allow anyone to participate without monetizing their personal data.
 
