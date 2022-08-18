@@ -4,6 +4,8 @@
 
 - **Smart contracts ARCHIVE:** https://github.com/sahilrajput03/My-Smart-Contracts
 
+- \*\*Removed infura's ipfs and replace nft.storage ipfs instaed for saving files with metadata(i.e., name, description and image url). Check commit: #72afbad
+
 ## Swapnil's Event
 
 https://lu.ma/psoc-blockchain-workshop
