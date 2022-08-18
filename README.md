@@ -6,6 +6,8 @@
 
 - **Removed infura's ipfs and added nft.storage ipfs** for saving files with metadata(i.e., name, description and image url). **Check [commit here](https://github.com/sahilrajput03/dapp-nft-marketplace-kryptobirdz/commit/72afbad6b5683039d0c7181a0a50e4ae468e36d9)**. _Reason: Infura's ipfs was requiring credit card to make it work accordig to new policies and it stopped working - dated: 18 Aug, 2022._
 
+- **To be able to open ipfs:// protocol urls you can [install this](https://chrome.google.com/webstore/detail/ipfs-companion/nibjojkomfdiaoajekhjakgkdhaomnch) and enable it to access all those urls! Yikes!!**
+
 ## Swapnil's Event
 
 https://lu.ma/psoc-blockchain-workshop
