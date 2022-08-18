@@ -4,7 +4,7 @@
 
 - **Smart contracts ARCHIVE:** https://github.com/sahilrajput03/My-Smart-Contracts
 
-- \*\*Removed infura's ipfs and replace nft.storage ipfs instaed for saving files with metadata(i.e., name, description and image url). Check commit: #72afbad
+- \*\*Removed infura's ipfs and replace nft.storage ipfs instaed for saving files with metadata(i.e., name, description and image url). Check [commit here](https://github.com/sahilrajput03/dapp-nft-marketplace-kryptobirdz/commit/72afbad6b5683039d0c7181a0a50e4ae468e36d9).
 
 ## Swapnil's Event
 
