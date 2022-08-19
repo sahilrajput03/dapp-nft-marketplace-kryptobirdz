@@ -13,7 +13,7 @@ let TARGET_FILE_PATH
 if (process.env.MUMBAI === 'true') {
 	TARGET_FILE_PATH = 'config-mumbai.js'
 } else {
-	TARGET_FILE_PATH = 'config.js'
+	TARGET_FILE_PATH = 'config-local.js'
 }
 
 async function main() {

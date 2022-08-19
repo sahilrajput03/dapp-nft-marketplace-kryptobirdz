@@ -4,11 +4,11 @@ import {ethers} from 'ethers'
 import {useEffect, useState} from 'react'
 import axios from 'axios'
 import Web3Modal from 'web3modal'
-
 import {nftaddress, nftmarketaddress} from '../config'
-
 import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
 import KBMarket from '../artifacts/contracts/KBMarket.sol/KBMarket.json'
+
+// console.log({nftaddress, nftmarketaddress})
 
 export default function Home() {
 	const [nfts, setNFts] = useState([])
@@ -23,14 +23,105 @@ export default function Home() {
 		// what we want to load:
 		// ***provider, tokenContract, marketContract, data for our marketItems***
 
-		const provider = new ethers.providers.JsonRpcProvider()
+		const provider = new ethers.providers.JsonRpcProvider() // original
+
+		// throwing cors error
+		// const provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.matic.today')
+
+		// working somewhat
+		// const provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.maticvigil.com')
+
+		// working ??????
+		// https://docs.ethers.io/v5/api/providers/api-providers/#InfuraProvider
+		// const projectIdInfura = 'ab3704f728034cb3ba2efbe718e72788'
+		// const provider = new ethers.providers.InfuraProvider('maticmum', projectIdInfura)
+
+		// working somewhat
+		// https://github.com/ethers-io/ethers.js/issues/1546#issuecomment-835542565
+		// const maticmum = {
+		// name: 'matic',
+		// name: 'matic',
+		// chainId: 137, // for mainnet
+		// chainId: 80001, // for mumbai testnet
+		// _defaultProvider: (providers) => new providers.JsonRpcProvider('https://rpc-mumbai.maticvigil.com'),
+		// this is in directly created "matic testnet" of metamask // _defaultProvider: (providers) => new providers.JsonRpcProvider('https://matic-mumbai.chainstacklabs.com'),
+		// }
+		// import those networks where ever you want to use it with getDefaultProvider
+		// const provider = ethers.getDefaultProvider(maticmum)
+
+		// !try 4
+		// const network = 'testnet',
+		// 	version = 'mumbai'
+		// const posClient = new POSClient()
+		// return posClient.init({
+		// 	log: true,
+		// 	network: network,
+		// 	version: version,
+		// 	child: {
+		// 		provider: new HDWalletProvider(privateKey, config.child.rpc),
+		// 		defaultConfig: {
+		// 			from: userAddress,
+		// 		},
+		// 	},
+		// 	parent: {
+		// 		provider: new HDWalletProvider(privateKey, config.parent.rpc),
+		// 		defaultConfig: {
+		// 			from: userAddress,
+		// 		},
+		// 	},
+		// })
+		// const client = await getPOSClient()
+		// const erc721Token = client.erc721(pos.parent.erc721, true)
+		// console.log({client})
+
+		// const result = await erc721Token.depositMany(['800', '802'], from)
+
+		// TODO:
+		// https://docs.polygon.technology/docs/develop/ethereum-polygon/matic-js/setup/ethers
+		// https://github.com/maticnetwork/maticjs-ethers/blob/main/examples/metamask/src/index.js
+
+		// TODO:
+		// https://dapp-world.com/smartbook/how-to-use-ethers-with-polygon-k5Hn
+
 		const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider)
 		const marketContract = new ethers.Contract(nftmarketaddress, KBMarket.abi, provider)
-		const data = await marketContract.fetchMarketTokens() //! ~SAhil - curiousita: Inspect how does this fetches tokens ??
+
+		//!!!!!!!! get max fees from gas station
+		let maxFeePerGas = ethers.BigNumber.from(40000000000) // fallback to 40 gwei
+		let maxPriorityFeePerGas = ethers.BigNumber.from(40000000000) // fallback to 40 gwei
+		try {
+			const {data} = await axios({
+				method: 'get',
+				url: isProd ? 'https://gasstation-mainnet.matic.network/v2' : 'https://gasstation-mumbai.matic.today/v2',
+			})
+			maxFeePerGas = ethers.utils.parseUnits(Math.ceil(data.fast.maxFee) + '', 'gwei')
+			maxPriorityFeePerGas = ethers.utils.parseUnits(Math.ceil(data.fast.maxPriorityFee) + '', 'gwei')
+		} catch {
+			// ignore
+		}
+		// !!!!!!
+		console.log('got here..1')
+
+		let data = []
+
+		try {
+			// const someWhatNeeded = {
+			// 	maxPriorityFeePerGas,
+			// 	maxFeePerGas,
+			// }
+			// data = await marketContract.fetchMarketTokens(someWhatNeeded)
+			data = await marketContract.fetchMarketTokens() //! ~SAhil - curiousita: Inspect how does this fetches tokens ??
+		} catch (error) {
+			console.log('got here..1.1')
+			window.e1 = error
+			throw error
+		}
+
 		if (!window.d) {
 			window.d = {}
 		}
-		window.d.nfts = nfts
+		window.d.nfts = data
+		console.log('got here..2')
 
 		const items = await Promise.all(
 			data.map(async (i) => {

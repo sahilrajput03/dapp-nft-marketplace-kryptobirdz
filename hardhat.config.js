@@ -71,6 +71,7 @@ module.exports = {
 	watcher: {
 		'learn-contracts': {
 			start: 'tmux clear-history -t $(tmux display -pt "${TMUX_PANE:?}" "#{pane_index}")', // https://github.com/sahilrajput03/flash-runner-npm/blob/main/startTesting.js#L86
+			// start: 'echo Running task now..', // https://github.com/sahilrajput03/flash-runner-npm/blob/main/startTesting.js#L86
 			clearOnStart: true,
 			// Using Position arguments hardhat watcher: https://github.com/xanderdeseyn/hardhat-watcher#positional-arguments
 			tasks: [{command: 'test', params: {testFiles: ['./test/learn-contracts.js']}}],

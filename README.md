@@ -1,6 +1,6 @@
 # Blockchain
 
-Polygon Faucet: https://faucet.polygon.technology/
+Polygon Faucet: https://faucet.polygon.technology/ (adds 0.2 MATIC to your mumbai testnet accout).
 
 ​Blockchain is a shared, immutable ledger that facilitates the process of recording transactions and tracking assets in a business network. An asset can be tangible (a house, car, cash, land) or intangible (intellectual property, patents, copyrights, branding). Virtually anything of value can be tracked and traded on a blockchain network, reducing risk and cutting costs for all involved.
 
@@ -40,11 +40,6 @@ Libraries:
 ```bash
 npm install ethers hardhat @nomiclabs/hardhat-waffle ethereum-waffle chai @nomiclabs/hardhat-ethers web3modal @openzeppelin/contracts ipfs-http-client axios
 ```
-
-**Linked Course:**
-
-- Complete nft development course - To help you create `ERC721 token` from scratch we learn the tokenomics and the functionality. **FYI: In real world we're not gonna be building from scratch every single nft.** But to solidify the the knowledge its good to learn how its done from scratch.
-- Become a Blockchain Developer: Ethereum + Solidity + Project @UDEMY
 
 **TRACK**
 
@@ -113,15 +108,40 @@ We are gonna use these contracts for minting token and grabbing TOKEN_URI, setti
 
 - (HINDI) - https://www.youtube.com/playlist?list=PLgPmWS2dQHW9u6IXZq5t5GMQTpW7JL33i
 - (TODO) UDEMY COURSE: Become a Blockchain Developer: Ethereum + Solidity + Project
-- (TODO) YOUTUBE COURSE: Blockchain Ecommerce App Tutorial (Accept ERC20 Token Payments): https://www.youtube.com/watch?v=f5npM1PvoyE , [Github - unofficial's person code](https://github.com/michael-steinert/SolidityWeb3ECommerceExpressMongooseMongoDBReact)
+- (**TODO** **project** for portfolio) YOUTUBE COURSE: Blockchain Ecommerce App Tutorial (Accept ERC20 Token Payments): https://www.youtube.com/watch?v=f5npM1PvoyE , [Github - unofficial's person code](https://github.com/michael-steinert/SolidityWeb3ECommerceExpressMongooseMongoDBReact)
 - (TODO) ~AMAZING~ Youtube Playlist (~Polygon): BUIDL IT - Workshop #1 - Intro to Web3 Tech Stack: https://www.youtube.com/watch?v=S8hZ5rDV7kg
-- UDEMY COURSE: Dapp course on gdrive - Build An NFT Marketplace From Scratch - Blockchain DApp: [Click here](https://drive.google.com/drive/folders/1o7eExDuepyTlyMUeospr1epx-xF9ELM9)
+- @UDEMY/@GDRIVE **DONE**: Dapp course on gdrive - Build An NFT Marketplace From Scratch - Blockchain DApp: [Click here](https://drive.google.com/drive/folders/1o7eExDuepyTlyMUeospr1epx-xF9ELM9)
+- @UDEMY: "Complete nft development course" - To help you create `ERC721 token` from scratch we learn the tokenomics and the functionality. **FYI: In real world we're not gonna be building from scratch every single nft.** But to solidify the the knowledge its good to learn how its done from scratch.
+- @UDEMY: "Become a Blockchain Developer: Ethereum + Solidity + Project ~ Swapnil Kole"
+- (**TODO**: **project** for portfolio) @AUTHOR_HOSTED/HDD: "6 Figure Blockchain Development course ~ Julien Klepatch" - OFFICIALLY HOSTED@https://pro.eattheblocks.com/p/6-figure-blockchain-developer
 - Deployement Cost to Ethereum and other blockchains: [Click here](https://medium.com/the-capital/how-much-does-it-cost-to-deploy-a-smart-contract-on-ethereum-11bcd64da1)
 
 ## LEARN
 
 - You can deploy to local blockchain by running the `start-local-blockchain` script and use `deploy-local-KryptoBird` to deploy to local blockchain you just started.
 - `artifacts` folder in generated when you run `deploy-local-KryptoBird` script.
+
+## now?? 8 August, 2022
+
+**TODO NOW:**
+
+- Deploy a solidity smartcontract on polygon testnet: https://youtu.be/c80AHFOo63M?t=412
+  - (COPY^^):Hardhat - Deploying Smart Contract to Ethereum (Testnet / Mainnet): https://youtu.be/Uvphp4aVeDg
+  - youtube search: https://www.youtube.com/results?search_query=deployment+to+mumbainet&sp=CAASAhAB
+  - google search: do if required..
+  - read article: https://blog.polymath.network/solidity-tips-and-tricks-to-save-gas-and-reduce-bytecode-size-c44580b218e6
+
+**TOOLS:**
+
+- Polygonchian Explorer: https://polygonscan.com/
+- Infura: https://infura.io/
+
+**Article / Videos / Interviews:**
+
+- **INTERVIEW** Deep Talk with Jaynti Kanani - CEO & Co-founder of Matic (Polygon): Start watching from: https://youtu.be/XsKRaMhX3Iw?t=137
+- **INTERVIEW** Matic Network | BlockchainBrad EXCLUSIVE Interview with MATIC COO | An Ethereum Scalability solution: Start watching from here: https://youtu.be/XZcBbKf8lRI?t=1115
+- **ARTICLE** Matic: https://www.moneycontrol.com/news/business/startup/from-diamond-factory-workers-son-to-founder-of-10-billion-crypto-venture-the-story-of-jaynti-kanani-and-polygon-7007481.html
+- **VIDEO** Polygon Tv CHANNEL: https://www.youtube.com/c/PolygonTV, src: https://polygon.technology/developers
 
 ## OTHER DISTURBED THINGS BY THIS NFT PROJECT
 
@@ -281,33 +301,6 @@ npx hardhat compile
 ## uint256?
 
 https://medium.com/hara-engineering/how-long-will-uint256-last-47f9796e171e
-
-## now?? 8 August, 2022
-
-**TODO NOW:**
-
-- Deploy a solidity smartcontract on polygon testnet: https://youtu.be/c80AHFOo63M?t=412
-  - (COPY^^):Hardhat - Deploying Smart Contract to Ethereum (Testnet / Mainnet): https://youtu.be/Uvphp4aVeDg
-  - youtube search: https://www.youtube.com/results?search_query=deployment+to+mumbainet&sp=CAASAhAB
-  - google search: do if required..
-  - read article: https://blog.polymath.network/solidity-tips-and-tricks-to-save-gas-and-reduce-bytecode-size-c44580b218e6
-
-**Explore:**
-
-- Q. What is Polygon Pos Chain explorer: https://polygonscan.com/
-
-**DEEP LONG INTERVIEWS**
-
-- Deep Talk with Jaynti Kanani - CEO & Co-founder of Matic (Polygon): Start watching from: https://youtu.be/XsKRaMhX3Iw?t=137
-- Matic Network | BlockchainBrad EXCLUSIVE Interview with MATIC COO | An Ethereum Scalability solution: Start watching from here: https://youtu.be/XZcBbKf8lRI?t=1115
-
-**Articles:**
-
-- Matic: https://www.moneycontrol.com/news/business/startup/from-diamond-factory-workers-son-to-founder-of-10-billion-crypto-venture-the-story-of-jaynti-kanani-and-polygon-7007481.html
-
-**Video content**
-
-- Polygon Tv CHANNEL: https://www.youtube.com/c/PolygonTV, src: https://polygon.technology/developers
 
 ## Installed `hardhat-watcher`
 
@@ -516,3 +509,7 @@ you need to give a project name then you can use that button copy that api key:
 ![](./ss/ss-creating-api-key-at-polygonscan-com.png)
 
 - Official fauce of mumbai testnet: https://faucet.polygon.technology/ . FYI: Took `0.2 MATIC` -> `0.1303 MATIC` to deploy my contract! YO!
+
+- read and write only contract instances [source](https://dapp-world.com/smartbook/how-to-use-ethers-with-polygon-k5Hn):
+
+![](./ss/ss-read-and-write-only-contract-instances.png)
