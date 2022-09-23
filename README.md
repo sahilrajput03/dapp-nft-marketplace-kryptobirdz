@@ -111,11 +111,15 @@ We are gonna use these contracts for minting token and grabbing TOKEN_URI, setti
 - @UDEMY: "Become a Blockchain Developer: Ethereum + Solidity + Project ~ Swapnil Kole"
 - (**TODO**: **project** for portfolio) @AUTHOR_HOSTED/HDD: "6 Figure Blockchain Development course ~ Julien Klepatch" - OFFICIALLY HOSTED@https://pro.eattheblocks.com/p/6-figure-blockchain-developer
 - Deployement Cost to Ethereum and other blockchains: [Click here](https://medium.com/the-capital/how-much-does-it-cost-to-deploy-a-smart-contract-on-ethereum-11bcd64da1)
-- Solidity Lotter Projects (**TODO - Looks Good**): [Click here](https://www.youtube.com/watch?v=aFI_XPll_mg)
-- `web3.js` (**TODO - Looks Good**): [Click here](https://www.youtube.com/watch?v=u3PtGMRmGA0)
-- `hardhat` (**TODO - Looks Good**): [Click here](https://www.youtube.com/watch?v=6SYsy1ZlOPo)
-- **TODO - Looks Good** - [Click here](https://www.youtube.com/watch?v=7lUxF3t1n4I)
-- **TODO - Blockchain Full Course**: [Click here](https://www.youtube.com/watch?v=6aF6p2VUORE)
+- FROM CODEEATER >>>
+- **TODO - Looks Good - Blockchain Mastery Path | Code Eater - Blockchain | Hindi** - [Click here](https://www.youtube.com/watch?v=7lUxF3t1n4I)
+- **TODO - Looks Good - Solidity Full Course - 4 hours | Solidity Latest Version | Master Solidity | Hindi | Code Eater** - [Click here](https://www.youtube.com/watch?v=NqGe942J4Y0)
+- **TODO - Looks Good - Solidity Project For Beginners | Deploying Smart Contract on Rinkeby | Code Eater | Hindi**): [Click here](https://www.youtube.com/watch?v=aFI_XPll_mg)
+- **TODO - Looks Good - Truffle Full Course | Truffle Tutorial | Master Truffle | Hindi | Code Eater**: [Click here](https://www.youtube.com/watch?v=Zo4dYRw9WSE&t=0s)
+- **TODO - Looks Good - web3.js full course | Master Web3js Library (Ethereum) | Code Eater | Hindi**: [Click here](https://www.youtube.com/watch?v=u3PtGMRmGA0)
+- **TODO - Looks Good - NFT full course - PLAYLIST**: [Click here](https://www.youtube.com/playlist?list=PLgPmWS2dQHW8AUns9PlkBW_vQsPr7fO9H)
+- **TODO - Looks Good - Learn Everything about Hardhat in one video | Hardhat Full Course | Hindi**: [Click here](https://www.youtube.com/watch?v=6SYsy1ZlOPo)
+- **TODO - Looks Good - Blockchain Full Course - 6 hours | Blockchain Tutorial | 3 courses in 1 | Hindi | Code Eater**: [Click here](https://www.youtube.com/watch?v=6aF6p2VUORE)
 
 ## LEARN
 
