@@ -10,10 +10,6 @@ Polygon Faucet: https://faucet.polygon.technology/ (adds 0.2 MATIC to your mumba
 
 - **To be able to open ipfs:// protocol urls you can [install this](https://chrome.google.com/webstore/detail/ipfs-companion/nibjojkomfdiaoajekhjakgkdhaomnch) and enable it to access all those urls! Yikes!!** Official Page: https://docs.ipfs.tech/install/ipfs-companion/
 
-## Swapnil's Event
-
-https://lu.ma/psoc-blockchain-workshop
-
 ## NFT Marketplace - Kyptobirdz
 
 ~~_Disclaimer: `p-key.txt` file related to `polygonAccount` account of metamask._~~ I am using sops encrypted `enc.env` file. Yo!!
