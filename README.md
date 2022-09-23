@@ -115,6 +115,7 @@ We are gonna use these contracts for minting token and grabbing TOKEN_URI, setti
 - `web3.js` (**TODO - Looks Good**): [Click here](https://www.youtube.com/watch?v=u3PtGMRmGA0)
 - `hardhat` (**TODO - Looks Good**): [Click here](https://www.youtube.com/watch?v=6SYsy1ZlOPo)
 - **TODO - Looks Good** - [Click here](https://www.youtube.com/watch?v=7lUxF3t1n4I)
+- **TODO - Blockchain Full Course**: [Click here](https://www.youtube.com/watch?v=6aF6p2VUORE)
 
 ## LEARN
 
