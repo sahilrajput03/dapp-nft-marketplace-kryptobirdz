@@ -115,7 +115,9 @@ We are gonna use these contracts for minting token and grabbing TOKEN_URI, setti
 - @UDEMY: "Become a Blockchain Developer: Ethereum + Solidity + Project ~ Swapnil Kole"
 - (**TODO**: **project** for portfolio) @AUTHOR_HOSTED/HDD: "6 Figure Blockchain Development course ~ Julien Klepatch" - OFFICIALLY HOSTED@https://pro.eattheblocks.com/p/6-figure-blockchain-developer
 - Deployement Cost to Ethereum and other blockchains: [Click here](https://medium.com/the-capital/how-much-does-it-cost-to-deploy-a-smart-contract-on-ethereum-11bcd64da1)
-- Solidity Lotter Projects (**TODO - Looks Good**): [Video 1](https://www.youtube.com/watch?v=aFI_XPll_mg)
+- Solidity Lotter Projects (**TODO - Looks Good**): [Click here](https://www.youtube.com/watch?v=aFI_XPll_mg)
+- `web3.js` (**TODO - Looks Good**): [Click here](https://www.youtube.com/watch?v=u3PtGMRmGA0)
+- `hardhat` (**TODO - Looks Good**): [Click here](https://www.youtube.com/watch?v=6SYsy1ZlOPo)
 
 ## LEARN
 
