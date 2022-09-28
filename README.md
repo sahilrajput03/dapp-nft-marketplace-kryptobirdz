@@ -1,3 +1,8 @@
+## TODO CONTINUE DEPLOYING TO TESTNET:
+
+- https://hardhat.org/tutorial/deploying-to-a-live-network
+- https://ethereum.org/en/developers/docs/networks/#ethereum-testnets
+
 ## dapps Updated Example Sites
 
 - State Of The Dapps - [Click here](https://www.stateofthedapps.com/)
