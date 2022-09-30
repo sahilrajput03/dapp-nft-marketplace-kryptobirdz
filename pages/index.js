@@ -25,8 +25,15 @@ export default function Home() {
 		// FROM DOCS: https://docs.ethers.io/v4/api-providers.html
 		// The network will be automatically detected; if the network is
 		// changed in MetaMask, it causes a page refresh.
-		let provider = new ethers.providers.Web3Provider(web3.currentProvider)
-		// const provider = new ethers.providers.JsonRpcProvider() // original
+		
+		// const provider = new ethers.providers.JsonRpcProvider() // original from course author (only work with localhost and breaks on connecting to goerli chain when run `nr start-goerli` script)
+		// let provider = new ethers.providers.Web3Provider(web3.currentProvider) // ! THIS IS LAST WORKING!!
+
+		// Below code to connect to metamask is used by author on other pages as well i.e., `mint-token`, `dashboard`, etc by course author
+		const web3Modal = new Web3Modal()
+		const connection = await web3Modal.connect()
+		const provider = new ethers.providers.Web3Provider(connection)
+
 
 		// throwing cors error
 		// const provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.matic.today')
