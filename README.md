@@ -13,7 +13,7 @@
 
 Consensus: Ethereum uses a consensus technique known as PoW(Proof of Work). The issue with Ethereum is that it necessitates a lot of processing power. Ethereum requires a significant amount of energy and It results in decreasing participation of users. This mechanism increases security to some extent. In polygon consensus is achieved by the mechanism based on PoS(Proof of stake), If a user joins the Polygon network, they would be rewarded in the form of points. Consensus is achieved faster in the Polygon blockchain.
 
-[Source](https://www.geeksforgeeks.org/ethereum-vs-polygon-which-is-better-for-nfts/#:~:text=Ethereum%20performs%20only%2013%2D15,50000%2D60000%20transactions%20per%20second.&text=Gas%20Fees-,OpenSea%20consists%20of%20the%20whole%20host%20of%20gas%20fees%20related,associated%20with%20Polygon%20on%20OpenSea.)
+[TOODO - Read it complete @ here](https://www.geeksforgeeks.org/ethereum-vs-polygon-which-is-better-for-nfts/#:~:text=Ethereum%20performs%20only%2013%2D15,50000%2D60000%20transactions%20per%20second.&text=Gas%20Fees-,OpenSea%20consists%20of%20the%20whole%20host%20of%20gas%20fees%20related,associated%20with%20Polygon%20on%20OpenSea.)
 
 # Blockchain
 
