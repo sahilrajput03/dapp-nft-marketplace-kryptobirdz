@@ -3,8 +3,9 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"dev": "next dev",
-		"dev-mumbai": "MUMBAI=true next dev",
+		"dev": "NEXT_PUBLIC_BC_NETWORK=local next dev",
+		"dev-goerli": "NEXT_PUBLIC_BC_NETWORK=goerli next dev",
+		"dev-mumbai": "NEXT_PUBLIC_BC_NETWORK=mumbai next dev",
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
@@ -14,6 +15,7 @@
 		"test-watch-2": "hardhat watch lock",
 		"deploy-local-KryptoBird": "hardhat run ./scripts/deployKryptoBird.js --network localhost",
 		"deploy-mumbai-KryptoBird": "MUMBAI=true hardhat run ./scripts/deployKryptoBird.js --network matic",
+		"deploy-goerli-KryptoBird": "hardhat run ./scripts/deployKryptoBird.js --network goerli",
 		"start-local-blockchain": "hardhat node",
 		"BADDDtest-watch-learn-contractsNodemon": "nodemon -x 'hardhat test --no-compile test/learn-contracts.js' -w contracts -w test -e sol",
 		"prettier": "prettier --write 'contracts/**/*.sol'"
@@ -37,6 +39,7 @@
 		"prettier-plugin-solidity": "^1.0.0-beta.24",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
+		"web3": "^1.8.0",
 		"web3modal": "^1.9.8"
 	},
 	"devDependencies": {

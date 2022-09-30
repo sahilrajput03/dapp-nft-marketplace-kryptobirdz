@@ -532,3 +532,9 @@ you need to give a project name then you can use that button copy that api key:
 - read and write only contract instances [source](https://dapp-world.com/smartbook/how-to-use-ethers-with-polygon-k5Hn):
 
 ![](./ss/ss-read-and-write-only-contract-instances.png)
+
+# Goerli's Experience
+
+Viewing a transaction of goerli on [goerli.etherscan.io](https://goerli.etherscan.io)
+
+![](./ss/ss-transaction_1_goerli.png)

@@ -4,7 +4,7 @@ import {ethers} from 'ethers'
 import {useEffect, useState} from 'react'
 import axios from 'axios'
 import Web3Modal from 'web3modal'
-import {nftaddress, nftmarketaddress} from '../config'
+import {nftaddress, nftmarketaddress, networkName} from '../config'
 import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
 import KBMarket from '../artifacts/contracts/KBMarket.sol/KBMarket.json'
 
@@ -22,8 +22,11 @@ export default function Home() {
 	async function loadNFTs() {
 		// what we want to load:
 		// ***provider, tokenContract, marketContract, data for our marketItems***
-
-		const provider = new ethers.providers.JsonRpcProvider() // original
+		// FROM DOCS: https://docs.ethers.io/v4/api-providers.html
+		// The network will be automatically detected; if the network is
+		// changed in MetaMask, it causes a page refresh.
+		let provider = new ethers.providers.Web3Provider(web3.currentProvider)
+		// const provider = new ethers.providers.JsonRpcProvider() // original
 
 		// throwing cors error
 		// const provider = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.matic.today')

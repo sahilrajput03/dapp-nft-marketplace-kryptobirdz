@@ -101,6 +101,11 @@ export default function MintItem() {
 		let event = tx.events[0]
 		let value = event.args[2]
 		let tokenId = value.toNumber()
+
+		if (isNaN(Number(formInput.price))) {
+			return alert('Please input numeric cost for the item')
+		}
+
 		const price = ethers.utils.parseUnits(formInput.price, 'ether')
 
 		// list the item for sale on the marketplace

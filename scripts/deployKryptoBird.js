@@ -9,22 +9,32 @@
 const hh = require('hardhat')
 const fs = require('fs')
 
-let TARGET_FILE_PATH
-
 /** Works Good */ /** src: https://ethereum.stackexchange.com/a/112947 */
-// const networkName = hh.network.name
+const networkName = hh.network.name
 // const chainId = hh.network.config.chainId
 // console.log(networkName, chainId);
 // WHEN DEPLOYING TO LOCAL NODE: localhost undefined
 // WHEN DEPLOYING TO MUMBAI KRYPTO: matic undefined
+// WHEN DEPLOYING TO GOERLI: goerli undefined
 // process.exit() // helpful in testing above above logs
 
-// This flag is meant to be passed via cli only; ~Sahil
-if (process.env.MUMBAI === 'true') {
-	TARGET_FILE_PATH = 'config-mumbai.js'
-} else {
-	TARGET_FILE_PATH = 'config-local.js'
+let TARGET_FILE_PATH = getConfigFilePath(networkName)
+
+function getConfigFilePath(networkName) {
+	switch (networkName) {
+		case 'goerli':
+			return './config/config-goerli.js'
+		case 'localhost':
+			return './config/config-local.js'
+		case 'matic':
+			return './config/config-mumbai.js'
+		default: // helpful in testing above above logs
+			console.log('Network:', networkName, 'not found. Exiting.')
+			process.exit()
+	}
 }
+
+module.exports.getConfigFilePath = getConfigFilePath
 
 const {formatEther, commify, formatUnits} = hh.ethers.utils
 
@@ -62,7 +72,8 @@ async function main() {
 	// So when we run ``npm run deploy-local-KryptoBird`` below config stirng will be written to file `./config.js`
 	let config = `
 export const nftmarketaddress = '${nftMarket.address}'
-export const nftaddress = '${nft.address}'`.trim()
+export const nftaddress = '${nft.address}'
+export const networkName = '${networkName}'`.trim()
 
 	let data = JSON.stringify(config)
 	fs.writeFileSync(TARGET_FILE_PATH, JSON.parse(data))

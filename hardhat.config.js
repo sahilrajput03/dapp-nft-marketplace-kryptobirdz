@@ -22,10 +22,13 @@ require('hardhat-watcher')
 // 	encoding: 'utf8',
 // 	flag: 'r',
 // })
-const PRIVATE_KEY = process.env.POLYGON_ACCOUNT_PRIVATE_KEY
-const POLYGONSCAN_API_KEY = process.env.POLYGONSCAN_API_KEY
 
 const projectId = 'ab3704f728034cb3ba2efbe718e72788'
+// This is highly sensitive and you should get this private key from server somehow though ~ Author.
+const PRIVATE_KEY = process.env.PRIVATE_KEY
+const POLYGONSCAN_API_KEY = process.env.POLYGONSCAN_API_KEY
+// From alchemy's "Demo App"
+const ALCHEMY_API_KEY = 'C4QURL1CGkEuSDPTR2LO7nuFLFVXQ5tD'
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -49,6 +52,10 @@ module.exports = {
 		// Learn: Deployment to polygontestnet (mumbai); source: https://docs.polygon.technology/docs/develop/hardhat#compiling-the-contract
 		matic: {
 			url: 'https://rpc-mumbai.maticvigil.com',
+			accounts: [PRIVATE_KEY],
+		},
+		goerli: {
+			url: `https://eth-goerli.alchemyapi.io/v2/${ALCHEMY_API_KEY}`,
 			accounts: [PRIVATE_KEY],
 		},
 	},
