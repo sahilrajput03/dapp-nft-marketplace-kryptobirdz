@@ -551,3 +551,11 @@ you need to give a project name then you can use that button copy that api key:
 Viewing a transaction of goerli on [goerli.etherscan.io](https://goerli.etherscan.io)
 
 ![](./ss/ss-transaction_1_goerli.png)
+
+## Projects using web3modal?
+
+Github: [Click here](https://github.com/WalletConnect/web3modal)
+Official React Example Usage with nextjs: [Find here in these steps](https://github.com/WalletConnect/web3modal#2-follow-instructions-and-examples-for-your-favourite-framework)
+![image](https://user-images.githubusercontent.com/31458531/193338430-770ce96d-e244-4df4-8d99-7c4937b93d5d.png)
+
+![image](https://user-images.githubusercontent.com/31458531/193338737-e57d4f26-a80a-43b4-94ef-f1f19d4f8696.png)
