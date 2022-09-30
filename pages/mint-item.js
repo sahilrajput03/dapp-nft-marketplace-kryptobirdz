@@ -75,6 +75,7 @@ export default function MintItem() {
 				image: imageFile,
 			})
 			window.metadata = metadata
+			debugger
 			// run a function that creates sale and passes in the url
 			createSale(metadata.url) // using nft.storage's ipfs
 			// createSale(url) // using infura's ipfs
