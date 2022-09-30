@@ -7,6 +7,14 @@
 
 - State Of The Dapps - [Click here](https://www.stateofthedapps.com/)
 
+# Never forget
+
+**PoW(Proof of Work), PoS(Proof of stake)**
+
+Consensus: Ethereum uses a consensus technique known as PoW(Proof of Work). The issue with Ethereum is that it necessitates a lot of processing power. Ethereum requires a significant amount of energy and It results in decreasing participation of users. This mechanism increases security to some extent. In polygon consensus is achieved by the mechanism based on PoS(Proof of stake), If a user joins the Polygon network, they would be rewarded in the form of points. Consensus is achieved faster in the Polygon blockchain.
+
+[TOODO - Read it complete @ here](https://www.geeksforgeeks.org/ethereum-vs-polygon-which-is-better-for-nfts/#:~:text=Ethereum%20performs%20only%2013%2D15,50000%2D60000%20transactions%20per%20second.&text=Gas%20Fees-,OpenSea%20consists%20of%20the%20whole%20host%20of%20gas%20fees%20related,associated%20with%20Polygon%20on%20OpenSea.)
+
 # Blockchain
 
 - **Official Ethereum Networks:** [Click here](https://ethereum.org/en/developers/docs/networks/#public-networks)
@@ -532,6 +540,11 @@ you need to give a project name then you can use that button copy that api key:
 - read and write only contract instances [source](https://dapp-world.com/smartbook/how-to-use-ethers-with-polygon-k5Hn):
 
 ![](./ss/ss-read-and-write-only-contract-instances.png)
+
+
+## Alchemy
+
+![image](https://user-images.githubusercontent.com/31458531/193222270-e0325115-959b-4aab-8abd-924ff3ca007c.png)
 
 # Goerli's Experience
 
