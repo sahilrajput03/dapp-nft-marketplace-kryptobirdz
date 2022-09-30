@@ -1,3 +1,8 @@
+## TODO CONTINUE DEPLOYING TO TESTNET:
+
+- https://hardhat.org/tutorial/deploying-to-a-live-network
+- https://ethereum.org/en/developers/docs/networks/#ethereum-testnets
+
 ## dapps Updated Example Sites
 
 - State Of The Dapps - [Click here](https://www.stateofthedapps.com/)
@@ -5,6 +10,9 @@
 # Blockchain
 
 - **Official Ethereum Networks:** [Click here](https://ethereum.org/en/developers/docs/networks/#public-networks)
+- What is `hre` in `import hre from 'hardhat'`? Ans. **[Hardhat Runtime Environment](https://hardhat.org/hardhat-runner/docs/advanced/hardhat-runtime-environment)**.
+
+https://hardhat.org/hardhat-runner/docs/advanced/hardhat-runtime-environment
 
 Polygon Faucet: https://faucet.polygon.technology/ (adds 0.2 MATIC to your mumbai testnet accout).
 
