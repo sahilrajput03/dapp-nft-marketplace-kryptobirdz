@@ -26,6 +26,8 @@
 		"@nomiclabs/hardhat-ethers": "^2.1.0",
 		"@nomiclabs/hardhat-waffle": "^2.0.3",
 		"@openzeppelin/contracts": "^4.7.2",
+		"@web3modal/ethereum": "^2.0.0-alpha.4",
+		"@web3modal/react": "^2.0.0-alpha.4",
 		"axios": "^0.27.2",
 		"chai": "^4.3.6",
 		"dotenv": "^16.0.1",
