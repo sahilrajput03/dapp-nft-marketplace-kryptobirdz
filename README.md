@@ -7,6 +7,10 @@
 
 - State Of The Dapps - [Click here](https://www.stateofthedapps.com/)
 
+# Never forget
+
+Ethereum uses a consensus technique known as PoW(Proof of Work). The issue with Ethereum is that it necessitates a lot of processing power. Ethereum requires a significant amount of energy and It results in decreasing participation of users. [Source](https://www.geeksforgeeks.org/ethereum-vs-polygon-which-is-better-for-nfts/#:~:text=Ethereum%20performs%20only%2013%2D15,50000%2D60000%20transactions%20per%20second.&text=Gas%20Fees-,OpenSea%20consists%20of%20the%20whole%20host%20of%20gas%20fees%20related,associated%20with%20Polygon%20on%20OpenSea.)
+
 # Blockchain
 
 - **Official Ethereum Networks:** [Click here](https://ethereum.org/en/developers/docs/networks/#public-networks)
