@@ -3,6 +3,7 @@ import * as mumbai from './config-mumbai'
 
 let config
 
+// FIX THIS USING: `hh.network.name`, please reafer file://./scripts/deployKryptoBird.js
 if (process.env.MUMBAI === 'true') {
 	config = mumbai
 } else {

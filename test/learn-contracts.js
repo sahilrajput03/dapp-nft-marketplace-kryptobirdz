@@ -1,5 +1,5 @@
 const {expect} = require('chai')
-const {BigNumber} = require('ethers')
+const {BigNumber} = require('ethers') // hh.ethers.BigNumber , also works.
 const {ethers, network} = require('hardhat')
 // const {ethers} = require('ethers') // from your own
 // Article Writing Test for Contract: https://dev.to/jacobedawson/import-test-a-popular-nft-smart-contract-with-hardhat-ethers-12i5
@@ -281,7 +281,15 @@ describe('Contract2 Tests', function () {
 })
 
 // FYI: 1eth = 10**9gwei = 10**18 wei). ~Sahil: ALSO: 1 gwei is gigaWei i.e., 10**9 wei
-// const ethValue = ethers.utils.formatEther(weiValue) //? Convert wei to ether
+//? CONVERT WEI TO ETHER
+// const ethValue = ethers.utils.formatEther(weiValue) 
+/**
+ * DOCS: ethers.utils.formatUnits( value [ , unit = "ether" ] ) ⇒ string
+ * Returns a string representation of value formatted with unit digits (if it is a number) or to the unit specified (if a string).
+ * DOCS: https://docs.ethers.io/v5/api/utils/display-logic/#utils-formatEther
+ */
+
+
 
 // Learn simple math with BigNumber (subtraction)
 // console.log(BigNumber.from('33919000271350').sub(BigNumber.from('33919000271360')))
