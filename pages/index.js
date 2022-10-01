@@ -8,13 +8,13 @@ import {nftaddress, nftmarketaddress, networkName} from '../config'
 import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
 import KBMarket from '../artifacts/contracts/KBMarket.sol/KBMarket.json'
 /* // TODO: Usin web3modal react  */
-import {ConnectButton, useAccount} from '@web3modal/react'
+// import {ConnectButton, useAccount} from '@web3modal/react'
 
 // console.log({nftaddress, nftmarketaddress})
 
 export default function Home() {
 	/* // TODO: Usin web3modal react  */
-	const {connected} = useAccount()
+	// const {connected} = useAccount()
 	const [nfts, setNFts] = useState([])
 	const [loadingState, setLoadingState] = useState('not-loaded')
 
@@ -136,13 +136,7 @@ export default function Home() {
 		await transaction.wait()
 		loadNFTs()
 	}
-	if (loadingState === 'loaded' && !nfts.length)
-		return (
-			<>
-				<h1 className='px-20 py-7 text-4x1'>No NFts in marketplace</h1>
-				<div>I am button</div>
-			</>
-		)
+	if (loadingState === 'loaded' && !nfts.length) return <h1 className='px-20 py-7 text-4x1'>No NFts in marketplace</h1>
 
 	// if (typeof window != 'undefined') {
 	// 	window.d = nfts
@@ -182,7 +176,7 @@ export default function Home() {
 				</div>
 			</div>
 
-			{/* // TODO: Usin web3modal react  */}
+			{/* // TODO: Use web3modal react lib  */}
 			{/* {connected ? '' : <ConnectButton />} */}
 		</div>
 	)
