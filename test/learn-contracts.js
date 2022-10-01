@@ -69,14 +69,13 @@ describe('Contract1 Tests', function () {
 		const address = await contract1.myAdd()
 		expect(typeof address).to.equal('string')
 		expect(address).to.equal(FirstAccAddr)
-		const defBalance = await contract1.getDefBalance()
+		const defBalance = await contract1.getDefBalance() // we defined `getDefBalance` this function in the contract itself
 		// console.log({defBalance})
 		const expectedKeys = ['_hex', '_isBigNumber']
 		expect(Object.keys(defBalance)).to.have.same.members(expectedKeys)
 		expect(typeof defBalance).equal('object')
-		expect(defBalance).equal(0)
-		expect(defBalance).equal('0')
-		expect(defBalance).equal(BigNumber.from('0')) // BigNumber.from('0') // https://docs.ethers.io/v5/api/utils/bignumber/
+
+		expect(defBalance.eq(0)).equal(true)
 
 		// Where is this value coming from.. coz its chainging everytime
 		const myBalance = await contract1.getMyBalance()
@@ -115,12 +114,12 @@ describe('Contract2 Tests', function () {
 		// console.log(contract2)
 		const fund = await contract2.fund()
 		expect(fund.addr).to.equal(zeroAddress)
-		expect(fund.amt).to.equal(0)
+		expect(fund.amt.eq(0)).equal(true)
 
 		await contract2.change()
 		const newFund = await contract2.fund()
 		expect(newFund.addr).to.equal(FirstAccAddr)
-		expect(newFund.amt).to.equal(25)
+		expect(newFund.amt.eq(25)).equal(true)
 
 		// LEARN ARRAYS
 		const missingArgumentArrayErr = {
@@ -151,9 +150,9 @@ describe('Contract2 Tests', function () {
 
 		// Push item to array
 		await contract2.pushArr(5)
+		// `valueAt0` is a BigNumber
 		const valueAt0 = await contract2.arr(0) // contract2.arr(0) gets value at 0 index
-		expect(valueAt0).equal(5)
-		expect(valueAt0).equal(BigNumber.from('5'))
+		expect(valueAt0.eq(5)).equal(true)
 
 		// Pop and try to access now will throw err again coz no value @ 0 index again as last above error
 		await contract2.popArr()
@@ -167,17 +166,21 @@ describe('Contract2 Tests', function () {
 		expect(err2.message).equal(nullPointerArrayError.message)
 
 		// FIXED SIZE ARRAY (i.e., see `barr` in smart contract)
-		expect(await contract2.barr(0)).equal(0)
-		expect(await contract2.barr(0)).equal('0')
-		expect(await contract2.barr(0)).equal(BigNumber.from('0'))
+		const bal = await contract2.barr(0)
+		expect(bal.eq(0)).equal(true)
+
 		// Same string comparison and BigNumber comparision *works* for beloe entities at index 1 and 2 as well -
-		expect(await contract2.barr(1)).equal(0)
-		expect(await contract2.barr(2)).equal(0)
+		const bar1 = await contract2.barr(1)
+		const bar2 = await contract2.barr(2)
+		expect(bar1.eq(0)).equal(true)
+		expect(bar2.eq(0)).equal(true)
+		// expect(await contract2.barr(1)).equal(0)
+		// expect(await contract2.barr(2)).equal(0)
 
 		await contract2.setSecondIndexValueInBarr(51)
-		expect(await contract2.barr(1)).equal(51)
-		expect(await contract2.barr(1)).equal('51')
-		expect(await contract2.barr(1)).equal(BigNumber.from('51'))
+
+		const newBar1 = await contract2.barr(1)
+		expect(newBar1.eq(51)).equal(true)
 
 		// learn enums
 		// enum ActionChoices{left,right,up,down} which means left=0, right=1, up=2, down=3
@@ -193,8 +196,8 @@ describe('Contract2 Tests', function () {
 		// mapping(key => value) VISIBILITYIDENTIFIER(public/private) VARIABLE_NAME;
 		// KEY can be (uint, string and address i.e., elementary data-types) and VALUE can be any data-type (including structs and all)
 
-		//! Learn functions
-		//! VISIBILITY IDENTIFIERS:
+		//?@@@@ Learn functions
+		//?@@@@ VISIBILITY IDENTIFIERS:
 		// 1. public: callable internally, externally and also by inherited contracts
 		// 2. private callable only via contract itself not via derived contract
 		// 3. external: callable only from other contracts and externally (*not* callable by contract itself)
@@ -203,8 +206,16 @@ describe('Contract2 Tests', function () {
 		expect(await contract2.myString()).equal('')
 		// Learn: Getter function can either be pure or view
 		// PURE FUNCTIONS cannot modify/read state variables
-		expect(await contract2.sumExternalPure(2, 3)).equal(5) // external pure
-		expect(await contract2.multiplyPublicPure(2, 3)).equal(6) // public pure
+		// `sumExternalPure` is of type BigNumber
+		const sumExternalPureResult = await contract2.sumExternalPure(2, 3) // external pure
+		// console.log('sumExternalPure?', sumExternalPure)
+		expect(sumExternalPureResult.eq(5)).equal(true)
+
+		const multiplyPublicPureResult = await contract2.multiplyPublicPure(2, 3) // public pure
+		expect(multiplyPublicPureResult.eq(6)).equal(true)
+
+		// expect(await contract2.sumExternalPure(2, 3)).equal(5)
+		// expect(await contract2.multiplyPublicPure(2, 3)).equal(6)
 		// VIEW FUNCTION cannot modify state variables but can read state
 		expect(await contract2.namePublicView()).equal('sahil')
 		expect(await contract2.nameExternalView()).equal('sahil')
@@ -217,9 +228,12 @@ describe('Contract2 Tests', function () {
 		// console.log(rc.events.map((event) => event.event)) // Lists all emmited events from tx
 		const myEvent = receipt.events.find((event) => event.event === 'myEvent')
 		const [foo, bar, baz] = myEvent.args
-		expect(foo).equal(7)
-		expect(bar).equal(8)
-		expect(baz).equal(9)
+		// `foo`, `bar`, `baz` is of type BigNumber
+		// console.log('foo?', foo)
+		expect(foo.eq(7)).equal(true)
+		expect(bar.eq(8)).equal(true)
+		expect(baz.eq(9)).equal(true)
+
 		const yourEvent = receipt.events.find((event) => event.event === 'yourEvent')
 		const [buzz] = yourEvent.args
 		expect(buzz).equal('bacardi')
@@ -282,14 +296,12 @@ describe('Contract2 Tests', function () {
 
 // FYI: 1eth = 10**9gwei = 10**18 wei). ~Sahil: ALSO: 1 gwei is gigaWei i.e., 10**9 wei
 //? CONVERT WEI TO ETHER
-// const ethValue = ethers.utils.formatEther(weiValue) 
+// const ethValue = ethers.utils.formatEther(weiValue)
 /**
  * DOCS: ethers.utils.formatUnits( value [ , unit = "ether" ] ) ⇒ string
  * Returns a string representation of value formatted with unit digits (if it is a number) or to the unit specified (if a string).
  * DOCS: https://docs.ethers.io/v5/api/utils/display-logic/#utils-formatEther
  */
-
-
 
 // Learn simple math with BigNumber (subtraction)
 // console.log(BigNumber.from('33919000271350').sub(BigNumber.from('33919000271360')))
@@ -306,14 +318,17 @@ describe('Contract 3 Tests', function () {
 		const oneEtherInWei = ethers.utils.parseEther('1') // 1 eth = 10**18 wei
 		expect(oneEtherInWei.eq(BigNumber.from('1000000000000000000')))
 
-		const contract3 = await Contract3.deploy() //! last argument will pbe msg object ~Sahil (check Lock.js file)
+		const contract3 = await Contract3.deploy() //? @@@@LEARN@@@: last argument will pbe msg object ~Sahil (check Lock.js file)
 		await contract3.deployed()
 		// console.log(contract3.address) // Address of contract. It changes on every run of the test ~Sahil
-		expect(await contract3.balance()).equal(0) // initial value
+		const balanceContract3 = await contract3.balance()
+		expect(balanceContract3.eq(0)).equal(true) // initial value
 		// Adding money to contract address from thin air IMO ~Sahil (=> Passing msg.value to solidity function: https://ethereum.stackexchange.com/a/102760)
 		// msg.value: https://ethereum.stackexchange.com/a/43382
 		await contract3.getMoney({value: amount}) // tldr: last argument is considered as `msg` object ~Sahil
-		expect(await contract3.balance()).equal(amount) // balance is returned in gwei
+
+		const balanceUpdatedContract3 = await contract3.balance()
+		expect(balanceUpdatedContract3.eq(amount)).equal(true) // balance is returned in gwei
 		// Add more money
 		const tx1 = await contract3.getMoney({value: amount})
 		expect(tx1.from).equal(firstAcc.address) // tx.from is the address of first user in the 20 account of hardhat accounts ~Sahi
@@ -352,9 +367,9 @@ describe('contract 4', function () {
 		// msg.sender in contracts is the address of the `firstAccAddr` from 20 demo accounts of the hardhat node.
 		expect(msgSender).equal(FirstAccAddr)
 		// msg.value in contracts (default value is 0)
-		expect(msgValueInWeiWithTheMessage).equal(0)
+		expect(msgValueInWeiWithTheMessage.eq(0)).equal(true)
 		// address(this).balance: balance of contract - IMO~Sahil
-		expect(amount).equal('0')
+		expect(amount.eq(0)).equal(true)
 		// gasleft() in contracts
 		// console.log(gasLeft) // (static value is passed to test manually- can be flaky test in future ~Sahil)
 		expect(gasLeft._isBigNumber).equal(true)
@@ -374,7 +389,7 @@ describe('contract 4', function () {
 		await contract4.isTwoDigitNumber({value: 50})
 		const ts2 = await contract4.getSomeTimeStamp()
 
-		//! This can be flaky test ~Sahil
+		//? @@@@@@ ##### This can be flaky test ~Sahil
 		expect(ts1).not.equal(ts2)
 	})
 })
@@ -393,6 +408,7 @@ describe('contract 5', function () {
 		// REVERT
 		const expectedErrMessage = 'Not owner'
 		// calling transaction from other than owner account (i.e., 1st account) of the default accounts: https://github.com/ethers-io/ethers.js/issues/1449#issuecomment-817198604
+
 		await expect(contract5.connect(secondSigner).getMoney({value: 6})).to.be.revertedWith(expectedErrMessage)
 
 		// ASSERT
@@ -428,7 +444,7 @@ describe('contract 5', function () {
 
 		// waht does {uint public targetAmount = 7 ether} in solidity means
 		const Amount = await contract5.targetAmount()
-		expect(Amount).equal(ethers.utils.parseEther('7'))
+		expect(Amount.eq(ethers.utils.parseEther('7'))).equal(true) //? @@ LEARN: parseEther requires a string type only, not a number.
 		const sevenEthersInWei = BigNumber.from('7000000000000000000')
 		expect(Amount.eq(sevenEthersInWei)).equal(true)
 	})
@@ -475,7 +491,7 @@ describe('contract 6', function () {
 
 		const [firstSigner] = await ethers.getSigners()
 
-		// ! Deleting Owner
+		//?@@@@@ Deleting Owner
 		expect(await contract6.getOwnerAddress()).equal(firstSigner.address)
 		await contract6.deleteOwner()
 		expect(await contract6.getOwnerAddress()).equal(zeroAddress)
@@ -494,7 +510,7 @@ describe('contract 6', function () {
 		expect(contractBal.eq(expectedWei)).equal(true)
 
 		const initialBalSecondSigner = await secondSigner.getBalance()
-		//! Withdraw to any user
+		//? @@@@@@@@@ Withdraw to any user
 		const tx2 = await contract6.connect(secondSigner).withdrawToAny()
 		const rc2 = await tx2.wait()
 		const gasCostForTxn2 = rc2.gasUsed.mul(rc2.effectiveGasPrice)

@@ -74,7 +74,7 @@ contract Contract6 {
 	// 	balance += msg.value;
 	// }
 
-	// Transfer money from contract to given account ~Sahil
+	// Transfer money from contract to given account ~Sahil (We have done `to.transfer` practically in 3.sol contract before)
 	// function withdraw(address payable to, uint256 amt) public {
 	// 	balance -= amt;
 	// 	to.transfer(amt); // `transfer` is a builtin function for address imo ~Sahil
