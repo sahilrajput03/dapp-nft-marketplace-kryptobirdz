@@ -1,3 +1,5 @@
+**Project deployed @** -  https://dapp-nft-marketplace-kryptobirdz.vercel.app/
+
 ## TODO CONTINUE DEPLOYING TO TESTNET:
 
 - https://hardhat.org/tutorial/deploying-to-a-live-network
