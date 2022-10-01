@@ -419,7 +419,7 @@ more?
 
 ![](./ss/ss-destructed-contract.png)
 
-![](./ss/ss-inheritance.png)
+![image](https://user-images.githubusercontent.com/31458531/193409499-e5bc3cc7-2ca3-4fb8-a749-efdc2628b297.png)
 
 ![image](https://user-images.githubusercontent.com/31458531/193409400-02040366-b024-40ac-af15-e5c4014c8ecc.png)
 
