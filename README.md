@@ -421,7 +421,7 @@ more?
 
 ![](./ss/ss-inheritance.png)
 
-![](./ss/ss-importing-files-solidity.png)
+![image](https://user-images.githubusercontent.com/31458531/193409400-02040366-b024-40ac-af15-e5c4014c8ecc.png)
 
 **Boilerplate contract:**
 
