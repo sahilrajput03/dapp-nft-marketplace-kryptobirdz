@@ -23,12 +23,12 @@ require('hardhat-watcher')
 // 	flag: 'r',
 // })
 
-const projectId = 'ab3704f728034cb3ba2efbe718e72788'
-// This is highly sensitive and you should get this private key from server somehow though ~ Author.
+const projectId = process.env.PROJECT_ID
+// This (private_key) is highly sensitive and you should get this private key from server somehow though ~ Author.
 const PRIVATE_KEY = process.env.PRIVATE_KEY
 const POLYGONSCAN_API_KEY = process.env.POLYGONSCAN_API_KEY
 // From alchemy's "Demo App"
-const ALCHEMY_API_KEY = 'C4QURL1CGkEuSDPTR2LO7nuFLFVXQ5tD'
+const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
