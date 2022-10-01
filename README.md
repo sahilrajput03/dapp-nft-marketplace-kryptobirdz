@@ -565,3 +565,5 @@ Official React Example Usage with nextjs: [Find here in these steps](https://git
 ## Swapnil project
 
 ![image](https://user-images.githubusercontent.com/31458531/193411482-e9f94ecb-6179-4e32-a9af-7951d366fac3.png)
+
+**To continue from video 24 to follow up on the project's coding.**
