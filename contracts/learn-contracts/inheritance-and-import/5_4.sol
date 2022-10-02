@@ -21,10 +21,10 @@ contract Contract5_4 is Ownable {
 	uint256 public balance; // initial value is 0
 
 	// Adding money to contract address from thin air IMO ~Sahil
-	function getMoney() public payable {
-		//!LEARN: Below throws error like: Operator != not compatible with types address and function () view returns (address).
-		//!LEARN: This happens becoz we are inheriting `Ownable` contract from @openzepplin's contracts library ~Sahil
-		//!LEARN: (This happens *idk exactly* ~Sahil)
+	function getMoney() public payable onlyOwner {
+		//?LEARN: Below throws error like: Operator != not compatible with types address and function () view returns (address).
+		//?LEARN: This happens becoz we are inheriting `Ownable` contract from @openzepplin's contracts library ~Sahil
+		//?LEARN: (This happens *probably* becoz we are inheriting the `Ownable` contract and having `onlyOwner` modifier in use. ~Sahil)
 		// if(msg.sender != owner){
 		//     revert("Not owner");
 		// }

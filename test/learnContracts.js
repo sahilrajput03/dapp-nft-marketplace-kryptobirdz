@@ -23,17 +23,18 @@ describe('Contract1 Tests', function () {
 	beforeEach(async function () {
 		// await network.provider.send('hardhat_reset')
 	})
-	it('first contract', async function () {
+	it('first account has 10,000 eth', async () => {
 		// Reset accounts in hardhat node // https://ethereum.stackexchange.com/a/112437/106687
 		await network.provider.send('hardhat_reset')
 
 		const [firstAcc] = await ethers.getSigners()
 		const firstAccBal = await firstAcc.getBalance()
 		const DEFAULT_BALANCE = BigNumber.from('10000000000000000000000')
-		// Using bigInt is also works fine and docs provide example an example using big Int as well ~Sahil
-		// const DEFAULT_BALANCE = BigNumber.from(10_000_000_000_000_000_000_000n) // ~Sahil: Learn to use big int in js: https://github.com/sahilrajput03#limitation-of-javascript-amazing-bigint-type
+		// const DEFAULT_BALANCE = BigNumber.from(10_000_000_000_000_000_000_000n) // Using bigInt also works fine and docs provide example an example using big Int as well. // ~Sahil: Learn to use big int in js: https://github.com/sahilrajput03#limitation-of-javascript-amazing-bigint-type
 		expect(firstAccBal.eq(DEFAULT_BALANCE)).eq(true)
+	})
 
+	it('first contract', async function () {
 		const Contract1 = await ethers.getContractFactory('Contract1')
 		const contract1 = await Contract1.deploy()
 		await contract1.deployed()
@@ -308,7 +309,7 @@ describe('Contract2 Tests', function () {
 
 describe('Contract 3 Tests', function () {
 	it('simple amount transfer', async function () {
-		// Contracts are deployed using the first signer/account by default ~Hardhat docs
+		// @@@LEARN: Contracts are deployed using the first signer/account by default ~Hardhat docs
 		const [firstAcc] = await ethers.getSigners()
 		const Contract3 = await ethers.getContractFactory('Contract3')
 		const ONE_GWEI = 10 ** 9
@@ -318,12 +319,12 @@ describe('Contract 3 Tests', function () {
 		const oneEtherInWei = ethers.utils.parseEther('1') // 1 eth = 10**18 wei
 		expect(oneEtherInWei.eq(BigNumber.from('1000000000000000000')))
 
-		const contract3 = await Contract3.deploy() //? @@@@LEARN@@@: last argument will pbe msg object ~Sahil (check Lock.js file)
+		const contract3 = await Contract3.deploy() //? @@@@LEARN@@@: last argument will be msg object ~Sahil (check Lock.js file)
 		await contract3.deployed()
 		// console.log(contract3.address) // Address of contract. It changes on every run of the test ~Sahil
 		const balanceContract3 = await contract3.balance()
 		expect(balanceContract3.eq(0)).equal(true) // initial value
-		// Adding money to contract address from thin air IMO ~Sahil (=> Passing msg.value to solidity function: https://ethereum.stackexchange.com/a/102760)
+		// Adding money to contract address from first signer account ~Sahil (=> Passing msg.value to solidity function: https://ethereum.stackexchange.com/a/102760)
 		// msg.value: https://ethereum.stackexchange.com/a/43382
 		await contract3.getMoney({value: amount}) // tldr: last argument is considered as `msg` object ~Sahil
 
@@ -351,7 +352,7 @@ describe('Contract 3 Tests', function () {
 	})
 })
 
-const requireErrorMessagePrefix = 'VM Exception while processing transaction: reverted with reason string '
+const genericRequireErrorMessagePrefix = 'VM Exception while processing transaction: reverted with reason string '
 
 describe('contract 4', function () {
 	it('testing msg.value', async function () {
@@ -405,13 +406,26 @@ describe('contract 5', function () {
 
 		const [_, secondSigner] = await ethers.getSigners()
 
-		// REVERT
+		// @LEARN-REVERT (errorMessage can be tested)
 		const expectedErrMessage = 'Not owner'
 		// calling transaction from other than owner account (i.e., 1st account) of the default accounts: https://github.com/ethers-io/ethers.js/issues/1449#issuecomment-817198604
 
 		await expect(contract5.connect(secondSigner).getMoney({value: 6})).to.be.revertedWith(expectedErrMessage)
 
-		// ASSERT
+		/** REQUIRE vs. ASSERT? Source: https://codeforgeek.com/assert-vs-require-in-solidity/#:~:text=The%20assert()%20and%20require,It%20also%20flags%20an%20error.
+		 * 1. The big difference between the two is that the assert() function when false, uses up all the remaining gas and reverts all the changes made. Meanwhile, a require() function when false, also reverts back all the changes made to the contract but does refund all the remaining gas fees we offered to pay. This is the most common Solidity function used by developers for debugging and error handling.
+
+		 * 2. A properly running program should never reach a failing assert statement; if this occurs, there is a flaw in your contract that has to be addressed.
+
+		=> Q. When to use require() and assert() ?
+		Ans. Solidity documentation states it very clearly.
+
+		1. The assert function should only be used to examine invariants and test for internal problems.
+
+		2. The require function should be used to check return values from calls to external contracts or to guarantee that valid conditions, such as inputs or contract state variables, are satisfied.
+		*/
+
+		// @LEARN-ASSERT (errorMessage can *NOT* be tested because we can not pass message via `assert`)
 		// LEARN: chai matchers have no direct way of testing solidity assert errors: https://hardhat.org/hardhat-chai-matchers/docs/overview
 		let e1
 		try {
@@ -425,22 +439,22 @@ describe('contract 5', function () {
 		// LEARN: Below test doesn't work to test with the assert so above way of testing is the only way. (as this test pass even when assert instruction is commented)
 		// await expect(contract5.withdraw(333)).to.be.revertedWith('')
 
-		// REQUIRE
+		// @LEARN-REQUIRE (errorMessage can be tested - Way1)
 		const expectedErrMessage2 = 'xxx - U are not the owner'
 		await expect(contract5.connect(secondSigner).withdraw(1)).to.be.revertedWith(expectedErrMessage2)
-		// Dirty way - Using try and catch
+		// @LEARN-REQUIRE (errorMessage can be tested - Way2: Dirty way - Using try and catch)
 		const e2 = {}
 		try {
 			const tx = await contract5.connect(secondSigner).withdraw(1)
 		} catch (error) {
 			const {name, message} = error
 			e2.name = name
-			e2.message = message.slice(message.indexOf("'") + 1, -1)
-			e2.bareMessage = message
+			e2.message = message
+			e2.parsedMessage = parseRequireErrorMessage(message)
 		}
 		expect(e2.name).equal('Error')
-		expect(e2.message).equal(expectedErrMessage2)
-		expect(e2.bareMessage.startsWith(requireErrorMessagePrefix)).equal(true)
+		expect(e2.message.startsWith(genericRequireErrorMessagePrefix)).equal(true)
+		expect(e2.parsedMessage).equal(expectedErrMessage2)
 
 		// waht does {uint public targetAmount = 7 ether} in solidity means
 		const Amount = await contract5.targetAmount()
@@ -541,6 +555,9 @@ describe('contract 6', function () {
 	})
 })
 
+function parseRequireErrorMessage(message) {
+	return message.slice(message.indexOf("'") + 1, -1)
+}
 // describe('ecomm', function () {
 // 	it('ecomm1', async function () {
 // 		const adminAddress = 'sd'

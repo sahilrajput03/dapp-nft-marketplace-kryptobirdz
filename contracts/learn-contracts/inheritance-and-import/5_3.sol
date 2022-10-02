@@ -9,8 +9,8 @@ pragma solidity ^0.8.16;
 
 /*
 
-// import "./5_2_1.sol";
-// import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol"
+import "./5_2_1.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol"
 
 import "hardhat/console.sol";
 

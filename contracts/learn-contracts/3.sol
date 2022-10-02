@@ -6,7 +6,7 @@ pragma solidity ^0.8.16;
 contract Contract3 {
 	uint public balance; // initial value is 0
 
-	// Adding money to contract address from thin air IMO ~Sahil
+	// Adding money to contract address from the sender's account ~Sahil
 	function getMoney() public payable {
 		balance += msg.value;
 	}

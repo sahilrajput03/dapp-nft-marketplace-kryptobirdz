@@ -25,13 +25,13 @@ contract Contract6 {
 		// Now, `owner` is the creator of this contract ~Sahil
 	}
 
-	// ! Read this: Works phenomenally ~Sahil
+	// ?@@@@ Read this: Works phenomenally ~Sahil
 	// Function to deposit Ether into this contract.
 	// Call this function along with some Ether.
 	// The balance of this contract will be automatically updated.
 	function deposit() public payable {}
 
-	// ~Sahil: Contract's balance is not the owner's balance
+	// ~Sahil: Contract's balance is not the owner's balance, contract balance is the balance of the contract itself.
 	function getContractBalance() external view returns (uint) {
 		return address(this).balance;
 	}
@@ -43,8 +43,8 @@ contract Contract6 {
 
 		// send all Ether to owner (i.e., contract creator ~Sahil)
 		// Owner can receive Ether since the address of owner is payable
-		(bool success, ) = owner.call{value: amount}("");
-		require(success, "Failed to send Ether");
+		(bool success, ) = owner.call{value: amount}('');
+		require(success, 'Failed to send Ether');
 		// ~Sahil: ^ I din't find a way mimic any test for this require on failure event.
 	}
 
@@ -65,8 +65,8 @@ contract Contract6 {
 	function withdrawToAny() public {
 		// require(msg.sender == winner, "Not winner");
 
-		(bool sent, ) = msg.sender.call{value: address(this).balance}("");
-		require(sent, "Failed to send Ether");
+		(bool sent, ) = msg.sender.call{value: address(this).balance}('');
+		require(sent, 'Failed to send Ether');
 	}
 
 	// Adding money to contract address from thin air IMO ~Sahil
@@ -74,7 +74,8 @@ contract Contract6 {
 	// 	balance += msg.value;
 	// }
 
-	// Transfer money from contract to given account ~Sahil (We have done `to.transfer` practically in 3.sol contract before)
+	//? LEARN: (TIP: WE HAVE DONE `to.transfer`/`withdraw()` and have a test for `contract3` and `contract5` i.e., 3.sol and 5.sol)
+	// Transfer money from contract to given account ~Sahil
 	// function withdraw(address payable to, uint256 amt) public {
 	// 	balance -= amt;
 	// 	to.transfer(amt); // `transfer` is a builtin function for address imo ~Sahil

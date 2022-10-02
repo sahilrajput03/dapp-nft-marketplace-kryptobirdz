@@ -14,8 +14,13 @@ contract Contract1 {
 	address public myAdd;
 	mapping(uint => address) public myMap;
 
+	// @@@ LEARN:
+	// Use `address(this)` to get the address of the contract
+	// Use `address(this).balance` to get balance of the contract. Default value is: 0 
+
 	// All variables are assiged with 0, false, 0x000 (zeroAddress) or ''
 	constructor() {
+		// Hardcoding address of the `firstSigner`
 		myAdd = 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266; // in js myAdd is returned as plain string
 	}
 
@@ -37,10 +42,6 @@ contract Contract1 {
 		return defAddress.balance;
 	}
 
-	// TODO
-	// function setDefBalance1Ether() public view returns(uint) {
-	//     return defAddress.balance;
-	// }
 	function changeString() public {
 		myString = "sahil";
 	}
