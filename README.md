@@ -262,8 +262,14 @@ Promising for 10 coins in 30mins(7:40pm): https://faucet.egorfine.com/
 - ![](./ss/ss-more-insights-about-metamask-and-remix.png)
 - ![image](https://user-images.githubusercontent.com/31458531/193448210-e7056fd5-7a45-459c-a81f-a0f299c96b47.png)
 - ![image](https://user-images.githubusercontent.com/31458531/193450607-4eccecc4-acec-4fb2-82aa-29482055d5ee.png)
-- ![image](https://user-images.githubusercontent.com/31458531/193450749-79281e32-803d-4dc3-8112-d436063120c3.png)
-- ![image](https://user-images.githubusercontent.com/31458531/193450810-d1ec0c2b-3e9d-44f3-8c85-31b83a7c56d3.png)
+- Checking Logs to get Event send by the transaction:
+
+![image](https://user-images.githubusercontent.com/31458531/193450749-79281e32-803d-4dc3-8112-d436063120c3.png)
+
+- Checking Logs to get Event send by the transaction:
+
+![image](https://user-images.githubusercontent.com/31458531/193450810-d1ec0c2b-3e9d-44f3-8c85-31b83a7c56d3.png)
+
 - Add polygon mumbai testnet to metamask [source](https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-metamask/):
 
 ![](./ss/ss-add-polygon-mumbai-testnet.png)
