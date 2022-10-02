@@ -260,6 +260,16 @@ Promising for 10 coins in 30mins(7:40pm): https://faucet.egorfine.com/
 
 - ![](./ss/ss-hello-world-contract-deployed-via-remix.png)
 - ![](./ss/ss-more-insights-about-metamask-and-remix.png)
+- ![image](https://user-images.githubusercontent.com/31458531/193448210-e7056fd5-7a45-459c-a81f-a0f299c96b47.png)
+- ![image](https://user-images.githubusercontent.com/31458531/193450607-4eccecc4-acec-4fb2-82aa-29482055d5ee.png)
+- Checking Logs to get Event send by the transaction:
+
+![image](https://user-images.githubusercontent.com/31458531/193450749-79281e32-803d-4dc3-8112-d436063120c3.png)
+
+- Checking Logs to get Event send by the transaction:
+
+![image](https://user-images.githubusercontent.com/31458531/193450810-d1ec0c2b-3e9d-44f3-8c85-31b83a7c56d3.png)
+
 - Add polygon mumbai testnet to metamask [source](https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-metamask/):
 
 ![](./ss/ss-add-polygon-mumbai-testnet.png)
@@ -399,6 +409,8 @@ more?
 ![](./ss/ss-require-assert-and-revert.png)
 ![](./ss/ss-view-vs-pure-functions.png)
 
+![image](https://user-images.githubusercontent.com/31458531/193450068-04bf224f-3491-467b-8544-351abd1ef7d8.png)
+
 - [Docs - Transaction Response - Etherjs](https://docs.ethers.io/v5/single-page/#/v5/api/providers/types/-%23-providers-TransactionResponse) -
 
 ![](./ss/ss-tx-receipt.png)
@@ -419,9 +431,9 @@ more?
 
 ![](./ss/ss-destructed-contract.png)
 
-![](./ss/ss-inheritance.png)
+![image](https://user-images.githubusercontent.com/31458531/193409499-e5bc3cc7-2ca3-4fb8-a749-efdc2628b297.png)
 
-![](./ss/ss-importing-files-solidity.png)
+![image](https://user-images.githubusercontent.com/31458531/193409400-02040366-b024-40ac-af15-e5c4014c8ecc.png)
 
 **Boilerplate contract:**
 
@@ -561,3 +573,9 @@ Official React Example Usage with nextjs: [Find here in these steps](https://git
 ![image](https://user-images.githubusercontent.com/31458531/193338430-770ce96d-e244-4df4-8d99-7c4937b93d5d.png)
 
 ![image](https://user-images.githubusercontent.com/31458531/193338737-e57d4f26-a80a-43b4-94ef-f1f19d4f8696.png)
+
+## Swapnil project
+
+![image](https://user-images.githubusercontent.com/31458531/193411482-e9f94ecb-6179-4e32-a9af-7951d366fac3.png)
+
+**To continue from video 24 to follow up on the project's coding.**
