@@ -260,6 +260,7 @@ Promising for 10 coins in 30mins(7:40pm): https://faucet.egorfine.com/
 
 - ![](./ss/ss-hello-world-contract-deployed-via-remix.png)
 - ![](./ss/ss-more-insights-about-metamask-and-remix.png)
+- ![image](https://user-images.githubusercontent.com/31458531/193448210-e7056fd5-7a45-459c-a81f-a0f299c96b47.png)
 - Add polygon mumbai testnet to metamask [source](https://docs.polygon.technology/docs/develop/metamask/config-polygon-on-metamask/):
 
 ![](./ss/ss-add-polygon-mumbai-testnet.png)
