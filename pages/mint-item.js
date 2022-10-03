@@ -75,7 +75,6 @@ export default function MintItem() {
 				image: imageFile,
 			})
 			window.metadata = metadata
-			debugger
 			// run a function that creates sale and passes in the url
 			createSale(metadata.url) // using nft.storage's ipfs
 			// createSale(url) // using infura's ipfs
@@ -97,8 +96,24 @@ export default function MintItem() {
 		let contract = new ethers.Contract(nftaddress, NFT.abi, signer)
 		// alert('got url in window.url, now starting to mint')
 		window.url = url
-		let transaction = await contract.mintToken(url)
-		let tx = await transaction.wait()
+		let transaction
+		try {
+			transaction = await contract.mintToken(url)
+		} catch (error) {
+			console.log('myContractError1?', error)
+			console.log('myContractError1?', error.name)
+			console.log('myContractError1?', error.message)
+			return
+		}
+		let tx
+		try {
+			tx = await transaction.wait()
+		} catch (error) {
+			console.log('myContractError2?', error)
+			console.log('myContractError2?', error.name)
+			console.log('myContractError2?', error.message)
+			return
+		}
 		let event = tx.events[0]
 		let value = event.args[2]
 		let tokenId = value.toNumber()
@@ -111,11 +126,37 @@ export default function MintItem() {
 
 		// list the item for sale on the marketplace
 		contract = new ethers.Contract(nftmarketaddress, KBMarket.abi, signer)
-		let listingPrice = await contract.getListingPrice()
+		let listingPrice
+		try {
+			listingPrice = await contract.getListingPrice()
+		} catch (error) {
+			console.log('myContractError3?', error)
+			console.log('myContractError3?', error.name)
+			console.log('myContractError3?', error.message)
+			return
+		}
 		listingPrice = listingPrice.toString()
 
-		transaction = await contract.makeMarketItem(nftaddress, tokenId, price, {value: listingPrice})
-		await transaction.wait()
+		try {
+			transaction = await contract.makeMarketItem(nftaddress, tokenId, price, {value: listingPrice})
+		} catch (error) {
+			console.log('myContractError4?', error)
+			console.log('myContractError4?', error.name)
+			console.log('myContractError4?', error.message)
+			if (error.message.startsWith('insufficient funds for intrinsic transaction cost')) {
+				alert('Sorry, you do not have enough funds to complete this transaction. Please try again to buy this item with sufficient funds in your account.')
+			}
+			return
+		}
+
+		try {
+			await transaction.wait()
+		} catch (error) {
+			console.log('myContractError5?', error)
+			console.log('myContractError5?', error.name)
+			console.log('myContractError5?', error.message)
+			return
+		}
 		window.file = null
 		router.push('./')
 	}

@@ -7,6 +7,7 @@ import Web3Modal from 'web3modal'
 import {nftaddress, nftmarketaddress, networkName} from '../config'
 import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
 import KBMarket from '../artifacts/contracts/KBMarket.sol/KBMarket.json'
+import {getSafeEncodedURI} from '../utils/utilityFunctions'
 /* // TODO: Usin web3modal react  */
 // import {ConnectButton, useAccount} from '@web3modal/react'
 
@@ -147,13 +148,10 @@ export default function Home() {
 			<div className='px-4' style={{maxWidth: '1600px'}}>
 				<div className='grid grid-cols-1 items-center sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4'>
 					{nfts.map((nft, i) => {
-						console.log('nft.image?', nft.image)
-
 						// Get url safe encoded url of the image (had to do this to correct the url of the images minted with file name including #), now it works good though.
-						let k = nft.image
-						let filename = k.slice(k.lastIndexOf('/')).slice(1) // .slice(1) removes the starting / from the filename as well
-						filename = encodeURIComponent(filename)
-						let newUrlSafeImageURI = k.slice(0, k.lastIndexOf('/')) + '/' + filename
+						let newUrlSafeImageURI = getSafeEncodedURI(nft.image)
+						console.log('IMAGE: nft.image?', nft.image)
+						console.log('IMAGE: newUrlSafeImageURI?', newUrlSafeImageURI)
 
 						return (
 							<div key={i} className='border shadow rounded-x1 overflow-hidden'>

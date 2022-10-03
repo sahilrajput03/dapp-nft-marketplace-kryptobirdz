@@ -10,6 +10,7 @@ import {nftaddress, nftmarketaddress} from '../config'
 
 import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
 import KBMarket from '../artifacts/contracts/KBMarket.sol/KBMarket.json'
+import { getSafeEncodedURI } from '../utils/utilityFunctions'
 
 export default function AccountDashBoard() {
 	// array of nfts
@@ -73,20 +74,24 @@ export default function AccountDashBoard() {
 			<h1 style={{fontSize: '20px', color: 'purple'}}>Tokens Minted</h1>
 			<div className='px-4' style={{maxWidth: '1600px'}}>
 				<div className='grid grid-cols-1 items-center sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4'>
-					{nfts.map((nft, i) => (
-						<div key={i} className='border shadow rounded-x1 overflow-hidden'>
-							<img src={nft.image} />
-							<div className='p-4 bg-black bg-opacity-50 text-white'>
-								<p className='text-3x1 font-semibold'>{nft.name}</p>
-								<div style={{overflow: 'hidden'}}>
-									<p className='text-gray-400'>{nft.description}</p>
+					{nfts.map((nft, i) => {
+						let newUrlSafeImageURI = getSafeEncodedURI(nft.image)
+
+						return (
+							<div key={i} className='border shadow rounded-x1 overflow-hidden'>
+								<img src={newUrlSafeImageURI} alt='image here' />
+								<div className='p-4 bg-black bg-opacity-50 text-white'>
+									<p className='text-3x1 font-semibold'>{nft.name}</p>
+									<div style={{ overflow: 'hidden' }}>
+										<p className='text-gray-400'>{nft.description}</p>
+									</div>
+								</div>
+								<div className='p-4 bg-black'>
+									<p className='text-3x-1 mb-4 font-bold text-white'>{nft.price} ETH</p>
 								</div>
 							</div>
-							<div className='p-4 bg-black'>
-								<p className='text-3x-1 mb-4 font-bold text-white'>{nft.price} ETH</p>
-							</div>
-						</div>
-					))}
+						)
+					})}
 				</div>
 			</div>
 		</div>
