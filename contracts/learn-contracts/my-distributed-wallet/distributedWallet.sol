@@ -22,14 +22,16 @@ contract DistributedWallet {
 	address public owner;
 	bool public pause;
 
+	// Using `Payment` to create a payment struct instance ~Sahil
+	// Payment memory pay = Payment(msg.value, block.timestamp);
 	struct Payment {
 		uint amt;
 		uint timestampe;
 	}
 	struct Account {
 		uint totBal; // total balance of a address/person
-		uint numpay; // paymentIndex of the payment (number of payments have occured), default value: 0
-		mapping(uint => Payment) payments;
+		uint paymentIndex; // paymentIndex of the payment (number of payments have occured), default value: 0
+		mapping(uint => Payment) getPayment; // we can get the any payment details by calling this `getPayment` mapping with a paymentIndex value, i.e., `getPayment[somePaymentIndex]`
 	}
 	// LEARN: A mapping is called with keys using square bracket notation
 	// mapping of balance (balance will be mapped to each account number)
@@ -51,6 +53,7 @@ contract DistributedWallet {
 		// return balance;
 	}
 
+	// This modifier can be better named as `checkIsOwner` as well ~Sahil
 	modifier onlyOwner() {
 		require(owner == msg.sender, 'xxx - U are not the owner');
 		_; // This is called placeholder
@@ -68,10 +71,10 @@ contract DistributedWallet {
 	// Send money to contract
 	function sendMoney() public payable checkPause {
 		getAccount[msg.sender].totBal += msg.value;
-		getAccount[msg.sender].numpay += 1;
+		getAccount[msg.sender].paymentIndex += 1;
 		Payment memory pay = Payment(msg.value, block.timestamp);
-		uint userNumPay = getAccount[msg.sender].numpay;
-		getAccount[msg.sender].payments[userNumPay] = pay;
+		uint userPaymentIndex = getAccount[msg.sender].paymentIndex;
+		getAccount[msg.sender].getPayment[userPaymentIndex] = pay;
 
 		emit sendMoneyAlert(msg.sender, msg.value);
 
