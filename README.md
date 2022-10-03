@@ -5,6 +5,13 @@
 - https://hardhat.org/tutorial/deploying-to-a-live-network
 - https://ethereum.org/en/developers/docs/networks/#ethereum-testnets
 
+## Two official faucets recommended by hardhat for goerli blockchain
+
+Source: Docs of hardhat - [Click here](https://hardhat.org/tutorial/deploying-to-a-live-network#deploying-to-remote-networks)
+
+- https://faucets.chain.link/
+- https://goerlifaucet.com/
+
 ## dapps Updated Example Sites
 
 - State Of The Dapps - [Click here](https://www.stateofthedapps.com/)

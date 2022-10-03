@@ -20,6 +20,8 @@ export default function MintItem() {
 	const [fileUrl, setFileUrl] = useState(null)
 	const [formInput, setFormInput] = useState({price: '', name: '', description: ''})
 	const router = useRouter()
+	const [isMinting, setIsMinting] = useState(false)
+	// const [isMinting, setIsMinting] = useState(true) // for testing `isMinting`
 
 	// set up a function to fireoff when we update files in our form - we can add our
 	// NFT images - IPFS
@@ -52,6 +54,7 @@ export default function MintItem() {
 		// 	description,
 		// 	image: fileUrl,
 		// })
+		setIsMinting(true)
 		try {
 			// const added = await client.add(data) // ~ with infura's ipfs
 			// const url = `https://ipfs.infura.io/ipfs/${added.path}`
@@ -80,6 +83,7 @@ export default function MintItem() {
 			// createSale(url) // using infura's ipfs
 		} catch (error) {
 			console.log('Error uploading file:2:', error)
+			setIsMinting(false)
 		}
 	}
 
@@ -103,6 +107,7 @@ export default function MintItem() {
 			console.log('myContractError1?', error)
 			console.log('myContractError1?', error.name)
 			console.log('myContractError1?', error.message)
+			setIsMinting(false)
 			return
 		}
 		let tx
@@ -112,6 +117,7 @@ export default function MintItem() {
 			console.log('myContractError2?', error)
 			console.log('myContractError2?', error.name)
 			console.log('myContractError2?', error.message)
+			setIsMinting(false)
 			return
 		}
 		let event = tx.events[0]
@@ -119,6 +125,7 @@ export default function MintItem() {
 		let tokenId = value.toNumber()
 
 		if (isNaN(Number(formInput.price))) {
+			setIsMinting(false)
 			return alert('Please input numeric cost for the item')
 		}
 
@@ -133,6 +140,7 @@ export default function MintItem() {
 			console.log('myContractError3?', error)
 			console.log('myContractError3?', error.name)
 			console.log('myContractError3?', error.message)
+			setIsMinting(false)
 			return
 		}
 		listingPrice = listingPrice.toString()
@@ -146,6 +154,7 @@ export default function MintItem() {
 			if (error.message.startsWith('insufficient funds for intrinsic transaction cost')) {
 				alert('Sorry, you do not have enough funds to complete this transaction. Please try again to buy this item with sufficient funds in your account.')
 			}
+			setIsMinting(false)
 			return
 		}
 
@@ -155,6 +164,7 @@ export default function MintItem() {
 			console.log('myContractError5?', error)
 			console.log('myContractError5?', error.name)
 			console.log('myContractError5?', error.message)
+			setIsMinting(false)
 			return
 		}
 		window.file = null
@@ -168,8 +178,8 @@ export default function MintItem() {
 				<textarea placeholder='Asset Description' className='mt-2 border rounded p-4' onChange={(e) => setFormInput({...formInput, description: e.target.value})} />
 				<input placeholder='Asset Price in Eth' className='mt-2 border rounded p-4' onChange={(e) => setFormInput({...formInput, price: e.target.value})} />
 				<input type='file' name='Asset' className='mt-4' onChange={onFileChange} /> {fileUrl && <img alt='some image here' className='rounded mt-4' width='350px' src={fileUrl} />}
-				<button onClick={createMarket} className='font-bold mt-4 bg-purple-500 text-white rounded p-4 shadow-lg'>
-					Mint NFT
+				<button disabled={isMinting} onClick={createMarket} className={`font-bold mt-4 bg-purple-500 text-white rounded p-4 shadow-lg ${isMinting ? 'bg-gray-400' : ''}`}>
+					{!isMinting ? 'Mint NFT': 'Please complete the transaction and wait for the minting process to complete.'}
 				</button>
 			</div>
 		</div>
