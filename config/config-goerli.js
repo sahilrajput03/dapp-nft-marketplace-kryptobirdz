@@ -1,3 +1,3 @@
-export const nftmarketaddress = '0x18157AF3C92d22B92A975195e9C2D7c84BD0D522'
-export const nftaddress = '0x3a6831B33b64205f36dF6C61C97849EF3Ebcc83E'
+export const nftmarketaddress = '0x0600340D811e13E896F2be0CDCEb9A6daCdD9004'
+export const nftaddress = '0x0f26e37C60fEe416800815acb8353E49a68EE8Fc'
 export const networkName = 'goerli'
