@@ -2,6 +2,8 @@
 
 ## TODO CONTINUE DEPLOYING TO TESTNET:
 
+- ***TODO: Make a script to automatic make the demo transactions for my demo app, i.e., automatic mint 5 birds on a single run of script, thats it!***
+
 - https://hardhat.org/tutorial/deploying-to-a-live-network
 - https://ethereum.org/en/developers/docs/networks/#ethereum-testnets
 
