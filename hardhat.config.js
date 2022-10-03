@@ -57,6 +57,9 @@ module.exports = {
 		goerli: {
 			url: `https://eth-goerli.alchemyapi.io/v2/${ALCHEMY_API_KEY}`,
 			accounts: [PRIVATE_KEY],
+			// To fix the issue - `Error: cannot estimate gas; transaction may fail or may require manual gas limit [ ...`
+			// Source:  https://github.com/ethereum/solidity/issues/13159#issuecomment-1181803918
+			allowUnlimitedContractSize: true 
 		},
 	},
 	// source: https://docs.polygon.technology/docs/develop/hardhat#compiling-the-contract

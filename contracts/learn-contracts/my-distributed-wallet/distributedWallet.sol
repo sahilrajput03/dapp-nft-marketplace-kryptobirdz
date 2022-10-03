@@ -29,7 +29,7 @@ contract DistributedWallet {
 		uint timestampe;
 	}
 	struct Account {
-		uint totBal; // total balance of a address/person
+		uint bal; // total balance of a address/person
 		uint paymentIndex; // paymentIndex of the payment (number of payments have occured), default value: 0
 		mapping(uint => Payment) getPayment; // we can get the any payment details by calling this `getPayment` mapping with a paymentIndex value, i.e., `getPayment[somePaymentIndex]`
 	}
@@ -47,7 +47,7 @@ contract DistributedWallet {
 
 	// Get balance of contract (this is redundant {but we need to make it according to our project requirements} to use coz `balance` is public and can be accessed directly from all users directly)
 	function getBalance() public view checkPause returns (uint) {
-		return getAccount[msg.sender].totBal;
+		return getAccount[msg.sender].bal;
 
 		// my old code
 		// return balance;
@@ -70,7 +70,7 @@ contract DistributedWallet {
 
 	// Send money to contract
 	function sendMoney() public payable checkPause {
-		getAccount[msg.sender].totBal += msg.value;
+		getAccount[msg.sender].bal += msg.value;
 		getAccount[msg.sender].paymentIndex += 1;
 		Payment memory pay = Payment(msg.value, block.timestamp);
 		uint userPaymentIndex = getAccount[msg.sender].paymentIndex;
@@ -84,8 +84,8 @@ contract DistributedWallet {
 
 	// Withdraw to a particular given account
 	function withdraw(uint amt) public checkPause onlyOwner {
-		require(getAccount[msg.sender].totBal >= amt, 'Not enough funds in your account.');
-		getAccount[msg.sender].totBal -= amt;
+		require(getAccount[msg.sender].bal >= amt, 'Not enough funds in your account.');
+		getAccount[msg.sender].bal -= amt;
 		// msg.sender.tranfer(amt); // DEPRECATED IMO (from swapnil's course)
 		payable(msg.sender).transfer(amt); // https://stackoverflow.com/a/66297057/10012446
 		emit receiveMoneyAlert(msg.sender, amt);
