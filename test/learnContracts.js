@@ -378,7 +378,7 @@ describe('contract 4', function () {
 		// require() in solidity
 		const expectedErrMessage = "give number's is smaller"
 		// Clean way
-		await expect(contract4.isTwoDigitNumber({value: 6})).to.be.revertedWith(expectedErrMessage)
+		await expect(contract4.isTwoDigitNumber({value: 6})).to.be.revertedWith(expectedErrMessage) // this message is actually reverted by using statement in contract ie., `require(msg.value > 9, "give number's is smaller");`
 	})
 
 	it('block.timestamp', async () => {
