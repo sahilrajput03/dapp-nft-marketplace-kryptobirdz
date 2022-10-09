@@ -74,7 +74,7 @@ contract MultiSigWallet {
         _;
     }
 
-	// ~Sahil - Get balance of this contract
+	// ~Sahil - Get balance of this contract: https://ethereum.stackexchange.com/a/21449/106687
 	function balance() external view returns(uint){
 		return address(this).balance;
 	}
