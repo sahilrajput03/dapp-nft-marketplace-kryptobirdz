@@ -12,6 +12,7 @@ describe('multiSigWallet', () => {
 		QUORUM = 2,
 		DEFAULT_BALANCE = BigNumber.from('10000000000000000000000')
 
+	// vid 48
 	it('should have corrrect balance, approvers and quorum', async () => {
 		// Reset accounts in hardhat node // https://ethereum.stackexchange.com/a/112437/106687
 		await network.provider.send('hardhat_reset')
@@ -33,6 +34,8 @@ describe('multiSigWallet', () => {
 		// Sending 1000 wei to contract (using receive fn i.e., using `sendTransaction` method)
 		// Learn: `sendTransaction` @ `address of the wallet`
 		await acc1.sendTransaction({from: addr1, to: wallet.address, value: INITIAL_CONTRACT_BALANCE})
+		// In #TRUFFLE we do it like below:
+		// await web3.eth.sendTransaction({from: accounts[0], to: wallet.address, value: INITIAL_CONTRACT_BALANCE}) // 10_000 wei // /* `accounts[0]` is address in truffle (string) */
 
 		/** SHOULD HAVE 1000 WEI */ // Getting provider and balance: https://ethereum.stackexchange.com/a/123115/106687
 		const balance = await provider.getBalance(wallet.address) //LEARN: // const provider = ethers.getDefaultProvider(); // This works as well but too slow, takes around 2 seconds to execute
@@ -94,23 +97,24 @@ describe('multiSigWallet', () => {
 	})
 
 	it('should send transfer if quorum reached', async () => {
-		await wallet.createTransfer(TRANSFER_AMOUNT, acc6.address) // making txn from `firstAcc`
 		const idx = 1 // transferId coz its second transfer
+
+		await wallet.createTransfer(TRANSFER_AMOUNT, acc6.address) // making txn from `firstAcc`
 
 		// expect initial balance to be 10,000 eth
 		const balanceInitial = await provider.getBalance(acc6.address)
 		// console.log("🚀 ~ file: multiSigWallet.js ~ line 101 ~ it ~ balanceInitial", balanceInitial)
 
 		expect(balanceInitial.eq(DEFAULT_BALANCE)).to.be.true
-		await wallet.connect(acc1).approveTransfer(idx) // id=0 becoz its the first transfer request
-		await wallet.connect(acc2).approveTransfer(idx) // id=0 becoz its the first transfer request
+		await wallet.connect(acc1).approveTransfer(idx) // idx=1
+		await wallet.connect(acc2).approveTransfer(idx) // idx=1
 
 		// Since two two addresses approved (acc1 and acc2) the txn should have happened by now
 		const transfers = await wallet.getTransfers()
 		expect(transfers[idx].approvals.eq(2)).to.be.true // APPROVALS INCREMENTED i.e., 2
 		// console.log('transfers?', transfers) // Get pretty readable output
 
-		// Transfer amount should be withdrawn from wallet balance 
+		// Transfer amount should be withdrawn from wallet balance
 		const receivedWalletBalance = await provider.getBalance(wallet.address) //LEARN: // const provider = ethers.getDefaultProvider(); // This works as well but too slow, takes around 2 seconds to execute
 		const expectedWalletBalance = INITIAL_CONTRACT_BALANCE - TRANSFER_AMOUNT
 		expect(receivedWalletBalance.eq(expectedWalletBalance)).to.be.true
@@ -120,6 +124,29 @@ describe('multiSigWallet', () => {
 		// const balanceFinal = await provider.getBalance(addr6) // LEARN: provider way to get any signer's balance
 		const receivedProfit = balanceFinal.sub(balanceInitial)
 		expect(receivedProfit.eq(TRANSFER_AMOUNT)).to.be.true
+	})
+
+	// vid 53 - Testing unhappy paths ~Author
+	it('should NOT approve transfer if sender is not approved', async () => {
+		const idx = 1
+		const expectedErrMessage = 'only approvers allowed'
+		// To execute a txn from a particular account in truffle, consider searching TRUFFLE:#001 in this project
+		await expect(wallet.connect(acc5).approveTransfer(idx)).to.be.revertedWith(expectedErrMessage)
+	})
+
+	it('should NOT approve transfer if transfer is already sent', async () => {
+		// const transfers = await wallet.getTransfers()
+		// console.log('transfers?', transfers); // Get pretty readable output
+		const idx = 1
+		const expectedErrMessage = 'transfer has already been sent'
+		await expect(wallet.connect(acc3).approveTransfer(idx)).to.be.revertedWith(expectedErrMessage)
+	})
+
+	it('should NOT approve transfer twice', async () => {
+		const idx = 0 // using transfeId = 0 becoz 0th transfer has not been made yet (1st transfer was successful though)
+		const expectedErrMessage = 'you cannot approve transfer twice'
+		// LEARN: By default `firstAccount` is used to make the txn (and we have already approved the 0th transfer with firstAccount in "should increment approvals" test already.
+		await expect(wallet.approveTransfer(idx)).to.be.revertedWith(expectedErrMessage)
 	})
 })
 
