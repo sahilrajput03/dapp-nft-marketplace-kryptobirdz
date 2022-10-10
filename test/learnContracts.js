@@ -408,8 +408,8 @@ describe('contract 5', function () {
 
 		// @LEARN-REVERT (errorMessage can be tested)
 		const expectedErrMessage = 'Not owner'
+		
 		// calling transaction from other than owner account (i.e., 1st account) of the default accounts: https://github.com/ethers-io/ethers.js/issues/1449#issuecomment-817198604
-
 		await expect(contract5.connect(secondSigner).getMoney({value: 6})).to.be.revertedWith(expectedErrMessage)
 
 		/** REQUIRE vs. ASSERT? Source: https://codeforgeek.com/assert-vs-require-in-solidity/#:~:text=The%20assert()%20and%20require,It%20also%20flags%20an%20error.

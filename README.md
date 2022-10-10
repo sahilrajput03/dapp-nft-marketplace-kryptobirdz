@@ -592,3 +592,20 @@ Official React Example Usage with nextjs: [Find here in these steps](https://git
 ![image](https://user-images.githubusercontent.com/31458531/193411482-e9f94ecb-6179-4e32-a9af-7951d366fac3.png)
 
 **To continue from video 24 to follow up on the project's coding.**
+
+## notice in terminal
+
+```txt
+========= NOTICE =========
+Request-Rate Exceeded  (this message will not be repeated)
+
+The default API keys for each service are provided as a highly-throttled,
+community resource for low-traffic projects and early prototyping.
+
+While your application will continue to function, we highly recommended
+signing up for your own API keys to improve performance, increase your
+request rate/limit and enable other perks, such as metrics and advanced APIs.
+
+For more details: https://docs.ethers.io/api-keys/
+==========================
+```

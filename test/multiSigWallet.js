@@ -1,46 +1,65 @@
-const {ethers, network} = require('hardhat')
-const {expect} = require('chai')
+const {ethers, network, waffle} = require('hardhat')
+const {expect, assert} = require('chai')
 const {BigNumber} = ethers
 
 /** Passing multiple values to constructor of the contract: https://stackoverflow.com/a/69751261/10012446 */
 
-describe('distributed wallet contract', () => {
-	it('sendMoney??', async () => {
-		const [acc1, acc2, acc3, _, acc5] = await ethers.getSigners()
+describe('multiSigWallet', () => {
+	const {provider} = waffle
+	let wallet, Wallet, acc1, acc2, acc3, _, acc5, acc6, addr1, addr2, addr3, addr5, addr6, approversAddrs
+	const INITIAL_CONTRACT_BALANCE = 1000,
+		TRANSFER_AMOUNT = 100,
+		QUORUM = 2,
+		DEFAULT_BALANCE = BigNumber.from('10000000000000000000000')
 
-		const Wallet = await ethers.getContractFactory('MultiSigWallet')
-		const addr1 = acc1.address
-		const addr2 = acc2.address
-		const addr3 = acc3.address
-		const addr5 = acc5.address
-		const addrs = [addr1, addr2, addr3]
-		const wallet = await Wallet.deploy(addrs, 2) // we're passing array of addreses and quorum (second argument) as 2 i.e., minium number of approvers for the transaction
+	it('should have corrrect balance, approvers and quorum', async () => {
+		// Reset accounts in hardhat node // https://ethereum.stackexchange.com/a/112437/106687
+		await network.provider.send('hardhat_reset')
+
+		// Assign variables
+		;[acc1, acc2, acc3, _, acc5, acc6] = await ethers.getSigners()
+
+		Wallet = await ethers.getContractFactory('MultiSigWallet')
+		addr1 = acc1.address
+		addr2 = acc2.address
+		addr3 = acc3.address
+		addr5 = acc5.address
+		addr6 = acc6.address
+		approversAddrs = [addr1, addr2, addr3]
+		wallet = await Wallet.deploy(approversAddrs, QUORUM) // we're passing array of addreses and quorum (second argument) as 2 i.e., minium number of approvers for the transaction
 
 		await wallet.deployed()
 
 		// Sending 1000 wei to contract (using receive fn i.e., using `sendTransaction` method)
 		// Learn: `sendTransaction` @ `address of the wallet`
-		const INITIAL_AMOUNT = 1000
-		await acc1.sendTransaction({from: addr1, to: wallet.address, value: INITIAL_AMOUNT})
+		await acc1.sendTransaction({from: addr1, to: wallet.address, value: INITIAL_CONTRACT_BALANCE})
 
-		/** SHOULD HAVE 1000 WEI */
-		const contractBalance = await wallet.balance()
-		expect(contractBalance.eq(INITIAL_AMOUNT)).equal(true)
+		/** SHOULD HAVE 1000 WEI */ // Getting provider and balance: https://ethereum.stackexchange.com/a/123115/106687
+		const balance = await provider.getBalance(wallet.address) //LEARN: // const provider = ethers.getDefaultProvider(); // This works as well but too slow, takes around 2 seconds to execute
+		// In web3 (#TRUFFLE) ~Author // const balance = await web3.eth.getBalance(wallet.address)
+		expect(balance.eq(1000)).to.be.true
+		// SHOULD HAVE 1000 WEI - WITH MANUALLY METHOD i.e., `balance()` in contract
+		const walletBalance = await wallet.balance() // balance is manullay created function so it should be avoided ~Sahil
+		expect(walletBalance.eq(INITIAL_CONTRACT_BALANCE)).to.be.true
 
 		/** SHOULD HAVE CORRECT APPROVERS AND QUORUM */
 		const [a1, a2, a3] = await wallet.getApprovers()
 		const quorum = await wallet.quorum()
 
-		expect(quorum.eq(2)).equal(true)
+		expect(quorum.eq(QUORUM)).to.be.true
 		expect(a1).equal(addr1)
 		expect(a2).equal(addr2)
 		expect(a3).equal(addr3)
+	})
 
-		/** SHOULD CREATE TRANSFERS */
-		const TRANSFER_AMOUNT = 100
-		await wallet.createTransfer(TRANSFER_AMOUNT, addr5, {
-			from: addr1, // you can use it to execute this test from a particular account
-		})
+	it('should create transfers', async () => {
+		/** SHOULD CREATE TRANSFER */
+		await wallet.createTransfer(TRANSFER_AMOUNT, addr5) // making txn from `firstAcc`
+
+		// TRUFFLE:#001; In TRUFFLE when we need to execute a txn by a particular account use below syntax
+		// await wallet.createTransfer(TRANSFER_AMOUNT, addr5, {
+		// 	from: addr1, // you can use it to execute this test from a particular account
+		// })
 
 		const transfers = await wallet.getTransfers()
 		// console.log('transfers?', transfers); // Get pretty readable output
@@ -48,11 +67,59 @@ describe('distributed wallet contract', () => {
 		expect(transfers[0].to).equal(addr5) // id is `BigNumber`
 		expect(transfers[0].sent).equal(false) // id is `BigNumber`
 		// BIG NUMBERS
-		expect(transfers[0].id.eq(0)).equal(true) // id is `BigNumber`
-		expect(transfers[0].amount.eq(TRANSFER_AMOUNT)).equal(true) // id is `BigNumber`
-		expect(transfers[0].approvals.eq(0)).equal(true) // id is `BigNumber`
+		expect(transfers[0].id.eq(0)).to.be.true // id is `BigNumber`
+		expect(transfers[0].amount.eq(TRANSFER_AMOUNT)).to.be.true // amount is `BigNumber`
+		expect(transfers[0].approvals.eq(0)).to.be.true // approvals is `BigNumber`
+	})
 
-		// Start doing vid50..
+	it('should NOT succeed createTransfer if sender is not approver', async () => {
+		// SHOULD NOT CREATE TRANSFER FROM NON-APPROVER
+		const expectedErrMessage = 'only approvers allowed'
+		// To execute a txn from a particular account in truffle, consider searching TRUFFLE:#001 in this project
+		await expect(wallet.connect(acc5).createTransfer(TRANSFER_AMOUNT, addr5)).to.be.revertedWith(expectedErrMessage)
+	})
+
+	it('should increment approvals', async () => {
+		// **we have already created transfers** // await wallet.createTransfer(TRANSFER_AMOUNT, addr5) // making txn from `firstAcc`
+
+		await wallet.approveTransfer(0) // id=0 becoz its the first transfer request
+		const transfers = await wallet.getTransfers()
+		// console.log('transfers?', transfers) // Get pretty readable output
+		expect(transfers[0].approvals.eq(1)).to.be.true // APPROVALS INCREMENTED i.e., 1
+
+		expect(transfers[0].sent).equal(false)
+		// Assert contract balance
+		const balance = await provider.getBalance(wallet.address) //LEARN: // const provider = ethers.getDefaultProvider(); // This works as well but too slow, takes around 2 seconds to execute
+		expect(balance.eq(INITIAL_CONTRACT_BALANCE)).to.be.true
+	})
+
+	it('should send transfer if quorum reached', async () => {
+		await wallet.createTransfer(TRANSFER_AMOUNT, acc6.address) // making txn from `firstAcc`
+		const idx = 1 // transferId coz its second transfer
+
+		// expect initial balance to be 10,000 eth
+		const balanceInitial = await provider.getBalance(acc6.address)
+		// console.log("🚀 ~ file: multiSigWallet.js ~ line 101 ~ it ~ balanceInitial", balanceInitial)
+
+		expect(balanceInitial.eq(DEFAULT_BALANCE)).to.be.true
+		await wallet.connect(acc1).approveTransfer(idx) // id=0 becoz its the first transfer request
+		await wallet.connect(acc2).approveTransfer(idx) // id=0 becoz its the first transfer request
+
+		// Since two two addresses approved (acc1 and acc2) the txn should have happened by now
+		const transfers = await wallet.getTransfers()
+		expect(transfers[idx].approvals.eq(2)).to.be.true // APPROVALS INCREMENTED i.e., 2
+		// console.log('transfers?', transfers) // Get pretty readable output
+
+		// Transfer amount should be withdrawn from wallet balance 
+		const receivedWalletBalance = await provider.getBalance(wallet.address) //LEARN: // const provider = ethers.getDefaultProvider(); // This works as well but too slow, takes around 2 seconds to execute
+		const expectedWalletBalance = INITIAL_CONTRACT_BALANCE - TRANSFER_AMOUNT
+		expect(receivedWalletBalance.eq(expectedWalletBalance)).to.be.true
+
+		// Net profit of user should be equal to amount transferred
+		const balanceFinal = await acc6.getBalance() // LEARN: hardhat way to get any signer's balance (works good as well)
+		// const balanceFinal = await provider.getBalance(addr6) // LEARN: provider way to get any signer's balance
+		const receivedProfit = balanceFinal.sub(balanceInitial)
+		expect(receivedProfit.eq(TRANSFER_AMOUNT)).to.be.true
 	})
 })
 
