@@ -2,6 +2,7 @@ const {ethers, network} = require('hardhat')
 const {expect} = require('chai')
 const {BigNumber} = ethers
 
+// From swapnil course
 describe('distributed wallet contract', () => {
 	it('first account has 10,000 eth', async () => {
 		await network.provider.send('hardhat_reset')

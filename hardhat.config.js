@@ -102,6 +102,13 @@ module.exports = {
 			files: ['./contracts', './test/multiSigWallet.js'],
 			runOnLaunch: true 
 		},
+		dex: {
+			start: 'tmux clear-history -t $(tmux display -pt "${TMUX_PANE:?}" "#{pane_index}")', // https://github.com/sahilrajput03/flash-runner-npm/blob/main/startTesting.js#L86
+			clearOnStart: true,
+			tasks: [{command: 'test', params: {testFiles: ['./test/dex.js']}}],
+			files: ['./contracts/dex', './test/dex.js'],
+			runOnLaunch: true 
+		},
 		lock: {
 			start: 'tmux clear-history -t $(tmux display -pt "${TMUX_PANE:?}" "#{pane_index}")', // https://github.com/sahilrajput03/flash-runner-npm/blob/main/startTesting.js#L86
 			clearOnStart: true,

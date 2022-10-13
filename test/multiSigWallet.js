@@ -4,6 +4,7 @@ const {BigNumber} = ethers
 
 /** Passing multiple values to constructor of the contract: https://stackoverflow.com/a/69751261/10012446 */
 
+// 6fig course
 describe('multiSigWallet', () => {
 	const {provider} = waffle
 	let wallet, Wallet, acc1, acc2, acc3, _, acc5, acc6, addr1, addr2, addr3, addr5, addr6, approversAddrs
@@ -19,16 +20,16 @@ describe('multiSigWallet', () => {
 
 		// Assign variables
 		;[acc1, acc2, acc3, _, acc5, acc6] = await ethers.getSigners()
-
-		Wallet = await ethers.getContractFactory('MultiSigWallet')
 		addr1 = acc1.address
 		addr2 = acc2.address
 		addr3 = acc3.address
 		addr5 = acc5.address
 		addr6 = acc6.address
 		approversAddrs = [addr1, addr2, addr3]
-		wallet = await Wallet.deploy(approversAddrs, QUORUM) // we're passing array of addreses and quorum (second argument) as 2 i.e., minium number of approvers for the transaction
 
+		// Deploy contract
+		Wallet = await ethers.getContractFactory('MultiSigWallet')
+		wallet = await Wallet.deploy(approversAddrs, QUORUM) // we're passing array of addreses and quorum (second argument) as 2 i.e., minium number of approvers for the transaction
 		await wallet.deployed()
 
 		// Sending 1000 wei to contract (using receive fn i.e., using `sendTransaction` method)
