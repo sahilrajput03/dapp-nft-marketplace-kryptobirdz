@@ -172,30 +172,32 @@ contract Dex {
 			);
 			if (side == Side.SELL) {
 				// DEDUCT TICKER AND ADD DAI
-				// safemath // traderBalances[msg.sender][ticker] -= matched;
 				traderBalances[msg.sender][ticker] = traderBalances[msg.sender][ticker].sub(matched);
-				// safemath // traderBalances[msg.sender][DAI] += matched * orders[i].price;
 				traderBalances[msg.sender][DAI] = traderBalances[msg.sender][DAI].add(matched.mul(orders[i].price));
+				// safemath // traderBalances[msg.sender][ticker] -= matched;
+				// safemath // traderBalances[msg.sender][DAI] += matched * orders[i].price;
+
 				// ADD TICKER AND DEDUCT DAI
-				// safemath // traderBalances[orders[i].trader][ticker] += matched;
 				traderBalances[orders[i].trader][ticker] = traderBalances[orders[i].trader][ticker].add(matched);
-				// safemath // traderBalances[orders[i].trader][DAI] -= matched * orders[i].price;
 				traderBalances[orders[i].trader][DAI] = traderBalances[orders[i].trader][DAI].sub(matched.mul(orders[i].price));
+				// safemath // traderBalances[orders[i].trader][ticker] += matched;
+				// safemath // traderBalances[orders[i].trader][DAI] -= matched * orders[i].price;
 			}
 
 			// copy of same above code but conditioned for buy order this time
 			if (side == Side.BUY) {
 				require(traderBalances[msg.sender][DAI] >= matched.mul(orders[i].price), 'dai balance too low');
 				// DEDUCT TICKER AND ADD DAI
-				// safemath // traderBalances[msg.sender][ticker] += matched;
 				traderBalances[msg.sender][ticker] = traderBalances[msg.sender][ticker] + matched;
-				// safemath // traderBalances[msg.sender][DAI] -= matched * orders[i].price;
 				traderBalances[msg.sender][DAI] = traderBalances[msg.sender][DAI].sub(matched.mul(orders[i].price));
+				// safemath // traderBalances[msg.sender][ticker] += matched;
+				// safemath // traderBalances[msg.sender][DAI] -= matched * orders[i].price;
+				
 				// ADD TICKER AND DEDUCT DAI
-				// safemath // traderBalances[orders[i].trader][ticker] -= matched;
 				traderBalances[orders[i].trader][ticker] = traderBalances[orders[i].trader][ticker].sub(matched);
-				// safemath // traderBalances[orders[i].trader][DAI] += matched * orders[i].price;
 				traderBalances[orders[i].trader][DAI] = traderBalances[orders[i].trader][DAI].add(matched.mul(orders[i].price));
+				// safemath // traderBalances[orders[i].trader][ticker] -= matched;
+				// safemath // traderBalances[orders[i].trader][DAI] += matched * orders[i].price;
 			}
 			// we know its less readable than before (i.e., without safemath) but we got no choice becoz its more important to be more safe than readable.
 			// safemath // nextOrderId++;

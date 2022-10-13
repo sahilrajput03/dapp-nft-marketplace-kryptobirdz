@@ -24,6 +24,7 @@ describe('decentralized exchange', () => {
 	const tkns100 = ethers.utils.parseEther('100')
 	const tkns200 = ethers.utils.parseEther('200')
 	const tkns10 = ethers.utils.parseEther('10')
+	const tkns5 = ethers.utils.parseEther('5')
 	// LEARN CONVERSION BETWEEN TWO UNITS i.e, wei and ether with just two fns i.e, `formatEther` and `parseEther`
 	// formatEther -> used to convert wei value to ether value
 	// parseEther -> user to convert ether value to wei value (parseEther functions exactly opposite to wheat usually `parseInt`, `parseFloat` does in javascript and similarly in other languages. etherjs developer were on **high** as shit when making these apis? LOL ~Sahil)
@@ -63,6 +64,7 @@ describe('decentralized exchange', () => {
 	}
 
 	// Slows down the tests coz contracts are deployed and tore down before each test which is kinda unnecessary and sounds ugly to me
+	// !YOU SHOULD ACTUALLY USE `beforeEach` coz they way you need to make your tests fast is by running only individual tests via `.only` way and *NOT* even try to run a series of tests when you change a single test becoz that is very very very very bad!
 	// beforeEach(async () => {
 	// 	await deployContracts()
 	// })
@@ -140,15 +142,15 @@ describe('decentralized exchange', () => {
 		const orderPrice = 5
 		await dex.connect(traderAcc1).createLimitOrder(REP, tkns10, orderPrice, SIDE.BUY)
 
-		let buyOrders = await dex.getOrders(REP, SIDE.BUY)
+		let buyOrdersREP = await dex.getOrders(REP, SIDE.BUY)
 		let sellOrders = await dex.getOrders(REP, SIDE.SELL)
 
 		// console.log('buyOrders?', buyOrders)
-		expect(buyOrders.length).equal(1)
-		expect(buyOrders[0].ticker).equal(REP) // need padding? NO, for web3 Author used fn i.e,. `web3.utils.padRight(REP, 64)` and then comapared it directly with a string of the `buyOrders[0].ticker`
-		expect(buyOrders[0].amount.eq(tkns10)).to.be.true
-		expect(buyOrders[0].price.eq(orderPrice)).to.be.true
-		expect(buyOrders[0].trader).equal(traderAcc1.address)
+		expect(buyOrdersREP.length).equal(1)
+		expect(buyOrdersREP[0].ticker).equal(REP) // need padding? NO, for web3 Author used fn i.e,. `web3.utils.padRight(REP, 64)` and then comapared it directly with a string of the `buyOrders[0].ticker`
+		expect(buyOrdersREP[0].amount.eq(tkns10)).to.be.true
+		expect(buyOrdersREP[0].price.eq(orderPrice)).to.be.true
+		expect(buyOrdersREP[0].trader).equal(traderAcc1.address)
 
 		expect(sellOrders.length).equal(0) // coz no SELL orders are created yet
 
@@ -163,13 +165,13 @@ describe('decentralized exchange', () => {
 		const OrderPriceNew = 9
 		await dex.connect(traderAcc2).createLimitOrder(REP, tkns10, OrderPriceNew, SIDE.BUY) // please keep price below 11 else the error "dai balance too low" will be thrown.
 
-		buyOrders = await dex.getOrders(REP, SIDE.BUY)
+		buyOrdersREP = await dex.getOrders(REP, SIDE.BUY)
 		sellOrders = await dex.getOrders(REP, SIDE.SELL)
-		expect(buyOrders.length).equal(2)
+		expect(buyOrdersREP.length).equal(2)
 		// Our new order should be moved to front of array coz `newOrderPrice` is better price compared to `orderPrice`
-		expect(buyOrders[0].price.eq(OrderPriceNew)).to.be.true
-		expect(buyOrders[0].trader).equal(traderAcc2.address)
-		expect(buyOrders[1].trader).equal(traderAcc1.address)
+		expect(buyOrdersREP[0].price.eq(OrderPriceNew)).to.be.true
+		expect(buyOrdersREP[0].trader).equal(traderAcc2.address)
+		expect(buyOrdersREP[1].trader).equal(traderAcc1.address)
 
 		expect(sellOrders.length).equal(0) // coz no SELL orders are created yet
 
@@ -183,14 +185,14 @@ describe('decentralized exchange', () => {
 		const OrderPriceLatest = 3
 		await dex.connect(traderAcc3).createLimitOrder(REP, tkns10, OrderPriceLatest, SIDE.BUY) // please keep price below 11 else the error "dai balance too low" will be thrown.
 
-		buyOrders = await dex.getOrders(REP, SIDE.BUY)
+		buyOrdersREP = await dex.getOrders(REP, SIDE.BUY)
 		sellOrders = await dex.getOrders(REP, SIDE.SELL)
-		expect(buyOrders.length).equal(3)
+		expect(buyOrdersREP.length).equal(3)
 		// Our latest order should be moved to front of array coz `newOrderPrice` is better price compared to `orderPrice`
-		expect(buyOrders[0].trader).equal(traderAcc2.address)
-		expect(buyOrders[1].trader).equal(traderAcc1.address)
-		expect(buyOrders[2].price.eq(OrderPriceLatest)).to.be.true
-		expect(buyOrders[2].trader).equal(traderAcc3.address)
+		expect(buyOrdersREP[0].trader).equal(traderAcc2.address)
+		expect(buyOrdersREP[1].trader).equal(traderAcc1.address)
+		expect(buyOrdersREP[2].price.eq(OrderPriceLatest)).to.be.true
+		expect(buyOrdersREP[2].trader).equal(traderAcc3.address)
 
 		expect(sellOrders.length).equal(0) // coz no SELL orders are created yet
 	})
@@ -221,6 +223,70 @@ describe('decentralized exchange', () => {
 
 		const expectedErrMessage = 'token balance is too low'
 		await expect(dex.connect(acc1).createLimitOrder(REP, tkns100, 3, SIDE.SELL)).to.be.revertedWith(expectedErrMessage)
+	})
+
+	// `createMarketOrder` Tests
+	// SIGNATURE: function createMarketOrder(bytes32 ticker,uint amount,Side side)
+	// ! YOU SHOULD USE `it.only` way to test methods which needs new initializations of the contracts, YIKES! Makes testing super fastt..!
+	it('Should create market order & match against existing limit order', async () => {
+		// Redeploy contracts to reset everything
+		await deployContracts()
+		const tkns4 = parseEther('4')
+
+		// create a limitOrder of 10 tokens
+		await dex.connect(acc1).deposit(tkns100, DAI)
+		await dex.connect(acc1).createLimitOrder(REP, tkns10, 10, SIDE.BUY)
+		// create a marketOrder of 4 tokens (so this marketOrder should buy part of tokens of above limitOrder)
+		await dex.connect(acc2).deposit(tkns100, REP)
+		await dex.connect(acc2).createMarketOrder(REP, tkns4, SIDE.SELL)
+
+		const r1 = dex.traderBalances(acc1.address, DAI)
+		const r2 = dex.traderBalances(acc1.address, REP)
+		const r3 = dex.traderBalances(acc2.address, DAI)
+		const r4 = dex.traderBalances(acc2.address, REP)
+		const [oneDAI, oneREP, twoDAI, twoREP] = await Promise.all([r1, r2, r3, r4])
+
+		const buyOrdersREP = await dex.getOrders(REP, SIDE.BUY)
+		// Learn formatEther, parseEther? Please visit the top of this file.
+		// console.log(formatEther(buyOrdersREP[0].filled));
+		// console.log(formatEther(b1))
+		// console.log(formatEther(b2))
+		// console.log(formatEther(b3))
+		// console.log(formatEther(b4))
+		expect(buyOrdersREP[0].filled.eq(tkns4)).to.be.true //\\ ORDER 	    |   0 =>  4
+		expect(oneDAI.eq(parseEther('60'))).to.be.true //\\\\\\\ Acc1 (DAI) | 100 => 60
+		expect(oneREP.eq(parseEther('4'))).to.be.true //\\\\\\\\ Acc1 (REP) |   0 =>  4
+		expect(twoDAI.eq(parseEther('40'))).to.be.true //\\\\\\\ Acc2 (DAI) |   0 => 40
+		expect(twoREP.eq(parseEther('96'))).to.be.true //\\\\\\\ Acc2 (REP) | 100 => 96
+	})
+
+	it('should NOT create market order if token does not exist', async () => {
+		const expectedErrMessage = 'this token does not exist'
+		await expect(dex.connect(acc1).createMarketOrder(_BAD_TOKEN, tkns10, SIDE.BUY)).to.be.revertedWith(expectedErrMessage)
+	})
+
+	it('should NOT create market order if token is DAI', async () => {
+		const expectedErrMessage = 'cannot trade DAI'
+		await expect(dex.connect(acc1).createMarketOrder(DAI, tkns10, SIDE.BUY)).to.be.revertedWith(expectedErrMessage)
+	})
+
+	it('Should NOT create market order if token balance is too low (SELL ORDER)', async () => {
+		await deployContracts()
+		const tkns99 = parseEther('99')
+		await dex.connect(acc1).deposit(tkns99, DAI)
+
+		const expectedErrMessage = 'token balance too low'
+		await expect(dex.connect(acc1).createMarketOrder(REP, tkns100, SIDE.SELL)).to.be.revertedWith(expectedErrMessage)
+	})
+
+	it('Should not create market order if dai balance is too low', async () => {
+		await deployContracts()
+
+		await dex.connect(acc1).deposit(tkns100, REP)
+		await dex.connect(acc1).createLimitOrder(REP, tkns100, 10, SIDE.SELL) // cost = 1000 DAI (10 * 100tkns)
+
+		const expectedErrMessage = 'dai balance too low'
+		await expect(dex.connect(acc2).createMarketOrder(REP, tkns100, SIDE.BUY)).to.be.revertedWith(expectedErrMessage)
 	})
 })
 
