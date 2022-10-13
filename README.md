@@ -13,6 +13,7 @@ Source: Docs of hardhat - [Click here](https://hardhat.org/tutorial/deploying-to
 
 - https://faucets.chain.link/
 - https://goerlifaucet.com/
+- Mining Based (Best) - https://goerli-faucet.pk910.de/
 
 ## dapps Updated Example Sites
 
