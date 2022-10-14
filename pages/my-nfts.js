@@ -5,11 +5,11 @@ import {useEffect, useState} from 'react'
 import axios from 'axios'
 import Web3Modal from 'web3modal'
 import {getSafeEncodedURI} from '../utils/utilityFunctions'
-
-import {nftaddress, nftmarketaddress} from '../config'
-
+import config from '../config'
 import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
 import KBMarket from '../artifacts/contracts/KBMarket.sol/KBMarket.json'
+
+const {nftaddress, nftmarketaddress, networkName} = config
 
 export default function MyAssets() {
 	// array of nfts

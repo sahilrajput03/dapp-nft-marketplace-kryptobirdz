@@ -6,11 +6,13 @@ import {useEffect, useState} from 'react'
 import axios from 'axios'
 import Web3Modal from 'web3modal'
 
-import {nftaddress, nftmarketaddress} from '../config'
+import config from '../config'
 
 import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
 import KBMarket from '../artifacts/contracts/KBMarket.sol/KBMarket.json'
 import { getSafeEncodedURI } from '../utils/utilityFunctions'
+
+const {nftaddress, nftmarketaddress, networkName} = config
 
 export default function AccountDashBoard() {
 	// array of nfts

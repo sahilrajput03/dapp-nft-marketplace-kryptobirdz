@@ -4,14 +4,15 @@ import {ethers} from 'ethers'
 import {useEffect, useState} from 'react'
 import axios from 'axios'
 import Web3Modal from 'web3modal'
-import {nftaddress, nftmarketaddress, networkName} from '../config'
+import config from '../config'
 import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
 import KBMarket from '../artifacts/contracts/KBMarket.sol/KBMarket.json'
 import {getSafeEncodedURI} from '../utils/utilityFunctions'
 /* // TODO: Usin web3modal react  */
 // import {ConnectButton, useAccount} from '@web3modal/react'
 
-// console.log({nftaddress, nftmarketaddress})
+const {nftaddress, nftmarketaddress, networkName} = config
+console.log('got addresses?', {nftaddress, nftmarketaddress})
 
 export default function Home() {
 	/* // TODO: Usin web3modal react  */

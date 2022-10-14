@@ -4,11 +4,13 @@ import {ethers} from 'ethers'
 import {useState} from 'react'
 import Web3Modal from 'web3modal'
 import {create as ipfsHttpClient} from 'ipfs-http-client'
-import {nftaddress, nftmarketaddress} from '../config'
+import config from '../config'
 import {useRouter} from 'next/router'
 import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
 import KBMarket from '../artifacts/contracts/KBMarket.sol/KBMarket.json'
 import dynamic from 'next/dynamic'
+
+const {nftaddress, nftmarketaddress, networkName} = config
 
 // in this component we set the ipfs up to host our nft data of
 // file storage

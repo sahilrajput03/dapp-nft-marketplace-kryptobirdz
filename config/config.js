@@ -23,8 +23,6 @@ switch (BC_NETWORK) {
 		throw new Error('Config file for: ' + BC_NETWORK + ' netowrk not found')
 }
 
-console.log('Uisng network with addresses:', config)
+console.log('Using network with addresses:', config)
 
-export const nftmarketaddress = config.nftmarketaddress
-export const nftaddress = config.nftaddress
-export const network = config.networkName
+export default config
