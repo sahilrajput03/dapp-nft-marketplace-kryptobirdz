@@ -1,5 +1,6 @@
 // @ts-nocheck
 // we want to load the users nfts and display
+import Head from 'next/head'
 import {ethers} from 'ethers'
 import {useEffect, useState} from 'react'
 import axios from 'axios'
@@ -68,6 +69,12 @@ export default function MyAssets() {
 
 	return (
 		<div className='flex justify-center'>
+			<Head>
+				<title>NFT Marketplace - Kryptobirdz | My NFTs</title>
+				<meta name='description' content='NFT Marketplace - Kryptobirdz | My NFTs' />
+				<link rel='icon' href='/favicon.ico' />
+			</Head>
+
 			<div className='px-4' style={{maxWidth: '1600px'}}>
 				<div className='grid grid-cols-1 items-center sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4'>
 					{nfts.map((nft, i) => {

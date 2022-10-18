@@ -1,5 +1,6 @@
 // @ts-nocheck
 /* eslint-disable @next/next/no-img-element */
+import Head from 'next/head'
 import {ethers} from 'ethers'
 import {useEffect, useState} from 'react'
 import axios from 'axios'
@@ -168,6 +169,11 @@ export default function Home() {
 
 	return (
 		<div className='flex justify-center'>
+			<Head>
+				<title>NFT Marketplace - Kryptobirdz | Home</title>
+				<meta name='description' content='NFT Marketplace - Kryptobirdz | Home' />
+				<link rel='icon' href='/favicon.ico' />
+			</Head>
 			<div className='px-4' style={{maxWidth: '1600px'}}>
 				<div className='grid grid-cols-1 items-center sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4'>
 					{nfts.map((nft, i) => {

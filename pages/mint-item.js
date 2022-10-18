@@ -1,5 +1,6 @@
 // @ts-nocheck
 /* eslint-disable @next/next/no-img-element */
+import Head from 'next/head'
 import {ethers} from 'ethers'
 import {useState} from 'react'
 import Web3Modal from 'web3modal'
@@ -175,6 +176,12 @@ export default function MintItem() {
 
 	return (
 		<div className='flex justify-center'>
+			<Head>
+				<title>NFT Marketplace - Kryptobirdz | Mint NFT</title>
+				<meta name='description' content='NFT Marketplace - Kryptobirdz | Mint NFT' />
+				<link rel='icon' href='/favicon.ico' />
+			</Head>
+
 			<div className='w-1/2 flex flex-col pb-12'>
 				<input placeholder='Asset Name' className='mt-8 border rounded p-4' onChange={(e) => setFormInput({...formInput, name: e.target.value})} />
 				<textarea placeholder='Asset Description' className='mt-2 border rounded p-4' onChange={(e) => setFormInput({...formInput, description: e.target.value})} />
