@@ -135,9 +135,9 @@ export default function Home() {
 		// Convert eth value to wei(return value is in bignumber format) becoz solidity interprets msg.value in wei
 		const price = ethers.utils.parseUnits(nft.price.toString(), 'ether')
 
-		console.log('got price(nft.price)?', nft.price);
-		console.log('got price (ethers.utils.parseUnits(nft.price.toString(), \'ether\'))?', price);
-		console.log('got price.toString()?', nft.price.toString());
+		console.log('got price(nft.price)?', nft.price)
+		console.log("got price (ethers.utils.parseUnits(nft.price.toString(), 'ether'))?", price)
+		console.log('got price.toString()?', nft.price.toString())
 		let transaction
 		try {
 			transaction = await contract.createMarketSale(nftaddress, nft.tokenId, {
@@ -145,7 +145,6 @@ export default function Home() {
 				// value: nft.price.toString(), // throws error: invalid BigNumber string (argument="value", value="0.000434", code=INVALID_ARGUMENT, version=bignumber/5.6.2)
 			})
 		} catch (error) {
-			
 			console.log('Caught error createMarketSale error(name)?:', error.name)
 			console.log('Caught error createMarketSale error(message)?:', error.message)
 			if (error.message.startsWith('insufficient funds for intrinsic transaction cost')) {
@@ -154,14 +153,15 @@ export default function Home() {
 
 			// !!! fixing this error.message here:
 			// cannot estimate gas; transaction may fail or may require manual gas limit [ See: https://links.ethers.org/v5-errors-UNPREDICTABLE_GAS_LIMIT ] (reason="execution reverted: Please submit the asking price in order to continue", method="estimateGas", transaction={"from":"0xF1C8471dF8772D9ACE6fa116d5C5f077A3b7AFe6","to":"0x0600340D811e13E896F2be0CDCEb9A6daCdD9004","value":{"type":"BigNumber","hex":"0x06d23ad5f80000"},"data":"0xc23b139e0000000000000000000000000f26e37c60fee416800815acb8353e49a68ee8fc000000000000000000000000000000000000000000000000000000000000000e","accessList":null}, error={"code":-32603,"message":"execution reverted: Please submit the asking price in order to continue","data":{"originalError":{"code":3,"data":"0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000033506c65617365207375626d6974207468652061736b696e6720707269636520696e206f7264657220746f20636f6e74696e756500000000000000000000000000","message":"execution reverted: Please submit the asking price in order to continue"}}}, code=UNPREDICTABLE_GAS_LIMIT, version=providers/5.6.8)
-			
+
 			return
 		}
 
 		await transaction.wait()
 		loadNFTs()
 	}
-	if (loadingState === 'loaded' && !nfts.length) return <h1 className='px-20 py-7 text-4x1'>No NFts in marketplace</h1>
+
+	const noNfts = loadingState === 'loaded' && !nfts.length
 
 	// if (typeof window != 'undefined') {
 	// 	window.d = nfts
@@ -174,34 +174,39 @@ export default function Home() {
 				<meta name='description' content='NFT Marketplace - Kryptobirdz | Home' />
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
-			<div className='px-4' style={{maxWidth: '1600px'}}>
-				<div className='grid grid-cols-1 items-center sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4'>
-					{nfts.map((nft, i) => {
-						// Get url safe encoded url of the image (had to do this to correct the url of the images minted with file name including #), now it works good though.
-						let newUrlSafeImageURI = getSafeEncodedURI(nft.image)
-						console.log('IMAGE: nft.image?', nft.image)
-						console.log('IMAGE: newUrlSafeImageURI?', newUrlSafeImageURI)
 
-						return (
-							<div key={i} className='border shadow rounded-x1 overflow-hidden'>
-								<img alt='image here' src={newUrlSafeImageURI} />
-								<div className='p-4 bg-black bg-opacity-50 text-white'>
-									<p className='text-3x1 font-semibold'>{nft.name}</p>
-									<div style={{overflow: 'hidden'}}>
-										<p className='text-gray-400'>{nft.description}</p>
+			{noNfts ? (
+				<h1 className='px-20 py-7 text-4x1'>No NFts in marketplace</h1>
+			) : (
+				<div className='px-4' style={{maxWidth: '1600px'}}>
+					<div className='grid grid-cols-1 items-center sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4'>
+						{nfts.map((nft, i) => {
+							// Get url safe encoded url of the image (had to do this to correct the url of the images minted with file name including #), now it works good though.
+							let newUrlSafeImageURI = getSafeEncodedURI(nft.image)
+							console.log('IMAGE: nft.image?', nft.image)
+							console.log('IMAGE: newUrlSafeImageURI?', newUrlSafeImageURI)
+
+							return (
+								<div key={i} className='border shadow rounded-x1 overflow-hidden'>
+									<img alt='image here' src={newUrlSafeImageURI} />
+									<div className='p-4 bg-black bg-opacity-50 text-white'>
+										<p className='text-3x1 font-semibold'>{nft.name}</p>
+										<div style={{overflow: 'hidden'}}>
+											<p className='text-gray-400'>{nft.description}</p>
+										</div>
+									</div>
+									<div className='p-4 bg-black'>
+										<p className='text-3x-1 mb-4 font-bold text-white'>{nft.price} ETH</p>
+										<button className='w-full bg-purple-500 text-white font-bold py-3 px-12 rounded' onClick={() => buyNFT(nft)}>
+											Buy
+										</button>
 									</div>
 								</div>
-								<div className='p-4 bg-black'>
-									<p className='text-3x-1 mb-4 font-bold text-white'>{nft.price} ETH</p>
-									<button className='w-full bg-purple-500 text-white font-bold py-3 px-12 rounded' onClick={() => buyNFT(nft)}>
-										Buy
-									</button>
-								</div>
-							</div>
-						)
-					})}
+							)
+						})}
+					</div>
 				</div>
-			</div>
+			)}
 
 			{/* // TODO: Use web3modal react lib  */}
 			{/* {connected ? '' : <ConnectButton />} */}
