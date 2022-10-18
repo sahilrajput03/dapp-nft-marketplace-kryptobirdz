@@ -11,6 +11,7 @@
 		"lint": "next lint",
 		"test": "hardhat test",
 		"compile": "hardhat compile",
+		"test-watch5": "hardhat watch kryptobirdz",
 		"test-watch4": "hardhat watch project-distributed-wallet",
 		"test-watch2": "hardhat watch learn-contracts",
 		"test-watch3": "hardhat watch lock",

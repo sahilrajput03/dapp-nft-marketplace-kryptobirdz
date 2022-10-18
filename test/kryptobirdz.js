@@ -18,7 +18,9 @@ describe('KBMarket', function () {
 		let listingPrice = await market.getListingPrice()
 		listingPrice = listingPrice.toString()
 
-		const auctionPrice = ethers.utils.parseUnits('100', 'ether')
+
+		const priceInEther = '100'
+		const auctionPrice = ethers.utils.parseUnits(priceInEther, 'ether') // 100 * 10**18
 
 		// test for minting (creating tokens)
 		await nft.mintToken('https-t1')
@@ -30,6 +32,20 @@ describe('KBMarket', function () {
 		// test for different addresses from different users - test accounts
 		// return an array of however many addresses
 		const [_, buyerAddress] = await ethers.getSigners()
+
+		// wrong price should revert
+		const newPriceInEther = '0.000434' //! my errored value:  currently
+		const newAuctionPrice = ethers.utils.parseUnits(newPriceInEther, 'ether') // 100 * 10**18
+
+		// const expectedErrMessage = 'Please submit the asking price in order to continue'
+		// Better logging with values from solidity contract ~Sahil: 18 Oct, 2022
+		const expectedErrMessage = 'You chose price as: 434000000000000 but the actual price of item is: 100000000000000000000'
+		// Clean way
+		await expect(
+			market.createMarketSale(nftContractAddress, 1, {
+				value: newAuctionPrice, // wrong price should rever the expected error message
+			})
+		).to.be.revertedWith(expectedErrMessage) // this message is actually reverted by using statement in contract ie., `require(msg.value > 9, "give number's is smaller");`
 
 		// create a market sale with address, id and price
 		await market.connect(buyerAddress).createMarketSale(nftContractAddress, 1, {
@@ -76,7 +92,7 @@ describe('KBMarket', function () {
 		)
 
 		// test out all the items
-		console.log('items', items)
+		// console.log('items', items)
 		/*OUTPUT:
 		items [
 		{

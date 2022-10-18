@@ -124,6 +124,9 @@ contract Contract2 {
 
 	function concatMyString(string memory b) public pure returns (string memory) {
 		string memory greet = "hello ";
+		// # String concatenation in solidity, string.concat() method acceps as multiple arguments and all strings will be joined together.
+		// # To learn uint to string conversion, visit KBmarket.sol file.~Sahil
+		// # String concatenation also used in KBMarket.sol
 		return string.concat(greet, b); // https://dev.to/hannudaniel/concatenate-two-strings-on-the-blockchain-using-solidity-smart-contracts-new-feature-in-v0812-549g
 	}
 

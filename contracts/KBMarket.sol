@@ -4,7 +4,7 @@ pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
-
+import "@openzeppelin/contracts/utils/Strings.sol";
 // security against transactions for multiple requests
 
 import "hardhat/console.sol";
@@ -117,7 +117,10 @@ contract KBMarket is ReentrancyGuard {
 		uint price = idToMarketToken[itemId].price;
 		uint tokenId = idToMarketToken[itemId].tokenId;
 
-		require(msg.value == price, "Please submit the asking price in order to continue");
+		// require(msg.value == price, "Please submit the asking price in order to continue");
+		// ~Sahil uint to string: src: https://stackoverflow.com/a/69860971/10012446
+		// ~SahilL: string concatenation: https://ethereum.stackexchange.com/a/129025/106687
+		require(msg.value == price, string.concat('You chose price as: ', Strings.toString(msg.value), ' but the actual price of item is: ', Strings.toString(price)));
 
 		// transfer the amount to the seller
 		idToMarketToken[itemId].seller.transfer(msg.value);

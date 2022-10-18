@@ -13,6 +13,33 @@ body {
 	font-size: 16px;
 	font-weight: normal;
 }
+@media (max-width: 1750px) {
+	body {
+		background-position: 0px -168px;
+	}
+}
+@media (max-width: 1680px) {
+	body {
+		background-position: 0px -68px;
+	}
+}
+@media (max-width: 1450px) {
+	body {
+		background-position: 0px 0px;
+	}
+}
+
+@media (max-width: 1350px) {
+	body {
+		background-position: 0px 100px;
+	}
+}
+@media (max-width: 1200px) {
+	body {
+		background-image: url(/bg_mobile.png);
+		background-repeat: repeat;
+	}
+}
 
 /* #NiceAndSimple: Main - margin:auto */
 

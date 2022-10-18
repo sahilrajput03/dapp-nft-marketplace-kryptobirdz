@@ -33,12 +33,12 @@ export default function Home() {
 		// changed in MetaMask, it causes a page refresh.
 
 		// const provider = new ethers.providers.JsonRpcProvider() // original from course author (only work with localhost and breaks on connecting to goerli chain when run `nr start-goerli` script)
-		// let provider = new ethers.providers.Web3Provider(web3.currentProvider) // ! THIS IS LAST WORKING!!
+		let provider = new ethers.providers.Web3Provider(web3.currentProvider) // ! THIS IS LAST WORKING!!
 
 		// Below code to connect to metamask is used by author on other pages as well i.e., `mint-token`, `dashboard`, etc by course author
-		const web3Modal = new Web3Modal()
-		const connection = await web3Modal.connect()
-		const provider = new ethers.providers.Web3Provider(connection)
+		// const web3Modal = new Web3Modal()
+		// const connection = await web3Modal.connect()
+		// const provider = new ethers.providers.Web3Provider(connection)
 
 		const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider)
 		const marketContract = new ethers.Contract(nftmarketaddress, KBMarket.abi, provider)
@@ -128,12 +128,34 @@ export default function Home() {
 		const connection = await web3Modal.connect()
 		const provider = new ethers.providers.Web3Provider(connection)
 		const signer = provider.getSigner()
+		Object.assign(window, {signer})
 		const contract = new ethers.Contract(nftmarketaddress, KBMarket.abi, signer)
 
+		// Convert eth value to wei(return value is in bignumber format) becoz solidity interprets msg.value in wei
 		const price = ethers.utils.parseUnits(nft.price.toString(), 'ether')
-		const transaction = await contract.createMarketSale(nftaddress, nft.tokenId, {
-			value: price,
-		})
+
+		console.log('got price(nft.price)?', nft.price);
+		console.log('got price (ethers.utils.parseUnits(nft.price.toString(), \'ether\'))?', price);
+		console.log('got price.toString()?', nft.price.toString());
+		let transaction
+		try {
+			transaction = await contract.createMarketSale(nftaddress, nft.tokenId, {
+				value: price,
+				// value: nft.price.toString(), // throws error: invalid BigNumber string (argument="value", value="0.000434", code=INVALID_ARGUMENT, version=bignumber/5.6.2)
+			})
+		} catch (error) {
+			
+			console.log('Caught error createMarketSale error(name)?:', error.name)
+			console.log('Caught error createMarketSale error(message)?:', error.message)
+			if (error.message.startsWith('insufficient funds for intrinsic transaction cost')) {
+				alert('Balance low. Please add some ETH balance to your account.')
+			}
+
+			// !!! fixing this error.message here:
+			// cannot estimate gas; transaction may fail or may require manual gas limit [ See: https://links.ethers.org/v5-errors-UNPREDICTABLE_GAS_LIMIT ] (reason="execution reverted: Please submit the asking price in order to continue", method="estimateGas", transaction={"from":"0xF1C8471dF8772D9ACE6fa116d5C5f077A3b7AFe6","to":"0x0600340D811e13E896F2be0CDCEb9A6daCdD9004","value":{"type":"BigNumber","hex":"0x06d23ad5f80000"},"data":"0xc23b139e0000000000000000000000000f26e37c60fee416800815acb8353e49a68ee8fc000000000000000000000000000000000000000000000000000000000000000e","accessList":null}, error={"code":-32603,"message":"execution reverted: Please submit the asking price in order to continue","data":{"originalError":{"code":3,"data":"0x08c379a000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000033506c65617365207375626d6974207468652061736b696e6720707269636520696e206f7264657220746f20636f6e74696e756500000000000000000000000000","message":"execution reverted: Please submit the asking price in order to continue"}}}, code=UNPREDICTABLE_GAS_LIMIT, version=providers/5.6.8)
+			
+			return
+		}
 
 		await transaction.wait()
 		loadNFTs()
