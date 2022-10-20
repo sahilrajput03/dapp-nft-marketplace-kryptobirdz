@@ -21,7 +21,7 @@ Source: Docs of hardhat - [Click here](https://hardhat.org/tutorial/deploying-to
 
 # App Screenshots
 
-![](./ss/ss-final-output.png)
+![image](https://user-images.githubusercontent.com/31458531/196963563-47d3781a-f0be-4af2-a4c1-bfc4355cc386.png)
 
 # Never forget
 
