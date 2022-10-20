@@ -2,7 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Head from 'next/head'
 import {ethers} from 'ethers'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import Web3Modal from 'web3modal'
 import {create as ipfsHttpClient} from 'ipfs-http-client'
 import config from '../config'
@@ -10,6 +10,9 @@ import {useRouter} from 'next/router'
 import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
 import KBMarket from '../artifacts/contracts/KBMarket.sol/KBMarket.json'
 import dynamic from 'next/dynamic'
+import Spinner from '../components/Spinner'
+import {refreshPageOnEventsMetamaskEvents} from '../utils/metamaskEvents'
+import handleAppError from '../utils/handleAppError'
 
 const {nftaddress, nftmarketaddress, networkName} = config
 
@@ -25,6 +28,29 @@ export default function MintItem() {
 	const router = useRouter()
 	const [isMinting, setIsMinting] = useState(false)
 	// const [isMinting, setIsMinting] = useState(true) // for testing `isMinting`
+	const [loadingState, setLoadingState] = useState('not-loaded')
+	const [appErrorMessg, setAppErrorMessg] = useState('')
+
+	useEffect(() => {
+		refreshPageOnEventsMetamaskEvents()
+		onPageLoad()
+	}, [])
+
+	const onPageLoad = async () => {
+		try {
+			// Fetchig myNfts only becoz i want to trigger error if the user loads the page with incorrect network in metamask(I don't need myNfts on this page though ~Sahil).
+			const web3Modal = new Web3Modal()
+			const connection = await web3Modal.connect()
+			const provider = new ethers.providers.Web3Provider(connection)
+			const signer = provider.getSigner()
+			const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider)
+			const marketContract = new ethers.Contract(nftmarketaddress, KBMarket.abi, signer)
+			const data = await marketContract.fetchMyNFTs()
+			setLoadingState('loaded')
+		} catch (error) {
+			handleAppError(error, setAppErrorMessg)
+		}
+	}
 
 	// set up a function to fireoff when we update files in our form - we can add our
 	// NFT images - IPFS
@@ -174,23 +200,51 @@ export default function MintItem() {
 		router.push('./')
 	}
 
+	const isLoading = loadingState === 'not-loaded'
+	console.log('isLoading?', isLoading, loadingState)
+
 	return (
-		<div className='flex justify-center'>
+		<div className=''>
 			<Head>
 				<title>NFT Marketplace - Kryptobirdz | Mint NFT</title>
 				<meta name='description' content='NFT Marketplace - Kryptobirdz | Mint NFT' />
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 
-			<div className='w-1/2 flex flex-col pb-12'>
-				<input placeholder='Asset Name' className='mt-8 border rounded p-4' onChange={(e) => setFormInput({...formInput, name: e.target.value})} />
-				<textarea placeholder='Asset Description' className='mt-2 border rounded p-4' onChange={(e) => setFormInput({...formInput, description: e.target.value})} />
-				<input placeholder='Asset Price in Eth' className='mt-2 border rounded p-4' onChange={(e) => setFormInput({...formInput, price: e.target.value})} />
-				<input type='file' name='Asset' className='mt-4' onChange={onFileChange} /> {fileUrl && <img alt='some image here' className='rounded mt-4' width='350px' src={fileUrl} />}
-				<button disabled={isMinting} onClick={createMarket} className={`font-bold mt-4 bg-purple-500 text-white rounded p-4 shadow-lg ${isMinting ? 'bg-gray-400' : ''}`}>
-					{!isMinting ? 'Mint NFT': 'Please complete the transaction and wait for the minting process to complete.'}
-				</button>
+			<div className='flex justify-center'>
+				{isLoading && (
+					<>
+						{Boolean(appErrorMessg) ? (
+							<div className='mt-5' style={{width: '500px'}}>
+								<h5 className='bg-white rounded-lg p-3' style={{whiteSpace: 'pre-line'}}>
+									{appErrorMessg}
+								</h5>
+							</div>
+						) : (
+							<div className='mt-[150px] flex items-center justify-center bg-purple-600 rounded-lg px-5 py-3'>
+								{Spinner}
+								<div className='text-xl text-white'>Loading</div>
+							</div>
+						)}
+					</>
+				)}
 			</div>
+
+			{!isLoading && (
+				<div className='flex justify-center'>
+					{!Boolean(appErrorMessg) && (
+						<div className='w-1/2 flex flex-col pb-12'>
+							<input placeholder='Asset Name' className='mt-8 border rounded p-4' onChange={(e) => setFormInput({...formInput, name: e.target.value})} />
+							<textarea placeholder='Asset Description' className='mt-2 border rounded p-4' onChange={(e) => setFormInput({...formInput, description: e.target.value})} />
+							<input placeholder='Asset Price in Eth' className='mt-2 border rounded p-4' onChange={(e) => setFormInput({...formInput, price: e.target.value})} />
+							<input type='file' name='Asset' className='mt-4' onChange={onFileChange} /> {fileUrl && <img alt='some image here' className='rounded mt-4' width='350px' src={fileUrl} />}
+							<button disabled={isMinting} onClick={createMarket} className={`font-bold mt-4 bg-purple-500 text-white rounded p-4 shadow-lg ${isMinting ? 'bg-gray-400' : ''}`}>
+								{!isMinting ? 'Mint NFT' : 'Please complete the transaction and wait for the minting process to complete.'}
+							</button>
+						</div>
+					)}
+				</div>
+			)}
 		</div>
 	)
 }

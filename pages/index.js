@@ -9,6 +9,9 @@ import config from '../config'
 import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
 import KBMarket from '../artifacts/contracts/KBMarket.sol/KBMarket.json'
 import {getSafeEncodedURI} from '../utils/utilityFunctions'
+import {refreshPageOnEventsMetamaskEvents} from '../utils/metamaskEvents'
+import Spinner from '../components/Spinner'
+import handleAppError from '../utils/handleAppError'
 /* // TODO: Usin web3modal react  */
 // import {ConnectButton, useAccount} from '@web3modal/react'
 
@@ -20,6 +23,7 @@ export default function Home() {
 	// const {connected} = useAccount()
 	const [nfts, setNFts] = useState([])
 	const [loadingState, setLoadingState] = useState('not-loaded')
+	const [appErrorMessg, setAppErrorMessg] = useState('')
 
 	useEffect(() => {
 		loadNFTs()
@@ -27,99 +31,105 @@ export default function Home() {
 	}, [])
 
 	async function loadNFTs() {
-		// what we want to load:
-		// ***provider, tokenContract, marketContract, data for our marketItems***
-		// FROM DOCS: https://docs.ethers.io/v4/api-providers.html
-		// The network will be automatically detected; if the network is
-		// changed in MetaMask, it causes a page refresh.
-
-		// const provider = new ethers.providers.JsonRpcProvider() // original from course author (only work with localhost and breaks on connecting to goerli chain when run `nr start-goerli` script)
-		let provider = new ethers.providers.Web3Provider(web3.currentProvider) // ! THIS IS LAST WORKING!!
-
-		// Below code to connect to metamask is used by author on other pages as well i.e., `mint-token`, `dashboard`, etc by course author
-		// const web3Modal = new Web3Modal()
-		// const connection = await web3Modal.connect()
-		// const provider = new ethers.providers.Web3Provider(connection)
-
-		const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider)
-		const marketContract = new ethers.Contract(nftmarketaddress, KBMarket.abi, provider)
-
-		//!!!!!!!! get max fees from gas station
-		let maxFeePerGas = ethers.BigNumber.from(40000000000) // fallback to 40 gwei
-		let maxPriorityFeePerGas = ethers.BigNumber.from(40000000000) // fallback to 40 gwei
 		try {
-			const {data} = await axios({
-				method: 'get',
-				url: isProd ? 'https://gasstation-mainnet.matic.network/v2' : 'https://gasstation-mumbai.matic.today/v2',
-			})
-			maxFeePerGas = ethers.utils.parseUnits(Math.ceil(data.fast.maxFee) + '', 'gwei')
-			maxPriorityFeePerGas = ethers.utils.parseUnits(Math.ceil(data.fast.maxPriorityFee) + '', 'gwei')
-		} catch {
-			// ignore
-		}
-		// !!!!!!
-		console.log('got here..1')
+			refreshPageOnEventsMetamaskEvents()
 
-		let data = []
+			// what we want to load:
+			// ***provider, tokenContract, marketContract, data for our marketItems***
+			// FROM DOCS: https://docs.ethers.io/v4/api-providers.html
+			// The network will be automatically detected; if the network is
+			// changed in MetaMask, it causes a page refresh.
 
-		try {
-			// const someWhatNeeded = {
-			// 	maxPriorityFeePerGas,
-			// 	maxFeePerGas,
-			// }
-			// data = await marketContract.fetchMarketTokens(someWhatNeeded)
-			data = await marketContract.fetchMarketTokens() //! ~SAhil - curiousita: Inspect how does this fetches tokens ??
-		} catch (error) {
-			console.log('got here..1.1')
-			window.e1 = error
-			throw error
-		}
+			// const provider = new ethers.providers.JsonRpcProvider() // original from course author (only work with localhost and breaks on connecting to goerli chain when run `nr start-goerli` script)
+			let provider = new ethers.providers.Web3Provider(web3.currentProvider) // ! THIS IS LAST WORKING!!
 
-		if (!window.d) {
-			window.d = {}
-		}
-		window.d.nfts = data
-		console.log('got here..2')
+			// Below code to connect to metamask is used by author on other pages as well i.e., `mint-token`, `dashboard`, etc by course author
+			// const web3Modal = new Web3Modal()
+			// const connection = await web3Modal.connect()
+			// const provider = new ethers.providers.Web3Provider(connection)
 
-		const items = await Promise.all(
-			data.map(async (i) => {
-				let tokenUri = await tokenContract.tokenURI(i.tokenId)
-				// alert('got token: uri:' + tokenUri)
-				//! Access ipfs file using https gateway (nft.storage): https://nft.storage/docs/concepts/gateways/#using-the-gateway ~Sahil
-				//! Replacing ipfs:// with https://nftstorage.link/ipfs/ so we can access nft.storage's ipfs file on a general browser (coz 90% of browser don't support ipfs atm)
+			const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider)
+			const marketContract = new ethers.Contract(nftmarketaddress, KBMarket.abi, provider)
 
-				//! Needed for nft.storage only (not* needed for infura's ipfs)
-				tokenUri = tokenUri.replace('ipfs://', 'https://nftstorage.link/ipfs/')
-				// we want get the token metadata - json
-				const meta = await axios.get(tokenUri)
-				// Example: tokenUri = https://bafyreid5elqj3kxzhiuriks44kovfh5g67wdhnbp24vofabnghvpzjpxeq.ipfs.nftstorage.link/metadata.json
-				// meta.data looks like:
-				// {
-				// name: "zxy",
-				// description: "wetgs",
-				// image: "ipfs://bafybeifg6bs7eisejoxwflo6uvz3wdasa4plrbxerbg2ril7jks23hf6ny/array.png"
+			//!!!!!!!! get max fees from gas station
+			let maxFeePerGas = ethers.BigNumber.from(40000000000) // fallback to 40 gwei
+			let maxPriorityFeePerGas = ethers.BigNumber.from(40000000000) // fallback to 40 gwei
+			try {
+				const {data} = await axios({
+					method: 'get',
+					url: isProd ? 'https://gasstation-mainnet.matic.network/v2' : 'https://gasstation-mumbai.matic.today/v2',
+				})
+				maxFeePerGas = ethers.utils.parseUnits(Math.ceil(data.fast.maxFee) + '', 'gwei')
+				maxPriorityFeePerGas = ethers.utils.parseUnits(Math.ceil(data.fast.maxPriorityFee) + '', 'gwei')
+			} catch {
+				// ignore
+			}
+			// !!!!!!
+			console.log('got here..1')
+
+			let data = []
+
+			try {
+				// const someWhatNeeded = {
+				// 	maxPriorityFeePerGas,
+				// 	maxFeePerGas,
 				// }
+				// data = await marketContract.fetchMarketTokens(someWhatNeeded)
+				data = await marketContract.fetchMarketTokens() //! ~SAhil - curiousita: Inspect how does this fetches tokens ??
+			} catch (error) {
+				console.log('got here..1.1')
+				window.e1 = error
+				throw error
+			}
 
-				//! Needed for nft.storage only (not* needed for infura's ipfs)
-				meta.data.image = meta.data.image.replace('ipfs://', 'https://nftstorage.link/ipfs/')
+			if (!window.d) {
+				window.d = {}
+			}
+			window.d.nfts = data
+			console.log('got here..2')
 
-				let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
-				let item = {
-					price,
-					tokenId: i.tokenId.toNumber(),
-					seller: i.seller,
-					owner: i.owner,
-					image: meta.data.image,
-					name: meta.data.name,
-					description: meta.data.description,
-				}
-				return item
-			})
-		)
+			const items = await Promise.all(
+				data.map(async (i) => {
+					let tokenUri = await tokenContract.tokenURI(i.tokenId)
+					// alert('got token: uri:' + tokenUri)
+					//! Access ipfs file using https gateway (nft.storage): https://nft.storage/docs/concepts/gateways/#using-the-gateway ~Sahil
+					//! Replacing ipfs:// with https://nftstorage.link/ipfs/ so we can access nft.storage's ipfs file on a general browser (coz 90% of browser don't support ipfs atm)
 
-		setNFts(items)
-		window.d.items = items
-		setLoadingState('loaded')
+					//! Needed for nft.storage only (not* needed for infura's ipfs)
+					tokenUri = tokenUri.replace('ipfs://', 'https://nftstorage.link/ipfs/')
+					// we want get the token metadata - json
+					const meta = await axios.get(tokenUri)
+					// Example: tokenUri = https://bafyreid5elqj3kxzhiuriks44kovfh5g67wdhnbp24vofabnghvpzjpxeq.ipfs.nftstorage.link/metadata.json
+					// meta.data looks like:
+					// {
+					// name: "zxy",
+					// description: "wetgs",
+					// image: "ipfs://bafybeifg6bs7eisejoxwflo6uvz3wdasa4plrbxerbg2ril7jks23hf6ny/array.png"
+					// }
+
+					//! Needed for nft.storage only (not* needed for infura's ipfs)
+					meta.data.image = meta.data.image.replace('ipfs://', 'https://nftstorage.link/ipfs/')
+
+					let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
+					let item = {
+						price,
+						tokenId: i.tokenId.toNumber(),
+						seller: i.seller,
+						owner: i.owner,
+						image: meta.data.image,
+						name: meta.data.name,
+						description: meta.data.description,
+					}
+					return item
+				})
+			)
+
+			setNFts(items)
+			window.d.items = items
+			setLoadingState('loaded')
+		} catch (error) {
+			handleAppError(error, setAppErrorMessg)
+		}
 	}
 
 	// function to buy nfts for market
@@ -167,6 +177,9 @@ export default function Home() {
 	// 	window.d = nfts
 	// }
 
+	const isLoading = loadingState === 'not-loaded'
+	console.log('isLoading?', isLoading, loadingState)
+
 	return (
 		<div className='flex justify-center'>
 			<Head>
@@ -174,6 +187,23 @@ export default function Home() {
 				<meta name='description' content='NFT Marketplace - Kryptobirdz | Home' />
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
+			{/* Loader and error showing management */}
+			{isLoading && (
+				<>
+					{Boolean(appErrorMessg) ? (
+						<div className='mt-5' style={{width: '500px'}}>
+							<h5 className='bg-white rounded-lg p-3' style={{whiteSpace: 'pre-line'}}>
+								{appErrorMessg}
+							</h5>
+						</div>
+					) : (
+						<div className='mt-[150px] flex items-center justify-center bg-purple-600 rounded-lg px-5 py-3'>
+							{Spinner}
+							<div className='text-xl text-white'>Loading</div>
+						</div>
+					)}
+				</>
+			)}
 
 			{noNfts ? (
 				<h1 className='px-20 py-7 text-4x1'>No NFts in marketplace</h1>
@@ -207,7 +237,6 @@ export default function Home() {
 					</div>
 				</div>
 			)}
-
 			{/* // TODO: Use web3modal react lib  */}
 			{/* {connected ? '' : <ConnectButton />} */}
 		</div>
