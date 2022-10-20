@@ -11,7 +11,8 @@ import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
 import KBMarket from '../artifacts/contracts/KBMarket.sol/KBMarket.json'
 import handleAppError from '../utils/handleAppError'
 import Spinner from '../components/Spinner'
-import { refreshPageOnEventsMetamaskEvents } from '../utils/metamaskEvents'
+import {refreshPageOnEventsMetamaskEvents} from '../utils/metamaskEvents'
+import ErrorNotify from '../components/ErrorNotify'
 
 const {nftaddress, nftmarketaddress, networkName} = config
 
@@ -86,24 +87,7 @@ export default function MyAssets() {
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 
-			<div className='flex justify-center'>
-				{isLoading && (
-					<>
-						{Boolean(appErrorMessg) ? (
-							<div className='mt-5' style={{width: '500px'}}>
-								<h5 className='bg-white rounded-lg p-3' style={{whiteSpace: 'pre-line'}}>
-									{appErrorMessg}
-								</h5>
-							</div>
-						) : (
-							<div className='mt-[150px] flex items-center justify-center bg-purple-600 rounded-lg px-5 py-3'>
-								{Spinner}
-								<div className='text-xl text-white'>Loading</div>
-							</div>
-						)}
-					</>
-				)}
-			</div>
+			<ErrorNotify {...{isLoading, appErrorMessg}} />
 
 			<div className='px-4' style={{maxWidth: '1600px'}}>
 				<div className='grid grid-cols-1 items-center sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4'>

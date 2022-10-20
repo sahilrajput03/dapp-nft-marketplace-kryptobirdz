@@ -10,8 +10,8 @@ import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
 import KBMarket from '../artifacts/contracts/KBMarket.sol/KBMarket.json'
 import {getSafeEncodedURI} from '../utils/utilityFunctions'
 import {refreshPageOnEventsMetamaskEvents} from '../utils/metamaskEvents'
-import Spinner from '../components/Spinner'
 import handleAppError from '../utils/handleAppError'
+import ErrorNotify from '../components/ErrorNotify'
 /* // TODO: Usin web3modal react  */
 // import {ConnectButton, useAccount} from '@web3modal/react'
 
@@ -188,22 +188,8 @@ export default function Home() {
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 			{/* Loader and error showing management */}
-			{isLoading && (
-				<>
-					{Boolean(appErrorMessg) ? (
-						<div className='mt-5' style={{width: '500px'}}>
-							<h5 className='bg-white rounded-lg p-3' style={{whiteSpace: 'pre-line'}}>
-								{appErrorMessg}
-							</h5>
-						</div>
-					) : (
-						<div className='mt-[150px] flex items-center justify-center bg-purple-600 rounded-lg px-5 py-3'>
-							{Spinner}
-							<div className='text-xl text-white'>Loading</div>
-						</div>
-					)}
-				</>
-			)}
+
+			<ErrorNotify {...{isLoading, appErrorMessg}} />
 
 			{noNfts ? (
 				<h1 className='px-20 py-7 text-4x1'>No NFts in marketplace</h1>

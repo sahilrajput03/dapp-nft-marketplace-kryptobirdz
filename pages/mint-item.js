@@ -13,6 +13,7 @@ import dynamic from 'next/dynamic'
 import Spinner from '../components/Spinner'
 import {refreshPageOnEventsMetamaskEvents} from '../utils/metamaskEvents'
 import handleAppError from '../utils/handleAppError'
+import ErrorNotify from '../components/ErrorNotify'
 
 const {nftaddress, nftmarketaddress, networkName} = config
 
@@ -32,12 +33,13 @@ export default function MintItem() {
 	const [appErrorMessg, setAppErrorMessg] = useState('')
 
 	useEffect(() => {
-		refreshPageOnEventsMetamaskEvents()
 		onPageLoad()
 	}, [])
 
 	const onPageLoad = async () => {
 		try {
+			refreshPageOnEventsMetamaskEvents()
+
 			// Fetchig myNfts only becoz i want to trigger error if the user loads the page with incorrect network in metamask(I don't need myNfts on this page though ~Sahil).
 			const web3Modal = new Web3Modal()
 			const connection = await web3Modal.connect()
@@ -211,24 +213,7 @@ export default function MintItem() {
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 
-			<div className='flex justify-center'>
-				{isLoading && (
-					<>
-						{Boolean(appErrorMessg) ? (
-							<div className='mt-5' style={{width: '500px'}}>
-								<h5 className='bg-white rounded-lg p-3' style={{whiteSpace: 'pre-line'}}>
-									{appErrorMessg}
-								</h5>
-							</div>
-						) : (
-							<div className='mt-[150px] flex items-center justify-center bg-purple-600 rounded-lg px-5 py-3'>
-								{Spinner}
-								<div className='text-xl text-white'>Loading</div>
-							</div>
-						)}
-					</>
-				)}
-			</div>
+			<ErrorNotify {...{isLoading, appErrorMessg}} />
 
 			{!isLoading && (
 				<div className='flex justify-center'>
