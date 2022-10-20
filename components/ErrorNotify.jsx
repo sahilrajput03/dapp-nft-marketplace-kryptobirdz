@@ -5,7 +5,7 @@ const ErrorNotify = ({isLoading, appErrorMessg}) => (
 	<div className='flex justify-center'>
 		{isLoading && (
 			<>
-				{Boolean(true) ? (
+				{Boolean(appErrorMessg) ? (
 					<div className='mt-5' style={{width: '500px'}}>
 						<h5 className='bg-white rounded-lg p-3' style={{whiteSpace: 'pre-line'}}>
 							{appErrorMessg}
