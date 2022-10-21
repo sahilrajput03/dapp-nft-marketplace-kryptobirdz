@@ -613,3 +613,9 @@ request rate/limit and enable other perks, such as metrics and advanced APIs.
 For more details: https://docs.ethers.io/api-keys/
 ==========================
 ```
+
+## reset chain before each test?
+
+[Source](https://ethereum.stackexchange.com/a/112437/106687)
+
+![image](https://user-images.githubusercontent.com/31458531/197202869-a46a6b25-ba8f-4b4f-aa7b-1c900042b428.png)
