@@ -6,6 +6,9 @@ import "hardhat/console.sol";
 contract Contract4 {
 	event msgDetails(address msgSenderAddr, uint256 msgValueInWeiWithMessage, uint amount, uint256 gasLeft);
 
+	//! LEARN: This throws error possibly becoz console.log can only be run inside the function calls
+	// console.log('hello');
+
 	// Adding money to contract address from thin air IMO ~Sahil
 	function getMsgDetails() public payable {
 		// FYI: If I use visibility "public"  instead of "public payable" I get following error for usage of `msg.value`:

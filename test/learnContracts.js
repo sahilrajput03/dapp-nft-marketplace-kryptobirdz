@@ -558,6 +558,24 @@ describe('contract 6', function () {
 function parseRequireErrorMessage(message) {
 	return message.slice(message.indexOf("'") + 1, -1)
 }
+
+
+// Learn: `console.logBytes()`, `console.logBytes32()`, `abi.encode()`, `keccak()`
+describe('contract 7', function () {
+	it('learn more, ', async () => {
+		const Contract7 = await ethers.getContractFactory('Contract7')
+		const contract7 = await Contract7.deploy()
+		await contract7.deployed()
+
+		await contract7.simpleFn()
+
+		// expect().equal()
+	})
+})
+
+
+
+
 // describe('ecomm', function () {
 // 	it('ecomm1', async function () {
 // 		const adminAddress = 'sd'
