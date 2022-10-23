@@ -86,7 +86,7 @@ module.exports = {
 			// Using Position arguments hardhat watcher: https://github.com/xanderdeseyn/hardhat-watcher#positional-arguments
 			tasks: [{command: 'test', params: {testFiles: ['./test/learnContracts.js']}}],
 			files: ['./contracts', './test/learnContracts.js'],
-			// runOnLaunch: true 
+			runOnLaunch: true 
 		},
 		'project-distributed-wallet': {
 			start: 'tmux clear-history -t $(tmux display -pt "${TMUX_PANE:?}" "#{pane_index}")', // https://github.com/sahilrajput03/flash-runner-npm/blob/main/startTesting.js#L86

@@ -561,7 +561,7 @@ function parseRequireErrorMessage(message) {
 
 
 // Learn: `console.logBytes()`, `console.logBytes32()`, `abi.encode()`, `keccak()`
-describe('contract 7', function () {
+describe.only('contract 7', function () {
 	it('learn more, ', async () => {
 		const Contract7 = await ethers.getContractFactory('Contract7')
 		const contract7 = await Contract7.deploy()
