@@ -1,5 +1,5 @@
 const {expect} = require('chai')
-const {BigNumber} = require('ethers') // hh.ethers.BigNumber , also works.
+const {BigNumber, logger} = require('ethers') // hh.ethers.BigNumber , also works.
 const {ethers, network} = require('hardhat')
 // const {ethers} = require('ethers') // from your own
 // Article Writing Test for Contract: https://dev.to/jacobedawson/import-test-a-popular-nft-smart-contract-with-hardhat-ethers-12i5
@@ -408,7 +408,7 @@ describe('contract 5', function () {
 
 		// @LEARN-REVERT (errorMessage can be tested)
 		const expectedErrMessage = 'Not owner'
-		
+
 		// calling transaction from other than owner account (i.e., 1st account) of the default accounts: https://github.com/ethers-io/ethers.js/issues/1449#issuecomment-817198604
 		await expect(contract5.connect(secondSigner).getMoney({value: 6})).to.be.revertedWith(expectedErrMessage)
 
@@ -559,7 +559,6 @@ function parseRequireErrorMessage(message) {
 	return message.slice(message.indexOf("'") + 1, -1)
 }
 
-
 // Learn: `console.logBytes()`, `console.logBytes32()`, `abi.encode()`, `keccak()`
 describe('contract 7', function () {
 	it('learn more, ', async () => {
@@ -573,8 +572,53 @@ describe('contract 7', function () {
 	})
 })
 
+describe.only('voting', function () {
+	it('voting, ', async () => {
+		const OpenVoting = await ethers.getContractFactory('OpenVoting')
+		const openVoting = await OpenVoting.deploy()
+		await openVoting.deployed()
+		const [owner, addr1, addr2] = await ethers.getSigners()
 
+		// create a Voting
+		const NAME = 'Event Activity'
+		const OPTIONS = ['tennis', 'baseball', 'soccer']
+		const VOTERS = [owner.address, addr1.address, addr2.address]
 
+		let total_votings = await openVoting.votingId()
+		expect(total_votings).equal(0)
+
+		await openVoting.createVoting(NAME, OPTIONS, VOTERS)
+		total_votings = await openVoting.votingId()
+		expect(total_votings).equal(1)
+
+		// Getting All `Voting`s and `allOptionsVotes` (2d array)
+		let [allVotings, allOptionsVotes] = await openVoting.getAllVotings()
+		// console.log('got allVotings?', allVotings)
+		let vId = 0 // `votingId`
+		expect(allVotings[vId].votingId).equal(0)
+		expect(allVotings[vId].name).equal(NAME)
+		expect(allVotings[vId].options[0]).equal(OPTIONS[0])
+		expect(allVotings[vId].options[1]).equal(OPTIONS[1])
+		expect(allVotings[vId].options[2]).equal(OPTIONS[2])
+		// check votes for options (all zero becoz no body voted yet)
+		expect(allOptionsVotes[vId][0]).equal(0)
+		expect(allOptionsVotes[vId][1]).equal(0)
+		expect(allOptionsVotes[vId][2]).equal(0)
+
+		// GETTING ONLY ONE `Voting` by providing idx ar argument to get value from a `mapping` type ~Sahil
+		// const firstVoting = await openVoting.votings(0)
+
+		// Vote for a `option` (i.e., option=0) of a voting
+		let optionIdx = 0
+		await openVoting.vote(allVotings[0].votingId, optionIdx)
+		;[allVotings, allOptionsVotes] = await openVoting.getAllVotings()
+		expect(allOptionsVotes[vId][optionIdx]).equal(1)
+
+		// Getting votes for a single `Voting`
+		let votes = await openVoting.votes(vId, optionIdx)
+		expect(votes.eq(1)).to.be.true
+	})
+})
 
 // describe('ecomm', function () {
 // 	it('ecomm1', async function () {

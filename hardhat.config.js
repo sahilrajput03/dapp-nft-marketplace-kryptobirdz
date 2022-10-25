@@ -85,7 +85,7 @@ module.exports = {
 			clearOnStart: true,
 			// Using Position arguments hardhat watcher: https://github.com/xanderdeseyn/hardhat-watcher#positional-arguments
 			tasks: [{command: 'test', params: {testFiles: ['./test/learnContracts.js']}}],
-			files: ['./contracts', './test/learnContracts.js'],
+			files: ['./contracts/learn-contracts', './test/learnContracts.js'],
 			runOnLaunch: true 
 		},
 		'project-distributed-wallet': {
