@@ -36,14 +36,13 @@ contract OpenVoting {
 
 	// feat 2
 	function vote(uint _votingId, uint voteOptionIdx) external {
-		// TODO: check if user has already voted and revert if so
 		require(hasVoted[_votingId][msg.sender] == false, 'You can not vote twice');
 
 		hasVoted[_votingId][msg.sender] = true;
 		votes[_votingId][voteOptionIdx] += 1;
 	}
 
-	// get all votings
+	// get all votings (returns Voting[], 2D arary to return of `otionsValue[]` of a `Voting`)
 	function getAllVotings() public view returns (Voting[] memory, uint[][] memory) {
 		Voting[] memory _votings = new Voting[](votingId);
 		uint[][] memory _optionVotes = new uint[][](votingId);
@@ -51,20 +50,11 @@ contract OpenVoting {
 			_votings[i] = votings[i];
 			_optionVotes[i] = new uint[](votings[i].options.length);
 			for (uint j = 0; j < votings[i].options.length; j++) {
-			_optionVotes[i][j] = votes[i][j];
+				_optionVotes[i][j] = votes[i][j];
 			}
 		}
 		return (_votings, _optionVotes);
 	}
-
-	// get all votes of a Voting
-	// function getAllVotes(uint _votingId) external view returns(uint ){
-	// 	for(uint i = 0; i < votings[_votingId].options.length; i++){
-
-	// 	}
-
-	// 	return ()
-	// }
 }
 
 // let activityVotingId = createVoting('Event Activity', ['Dance Event', 'Singing Event'], ['addr1', 'addr2']) //feat1
