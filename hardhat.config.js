@@ -99,7 +99,7 @@ module.exports = {
 			start: 'tmux clear-history -t $(tmux display -pt "${TMUX_PANE:?}" "#{pane_index}")', // https://github.com/sahilrajput03/flash-runner-npm/blob/main/startTesting.js#L86
 			clearOnStart: true,
 			tasks: [{command: 'test', params: {testFiles: ['./test/multiSigWallet.js']}}],
-			files: ['./contracts', './test/multiSigWallet.js'],
+			files: ['./contracts/multisig-wallet/', './test/multiSigWallet.js'],
 			runOnLaunch: true 
 		},
 		'kryptobirdz': {

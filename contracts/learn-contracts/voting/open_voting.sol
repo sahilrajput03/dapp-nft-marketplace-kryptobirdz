@@ -36,6 +36,7 @@ contract OpenVoting {
 
 	// feat 2
 	function vote(uint _votingId, uint voteOptionIdx) external {
+		// TODO: Check if user is allowed to for the specific `votingId` he's requesting to for and rever if not allowed for that.
 		require(hasVoted[_votingId][msg.sender] == false, 'You can not vote twice');
 
 		hasVoted[_votingId][msg.sender] = true;

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity >=0.7.0 <0.9.0;
 
-// import "hardhat/console.sol";
+import "hardhat/console.sol";
 
 contract MultiSigWallet {
 	// `approvers` is a list of people who are allowed to create and approve transfers
@@ -67,7 +67,9 @@ contract MultiSigWallet {
 	// function sendEther() external payable{}
 
 	// We just need to send a transaction to the address of the contract with some ether in it but without targeting any function and below fn will be triggered automatically. Learn: We don't need fn body such receive fn
-	receive() external payable {}
+	receive() external payable {
+		console.log('receive function executed!');
+	}
 
 	modifier onlyApprover() {
 		bool allowed = false;
