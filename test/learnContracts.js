@@ -620,7 +620,9 @@ describe('voting', function () {
 	})
 })
 
-describe.only('rarely used features of solidity', async function () {
+// StackOverflow: Question:  Fallback functions. What are they needed for?
+// Source: https://stackoverflow.com/questions/69178874/solidity-v0-6-0-fallback-functions-what-are-they-needed-for
+describe('rarely used features of solidity', async function () {
 	it('fallback function, ', async () => {
 		const Contract8 = await ethers.getContractFactory('Contract8')
 		const contract8 = await Contract8.deploy()
