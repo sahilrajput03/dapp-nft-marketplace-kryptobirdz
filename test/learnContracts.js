@@ -572,7 +572,7 @@ describe('contract 7', function () {
 	})
 })
 
-describe.only('voting', function () {
+describe('voting', function () {
 	it('voting, ', async () => {
 		const OpenVoting = await ethers.getContractFactory('OpenVoting')
 		const openVoting = await OpenVoting.deploy()
@@ -620,29 +620,71 @@ describe.only('voting', function () {
 	})
 })
 
-// describe('ecomm', function () {
-// 	it('ecomm1', async function () {
-// 		const adminAddress = 'sd'
-// 		const daiAddress = ''
-// 		const paymentId = ''
-// 		const addressZero = ethers.constants.AddressZero
+describe.only('rarely used features of solidity', async function () {
+	it('fallback function, ', async () => {
+		const Contract8 = await ethers.getContractFactory('Contract8')
+		const contract8 = await Contract8.deploy()
+		await contract8.deployed()
+		const [owner, addr1, addr2] = await ethers.getSigners()
 
-// 		const PaymentProcessor = await ethers.getContractFactory('PaymentProcessor')
-// 		const paymentProcessor = await PaymentProcessor.deploy(adminAddress, daiAddress)
-// 		await paymentProcessor.deployed()
-// 		const paymentAddress = paymentProcessor.address
+		// LEARN: Below works exactly as below code of `owner.sendTransaction`
+		// const tx = contract8.signer.sendTransaction({
+		// 	to: contract8.address,
+		// 	data: '0x',
+		// 	value: ethers.utils.parseEther("0")
+		// })
+		const tx = owner.sendTransaction({
+			to: contract8.address,
+			data: '0x',
+			value: ethers.utils.parseEther('0'), // value is redundant here though
+		})
 
-// 		const [owner, address1] = await ethers.getSigners()
+		// Test fallback function
+		await expect(tx).to.emit(contract8, 'myEvent').withArgs('fallback-function-works-yoo')
+	})
 
-// 		expect(await paymentProcessor.pay(200, paymentId))
-// 			.to.emit(paymentProcessor, 'PaymentDone')
-// 			.withArgs(addressZero, owner.address)
+	it('fallback function called with ether SHOULD revert / throw error', async function () {
+		const Contract8 = await ethers.getContractFactory('Contract8')
+		const contract8 = await Contract8.deploy()
+		await contract8.deployed()
+		const [owner, addr1, addr2] = await ethers.getSigners()
+		const revertMessg = `Transaction reverted: there's no receive function, fallback function is not payable and was called with value 1000000000000000000`
 
-// 		// ! ??????
-// 		// ! ??????
-// 		// a getter is created for every public variable
-// 		// let myuInt = await paymentProcessor.myuInt()
-// 		// myuInt = myuInt.toString()
-// 		// console.log({myuInt})
-// 	})
-// })
+		const txPromise = owner.sendTransaction({
+			to: contract8.address,
+			data: '0x',
+			value: ethers.utils.parseEther('1'), // LEARN: Since value is non-zero i.e, we are sending some ether now the contract throws error coz fallback cannot receive ether as `fallback()` cannot be payable and we haven't implemented `receive()` function either, so contract throws error.
+		})
+
+		// Test rever message
+		await expect(txPromise).to.be.revertedWith(revertMessg) // this message is actually reverted by using statement in contract ie., `require(msg.value > 9, "give number's is smaller");`
+
+		// Test error message received
+		let err
+		const expectedErrMessg = 'cannot estimate gas; transaction may fail or may require manual gas limit'
+		try {
+			await txPromise
+		} catch (error) {
+			err = error
+		}
+		expect(err?.message.startsWith(expectedErrMessg)).equal(true)
+	})
+
+	// Learning: You cannot get your fallback function called 
+	it('receive function has precedence over fallback function, ', async () => {
+		const Contract10 = await ethers.getContractFactory('Contract10')
+		const contract10 = await Contract10.deploy()
+		await contract10.deployed()
+		const [owner, addr1, addr2] = await ethers.getSigners()
+
+		const tx = owner.sendTransaction({
+			to: contract10.address,
+			data: '0x',
+			// Learn: Even if you pass 0 ether, only receive function will be called. So, there's no way to call fallback function when you have defined receive function in your contract. ~ IMO: Sahil
+			value: ethers.utils.parseEther('1'), // value is redundant here though
+		})
+
+		// Test fallback function, I answered it on StackOverflow: https://stackoverflow.com/a/74226276/10012446
+		await expect(tx).to.emit(contract10, 'myEvent').withArgs('receive-function-works-too')
+	})
+})

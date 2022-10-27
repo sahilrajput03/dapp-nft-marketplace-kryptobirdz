@@ -32,7 +32,7 @@ describe('multiSigWallet', () => {
 		wallet = await Wallet.deploy(approversAddrs, QUORUM) // we're passing array of addreses and quorum (second argument) as 2 i.e., minium number of approvers for the transaction
 		await wallet.deployed()
 
-		// Sending 1000 wei to contract (using receive fn i.e., using `sendTransaction` method)
+		// Sending 1000 wei to contract (using receive function i.e., using `sendTransaction` method)
 		// Learn: `sendTransaction` @ `address of the wallet`
 		await acc1.sendTransaction({from: addr1, to: wallet.address, value: INITIAL_CONTRACT_BALANCE})
 		// In #TRUFFLE we do it like below:
