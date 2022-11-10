@@ -94,7 +94,10 @@ export default function MintItem() {
 			// ! Why nft.storage ? A. Its free but have a limitation i.e., single upload size limit to 31gb, source: https://nft.storage/faq/#how-is-nft-storage-free-to-use
 			// ! Why abandoning infura's ipfs? A. Bcoz it is asking for credit card to avail its service. ~Sahil
 			// Using `nft.storage's` ipfs instead of `infura's ipfs`
-			const NFT_STORAGE_API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDQwZkJCNzA3NzFjQmQ5Y0RDRjRjNDE0ZWY3OGRmY0UxMDcwQjYxRDkiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY2MDgwNjY0OTcwMCwibmFtZSI6Im15LWlwZnMtcHJvamVjdCJ9.3mif0W36dXY7sHXd7jDcx0C_aGmjsO2Vyb-TUgfpfaw'
+			const NEXT_PUBLIC_NFT_STORAGE_API_KEY = process.env.NEXT_PUBLIC_NFT_STORAGE_API_KEY
+			
+			if(!NEXT_PUBLIC_NFT_STORAGE_API_KEY) return alert('nft.storage api key missing ~ApplicationErrors')
+			const NFT_STORAGE_API_KEY = NEXT_PUBLIC_NFT_STORAGE_API_KEY
 			const {NFTStorage, File, Blob} = await import('nft.storage')
 			const client = new NFTStorage({token: NFT_STORAGE_API_KEY})
 

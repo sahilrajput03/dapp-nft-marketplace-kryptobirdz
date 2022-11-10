@@ -22,7 +22,10 @@
 		"deploy-goerli-KryptoBird": "hardhat run ./scripts/deployKryptoBird.js --network goerli",
 		"start-local-blockchain": "hardhat node",
 		"BADDDtest-watch-learn-contractsNodemon": "nodemon -x 'hardhat test --no-compile test/learn-contracts.js' -w contracts -w test -e sol",
-		"prettier": "prettier --write 'contracts/**/*.sol'"
+		"prettier": "prettier --write 'contracts/**/*.sol'",
+		"comment":"ALERT: for script, address for the contract needs to be pasted manually.",
+		"verify-etherscan-kbMarket-": "npx hardhat verify --network goerli 0xe01ab95fCAcd00720A27b3273ED22c3E0289c78D",
+		"verify-etherscan-NFT": "npx hardhat verify --network goerli 0x4e0c944c56014413A2CDDf010A2F391E05c00330 '0xe01ab95fCAcd00720A27b3273ED22c3E0289c78D'"
 	},
 	"dependencies": {
 		"@nomicfoundation/hardhat-chai-matchers": "^1.0.2",
@@ -50,6 +53,7 @@
 		"web3modal": "^1.9.8"
 	},
 	"devDependencies": {
+		"@nomiclabs/hardhat-etherscan": "^3.1.2",
 		"@types/mocha": "^9.1.1",
 		"add": "^2.0.6",
 		"autoprefixer": "^10.4.8",

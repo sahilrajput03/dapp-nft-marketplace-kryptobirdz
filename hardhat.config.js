@@ -1,4 +1,5 @@
 require('dotenv').config()
+require("@nomiclabs/hardhat-etherscan");
 
 //? ~Sahil: ALL CONFIG OPTIONS IN DOCS: https://hardhat.org/hardhat-runner/docs/config
 
@@ -29,6 +30,7 @@ const PRIVATE_KEY = process.env.PRIVATE_KEY
 const POLYGONSCAN_API_KEY = process.env.POLYGONSCAN_API_KEY
 // From alchemy's "Demo App"
 const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY
+const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -64,7 +66,8 @@ module.exports = {
 	},
 	// source: https://docs.polygon.technology/docs/develop/hardhat#compiling-the-contract
 	etherscan: {
-		apiKey: POLYGONSCAN_API_KEY,
+		// apiKey: POLYGONSCAN_API_KEY,
+		apiKey: ETHERSCAN_API_KEY,
 	},
 	// Adding optimizer for solidity coz its gonna simplify complicated expressions, it can reduce gas cost and a whole bunch of good stuff.
 	solidity: {
